@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Pull together blog variables for the save form
+ * Pull together variables for the save form
  *
  * @param ElggEntity $schedule
  * @return array $values

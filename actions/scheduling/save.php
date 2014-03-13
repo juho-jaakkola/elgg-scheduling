@@ -6,7 +6,7 @@ $entity = get_entity($guid);
 
 if (elgg_instanceof($entity, 'object', 'scheduling_poll')) {
 	if (!$entity->canEdit()) {
-		register_error(elgg_echo('actionunauthorized'));
+		register_error(elgg_echo('scheduling:error:cannot_edit'));
 		forward(REFERER);
 	}
 } else {

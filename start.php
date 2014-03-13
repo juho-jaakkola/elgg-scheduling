@@ -9,6 +9,7 @@ function scheduling_init() {
 	$actions_path = elgg_get_plugins_path() . 'scheduling/actions/scheduling/';
 	elgg_register_action('scheduling/save', $actions_path . 'save.php');
 	elgg_register_action('scheduling/days', $actions_path . 'days.php');
+	elgg_register_action('scheduling/answer', $actions_path . 'answer.php');
 
 	elgg_register_library('scheduling', elgg_get_plugins_path() . 'scheduling/lib/scheduling.php');
 

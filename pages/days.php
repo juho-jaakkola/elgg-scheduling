@@ -18,7 +18,7 @@ elgg_register_menu_item('title', array(
 elgg_load_js('elgg.scheduling');
 elgg_load_js('date.format');
 
-$form_vars = scheduling_prepare_form_vars();
+$form_vars = scheduling_prepare_form_vars($entity);
 $form_vars['entity'] = $entity;
 
 $content = '';
