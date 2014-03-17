@@ -15,6 +15,8 @@ $lang = array(
 
 	'scheduling:save:success' => 'Schedule poll saved',
 	'scheduling:error:cannot_edit' => 'You are unauthorized to edit this content',
+	'scheduling:delete:success' => 'Scheduling poll deleted',
+	'scheduling:delete:error' => 'Deleting the scheduling poll failed',
 );
 
 add_translation('en', $lang);
