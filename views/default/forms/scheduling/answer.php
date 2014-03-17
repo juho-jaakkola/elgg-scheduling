@@ -4,8 +4,8 @@ $entity = elgg_extract('entity', $vars);
 
 $poll = unserialize($entity->poll);
 
-$date_row = '<td></td>';
-$slot_row = '<td></td>';
+$date_row = '<td class="empty"></td>';
+$slot_row = '<td class="empty"></td>';
 $poll_row = '<td></td>';
 foreach ($poll as $timestamp => $day) {
 	$date = date(elgg_echo('scheduling:date_format'), $timestamp);
