@@ -27,18 +27,34 @@ $answers = $entity->getAnswers();
 
 // Add answers, one row per user
 $answer_rows = '';
+$answer_sums = array();
 foreach ($answers as $user_guid => $answer) {
 	$user = get_entity($user_guid);
 	$user_icon = elgg_view_entity_icon($user, 'tiny');
 
 	$cells = "<td style=\"padding: 0;\">$user_icon</td>";
 	foreach ($answer as $timestamp => $slots) {
-		foreach ($slots as $slot) {
-			$class = empty($slot) ? 'unselected' : 'selected';
+		foreach ($slots as $key => $slot) {
+			if (empty($slot)) {
+				$class = 'unselected';
+				$vote = 0;
+			} else {
+				$class = 'selected';
+				$vote = 1;
+			}
+
+			// Add the vote to the sum of users who selected this time slot
+			$answer_sums["{$timestamp}-{$key}"] += $vote;
+
 			$cells .= "<td class=\"$class\"></td>";
 		}
 	}
 	$answer_rows .= "<tr>$cells</tr>";
+}
+
+$sum_row = '<td class="empty"></td>';
+foreach ($answer_sums as $sum) {
+	$sum_row .= "<td>$sum</td>";
 }
 
 $submit_input = elgg_view('input/submit');
@@ -48,11 +64,12 @@ $guid_input = elgg_view('input/hidden', array(
 ));
 
 echo <<<FORM
-	<table class="elgg-table mvm" id="elgg-table-scheduling-answer">
+	<table class="elgg-table mvl" id="elgg-table-scheduling-answer">
 		<tr>$date_row</tr>
 		<tr>$slot_row</tr>
 		$answer_rows
 		<tr>$poll_row</tr>
+		<tr>$sum_row</tr>
 	</table>
 	<div>
 		$guid_input

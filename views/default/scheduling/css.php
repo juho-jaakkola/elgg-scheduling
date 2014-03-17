@@ -7,6 +7,11 @@
 	border: 0;
 }
 
+#elgg-table-scheduling-answer td,
+#elgg-table-scheduling-answer th {
+	text-align: center;
+}
+
 #elgg-table-scheduling-answer .selected {
 	background: lightgreen;
 }
