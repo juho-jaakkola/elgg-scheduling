@@ -3,7 +3,7 @@
 $guid = get_input('guid');
 $entity = get_entity($guid);
 
-if (!$entity->canEdit()) {
+if (!$entity instanceof ElggSchedulingPoll || !$entity->canEdit()) {
 	register_error(elgg_echo('scheduling:error:cannot_edit'));
 	forward();
 }
