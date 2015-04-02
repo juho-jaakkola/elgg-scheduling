@@ -16,7 +16,7 @@ function scheduling_init() {
 
 	elgg_register_page_handler('scheduling', 'scheduling_page_handler');
 
-	elgg_register_entity_url_handler('object', 'scheduling_poll', 'scheduling_poll_url');
+	elgg_register_plugin_hook_handler('entity:url', 'object', 'scheduling_poll_url');
 
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'scheduling_entity_menu');
 
@@ -74,10 +74,19 @@ function scheduling_page_handler($page) {
 /**
  * Populates the ->getUrl() method
  *
- * @param ElggEntity $entity
+ * @param string $hook
+ * @param string $type
+ * @param string $url
+ * @param array  $params
  * @return string URL
  */
-function scheduling_poll_url($entity) {
+function scheduling_poll_url($hook, $type, $url, $params) {
+	$entity = $params['entity'];
+
+	if (!$entity instanceof ElggSchedulingPoll) {
+		return $url;
+	}
+
 	$title = elgg_get_friendly_title($entity->name);
 
 	return "scheduling/view/{$entity->guid}/$title";
