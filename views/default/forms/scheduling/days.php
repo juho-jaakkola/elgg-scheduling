@@ -2,8 +2,10 @@
 
 $entity = elgg_extract('entity', $vars);
 
-$num_rows = $vars['num_rows'];
-$num_cols = $vars['num_columns'];
+$days = $entity->getSlotsGroupedByDays();
+
+$num_rows = $days ? count($days) : 1;
+$num_cols = count(reset($days)) ? count(reset($days)) : 1;
 
 $headings = '<th></th>';
 for ($heading = 0; $heading < $num_cols; $heading++) {
@@ -11,31 +13,42 @@ for ($heading = 0; $heading < $num_cols; $heading++) {
 	$headings .= "<th>$text</th>";
 }
 
-for ($day = 0; $day < $num_rows; $day++) {
-	$timestampt = $entity->getTimeFromDaynumber($day);
+$current_day = 0;
 
-	$date = date(elgg_echo('scheduling:date_format'), $timestampt);
+$rows = '';
+foreach ($days as $iso_date => $slots) {
+	// Convert YYYY-MM-DD into a timestamp
+	$timestamp = strtotime($iso_date);
+
+	$date = date(elgg_echo('scheduling:date_format'), $timestamp);
 
 	$day_number_input = elgg_view('input/hidden', array(
-		'name' => "day{$day}",
-		'value' => $timestampt,
+		'name' => "day{$current_day}",
+		'value' => $timestamp,
 	));
 
 	$row = "<td>{$date}{$day_number_input}</td>";
-	for ($slot = 0; $slot < $num_cols; $slot++) {
-		$slot_name = "slot{$day}-{$slot}";
+
+	$current_slot = 0;
+	foreach ($slots as $slot) {
+		$slot_name = "slot{$current_day}-{$current_slot}";
+
 		$field = elgg_view('input/text', array(
 			'name' => $slot_name,
-			'value' => $vars[$slot_name],
+			'value' => date('H:i', $slot->title),
 			'class' => 'scheduling-slot',
-			'data-day' => $day,
-			'data-slot' => $slot,
+			'data-day' => $current_day,
+			'data-slot' => $current_slot,
 		));
 
 		$row .= "<td>$field</td>";
+
+		$current_slot++;
 	}
 
-	$rows .= "<tr>$row</tr>";
+	$rows .= "<tr id=\"$timestamp\">$row</tr>";
+
+	$current_day++;
 }
 
 $add_day_label = elgg_echo('scheduling:add_day');
@@ -44,16 +57,11 @@ $add_day_input = elgg_view('input/text', array(
 	'id' => 'new_date',
 ));
 
-$num_rows_input = elgg_view('input/hidden', array(
-	'name' => 'num_rows',
-	'id' => 'num_rows',
-	'value' => $vars['num_rows'],
-));
-
-$num_columns_input = elgg_view('input/hidden', array(
-	'name' => 'num_columns',
-	'id' => 'num_columns',
-	'value' => $vars['num_columns'],
+// This field is populated using javascript
+$slots_input = elgg_view('input/hidden', array(
+	'name' => 'slots',
+	'id' => 'scheduling-slots',
+	'value' => null,
 ));
 
 $guid_input = elgg_view('input/hidden', array(
@@ -77,8 +85,7 @@ echo <<<FORM
 		$add_day_input
 	</div>
 	<div>
-		$num_rows_input
-		$num_columns_input
+		$slots_input
 		$guid_input
 		$container_guid_input
 		$submit_input

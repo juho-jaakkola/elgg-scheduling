@@ -14,10 +14,6 @@ function scheduling_prepare_form_vars(ElggEntity $schedule = null) {
 		'owner_guid' => elgg_get_logged_in_user_guid(),
 		'container_guid' => 0,
 		'access_id' => ACCESS_PUBLIC,
-		'date_begin' => null,
-		'date_end' => null,
-		'num_rows' => 1,
-		'num_columns' => 3,
 	);
 
 	if ($schedule) {

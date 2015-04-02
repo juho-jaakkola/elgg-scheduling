@@ -2,20 +2,26 @@
 
 $entity = elgg_extract('entity', $vars);
 
-$poll = unserialize($entity->poll);
+$poll = $entity->getSlotsGroupedByDays();
 
 $date_row = '<td class="empty"></td>';
 $slot_row = '<td class="empty"></td>';
 $poll_row = '<td></td>';
-foreach ($poll as $timestamp => $day) {
-	$date = date(elgg_echo('scheduling:date_format'), $timestamp);
-	$date_row .= "<td colspan=\"{$entity->num_columns}\">$date</td>";
+foreach ($poll as $day => $slots) {
+	$col_span = count($slots);
 
-	foreach ($day as $key => $slot) {
-		$slot_row .= "<td>$slot</td>";
+	$date = date(elgg_echo('scheduling:date_format'), strtotime($day));
+	$date_row .= "<td colspan=\"{$col_span}\">$date</td>";
+
+	foreach ($slots as $timestamp => $slot) {
+
+		$test1 .= "{$slot->guid} {$slot->title}<br />";
+
+		$time = date('H:i', $timestamp);
+		$slot_row .= "<td>$time</td>";
 
 		$poll_input = elgg_view('input/checkbox', array(
-			'name' => "{$timestamp}-{$key}",
+			'name' => $slot->guid,
 			'value' => null,
 		));
 
@@ -23,35 +29,29 @@ foreach ($poll as $timestamp => $day) {
 	}
 }
 
-$answers = $entity->getAnswers();
+$answers = $entity->getVotesByUser();
 
-// Add answers, one row per user
 $answer_rows = '';
-$answer_sums = array();
-foreach ($answers as $user_guid => $answer) {
+foreach ($answers as $user_guid => $slots) {
 	$user = get_entity($user_guid);
-	$user_icon = elgg_view_entity_icon($user, 'tiny');
+	$icon = elgg_view_entity_icon($user, 'tiny');
 
-	$cells = "<td style=\"padding: 0;\">$user_icon</td>";
-	foreach ($answer as $timestamp => $slots) {
-		foreach ($slots as $key => $slot) {
-			if (empty($slot)) {
-				$class = 'unselected';
-				$vote = 0;
-			} else {
-				$class = 'selected';
-				$vote = 1;
-			}
-
-			// Add the vote to the sum of users who selected this time slot
-			$answer_sums["{$timestamp}-{$key}"] += $vote;
-
-			$cells .= "<td class=\"$class\"></td>";
+	$answer_row = "<td style=\"padding: 0;\">$icon</td>";
+	foreach ($slots as $slot) {
+		if ($slot) {
+			$class = 'selected';
+		} else {
+			$class = 'unselected';
 		}
+
+		$answer_row .= "<td class=\"$class\"></td>";
 	}
-	$answer_rows .= "<tr>$cells</tr>";
+
+	$answer_rows .= "<tr>$answer_row</tr>";
 }
 
+// Add a row that shows the total amount of votes for each time slot
+$answer_sums = $entity->getVoteCounts();
 $sum_row = '<td class="empty"></td>';
 foreach ($answer_sums as $sum) {
 	$sum_row .= "<td>$sum</td>";

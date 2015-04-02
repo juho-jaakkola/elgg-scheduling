@@ -27,11 +27,10 @@ elgg.scheduling.addColumn = function(event) {
 		$(this).append(cell);
 	});
 
-	// Save the current amount of columns into a hidden field
 	columnCount++;
-	$('#num_columns').val(columnCount);
 
 	event.preventDefault();
+	return false;
 };
 
 /**
@@ -50,6 +49,7 @@ elgg.scheduling.addRow = function(dateText) {
 
 	var columns = $('#elgg-table-scheduling th');
 	var newRow = document.createElement('tr');
+	newRow.id = timestamp / 1000;
 
 	var rows = $('#elgg-table-scheduling tr');
 	var newRowKey = rows.length - 1;
@@ -86,10 +86,58 @@ elgg.scheduling.addRow = function(dateText) {
 };
 
 /**
+ * Processes the entered times into timestamps before sending the form
+ */
+elgg.schedulingSubmit = function(event) {
+	var slots = [];
+	var selects = [];
+
+	var rows = $('#elgg-table-scheduling tr');
+
+	// Remove the first row which contains the table headings
+	rows = rows.slice(1);
+
+	rows.each(function(key, value) {
+		var dayTimestamp = $(this).attr('id');
+
+		selects = $(this).find('input[type=text]');
+
+		selects.each(function(key, value) {
+			// Javascript treats timestamps in milliseconds
+			var date = new Date(dayTimestamp * 1000);
+
+			// Get the entered time
+			// TODO Validate the value
+			var time = $(this).val();
+
+			if (!time) {
+				// Nothing was entered to the field
+				return true;
+			}
+
+			// Separate the format HH:MM into hours and minutes
+			var time = $(this).val().split(':');
+			var hours = time[0];
+			var minutes = time[1];
+
+			var date = date.setHours(hours, minutes) / 1000;
+
+		 	slots.push(date);
+		});
+	});
+
+	$('#scheduling-slots').val(slots);
+	$('#num-rows').val(rows.length);
+	$('#num-columns').val(selects.length);
+};
+
+/**
  * Initializes the javascript
  */
 elgg.scheduling.init = function() {
 	$('#scheduling-column-add').bind('click', elgg.scheduling.addColumn);
+
+	$('.elgg-form-scheduling-days').bind('submit', elgg.schedulingSubmit);
 
 	$('#new_date').datepicker({
 		dateFormat: 'yy-mm-dd', // ISO-8601
