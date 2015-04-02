@@ -1,6 +1,6 @@
 <?php
 
-$lang = array(
+return array(
 	'scheduling' => 'Scheduling',
 	'scheduling:add' => 'Add a new poll',
 	'item:object:scheduling_poll' => 'Scheduling polls',
@@ -18,5 +18,3 @@ $lang = array(
 	'scheduling:delete:success' => 'Scheduling poll deleted',
 	'scheduling:delete:error' => 'Deleting the scheduling poll failed',
 );
-
-add_translation('en', $lang);
