@@ -17,4 +17,17 @@ return array(
 	'scheduling:error:cannot_edit' => 'You are unauthorized to edit this content',
 	'scheduling:delete:success' => 'Scheduling poll deleted',
 	'scheduling:delete:error' => 'Deleting the scheduling poll failed',
+
+	// Notifications
+	'scheduling:notify:publish:subject' => 'New scheduling poll',
+	'scheduling:notify:publish:body' => '%s has created a new scheduling poll: "%s"
+
+%s',
+	'scheduling:notify:publish:summary' => '%s has created a new scheduling poll: %s',
+	'scheduling:notify:update:subject' => 'Updated scheduling poll',
+	'scheduling:notify:update:body' => '%s has updated the scheduling poll "%s" that you have answered earlier.
+
+You should check if your answer needs to be updated:
+%s',
+	'scheduling:notify:update:summary' => '%s has updated the scheduling poll: %s',
 );

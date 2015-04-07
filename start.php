@@ -20,6 +20,12 @@ function scheduling_init() {
 
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'scheduling_entity_menu');
 
+	// Notifications
+	elgg_register_notification_event('object', 'scheduling_poll', array('publish', 'update'));
+	elgg_register_plugin_hook_handler('prepare', 'notification:publish:object:scheduling_poll', '\Elgg\Scheduling\Notification::prepare');
+	elgg_register_plugin_hook_handler('prepare', 'notification:update:object:scheduling_poll', '\Elgg\Scheduling\Notification::prepare');
+	elgg_register_plugin_hook_handler('get', 'subscriptions', '\Elgg\Scheduling\Notification::subscribers');
+
 	elgg_extend_view('css/elgg', 'scheduling/css');
 
 	elgg_register_menu_item('site', array(
