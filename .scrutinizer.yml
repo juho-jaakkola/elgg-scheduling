@@ -1,12 +1,5 @@
-before_commands:
-  - mkdir ../elgg-coding-standards
-  - git clone https://github.com/Elgg/elgg-coding-standards.git ../elgg-coding-standards/
-
 tools:
-  php_code_sniffer:
-    enabled: true
-    config:
-      ruleset: ../elgg-coding-standards/elgg.xml
+  php_code_sniffer: true
   php_mess_detector: true
   sensiolabs_security_checker: true
   php_pdepend: true
