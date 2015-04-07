@@ -106,7 +106,7 @@ function scheduling_poll_url($hook, $type, $url, $params) {
  * @return ElggMenuItem[] $menu
  */
 function scheduling_entity_menu($hook, $type, $menu, $params) {
-	if ($params['handler'] !== 'scheduling') {
+	if (elgg_extract('handler', $params) !== 'scheduling') {
 		return $menu;
 	}
 
