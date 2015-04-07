@@ -5,7 +5,7 @@ return array(
 	'scheduling:add' => 'Add a new poll',
 	'item:object:scheduling_poll' => 'Scheduling polls',
 	'item:object:scheduling_poll_slot' => 'Scheduling poll slots',
-	'scheduling:date_format' => 'D j.m.Y',
+	'scheduling:date_format' => 'D n/j/Y',
 	'scheduling:edit:time' => 'Edit times',
 	'scheduling:slot:title' => 'Slot %s',
 	'scheduling:column:add' => 'Add column',
