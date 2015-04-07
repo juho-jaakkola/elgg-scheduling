@@ -14,9 +14,6 @@ foreach ($poll as $day => $slots) {
 	$date_row .= "<td colspan=\"{$col_span}\">$date</td>";
 
 	foreach ($slots as $timestamp => $slot) {
-
-		$test1 .= "{$slot->guid} {$slot->title}<br />";
-
 		$time = date('H:i', $timestamp);
 		$slot_row .= "<td>$time</td>";
 
