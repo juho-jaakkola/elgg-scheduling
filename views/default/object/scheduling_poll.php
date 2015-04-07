@@ -31,7 +31,7 @@ if ($full_view) {
 	$author_text = elgg_echo('byline', array($owner_link));
 	$date = elgg_view_friendly_time($entity->time_created);
 
-	$subtitle = "$author_text $date $comments_link $categories";
+	$subtitle = "$author_text $date $categories";
 
 	$params = array(
 		'entity' => $entity,
