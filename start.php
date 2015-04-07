@@ -40,6 +40,10 @@ function scheduling_init() {
 function scheduling_page_handler($page) {
 	elgg_load_library('scheduling');
 
+	if (!isset($page[0])) {
+		$page[0] = 'all';
+	}
+
 	elgg_push_breadcrumb(elgg_echo('scheduling'));
 
 	$base_path = elgg_get_plugins_path() . 'scheduling/pages/';
