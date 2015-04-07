@@ -14,7 +14,7 @@ foreach ($poll as $day => $slots) {
 	$date_row .= "<td colspan=\"{$col_span}\">$date</td>";
 
 	foreach ($slots as $timestamp => $slot) {
-		$time = date('H:i', $timestamp);
+		$time = date('H:i', (int) $timestamp);
 		$slot_row .= "<td>$time</td>";
 
 		$poll_input = elgg_view('input/checkbox', array(
