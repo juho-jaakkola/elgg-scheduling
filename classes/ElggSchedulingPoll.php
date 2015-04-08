@@ -70,6 +70,13 @@ class ElggSchedulingPoll extends ElggObject {
 	public function setSlots($slots) {
 		$this->getSlots();
 
+		if ($this->slots) {
+			$event = 'update';
+		} else {
+			// No slots were found, so we assume this is a new poll
+			$event = 'publish';
+		}
+
 		$success = true;
 
 		// Delete the slots that were removed from the timetable
@@ -105,6 +112,11 @@ class ElggSchedulingPoll extends ElggObject {
 				$success = false;
 			}
 		}
+
+		// We don't want to notify about the create/update event of a
+		// scheduling_poll object because one may exist without any options.
+		// So we trigger an event manually once we're sure options exist.
+		elgg_trigger_event($event, 'scheduling_poll', $this);
 
 		return $success;
 	}
