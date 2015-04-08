@@ -55,7 +55,7 @@ class Notification {
 
 		$voters = array_keys($poll->getVotesByUser());
 
-		if (!$voters) {
+		if (empty($voters)) {
 			// There's no one to notify
 			return $subscriptions;
 		}

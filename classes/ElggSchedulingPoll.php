@@ -25,7 +25,6 @@ class ElggSchedulingPoll extends ElggObject {
 			return $this->slots;
 		}
 
-		$dbprefix = elgg_get_config('dbprefix');
 		$slots = elgg_get_entities(array(
 			'type' => 'object',
 			'subtype' => 'scheduling_poll_slot',
