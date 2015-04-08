@@ -121,7 +121,6 @@ function scheduling_entity_menu($hook, $type, $menu, $params) {
 	if ($entity->canEdit()) {
 		$menu[] = ElggMenuItem::factory(array(
 			'name' => 'scheduling_time',
-			//'href' => "scheduling/edit/{$entity->guid}/time",
 			'href' => "scheduling/days/{$entity->guid}",
 			'text' => elgg_echo('scheduling:edit:time'),
 		));
