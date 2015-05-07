@@ -16,6 +16,32 @@ class ElggSchedulingPoll extends ElggObject {
 	}
 
 	/**
+	 * Makes sure access_id of the poll slots matches access_id of the poll
+	 *
+	 * @return boolean
+	 */
+	public function save() {
+		$success = parent::save();
+
+		if (!$success) {
+			return false;
+		}
+
+		// Update slot access_ids if necessary
+		foreach ($this->getSlots() as $slot) {
+			if ($slot->access_id === $this->access_id) {
+				// They're already the same so no need to continue
+				break;
+			}
+
+			$slot->access_id = $this->access_id;
+			$slot->save();
+		}
+
+		return true;
+	}
+
+	/**
 	 * Get all the time slots saved for this poll
 	 *
 	 * @return array $slots
