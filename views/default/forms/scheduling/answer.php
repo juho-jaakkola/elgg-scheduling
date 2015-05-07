@@ -61,13 +61,15 @@ $guid_input = elgg_view('input/hidden', array(
 ));
 
 echo <<<FORM
-	<table class="elgg-table mvl" id="elgg-table-scheduling-answer">
-		<tr>$date_row</tr>
-		<tr>$slot_row</tr>
-		$answer_rows
-		<tr>$poll_row</tr>
-		<tr>$sum_row</tr>
-	</table>
+	<div id="elgg-scheduling-answer-container">
+		<table class="elgg-table" id="elgg-table-scheduling-answer">
+			<tr>$date_row</tr>
+			<tr>$slot_row</tr>
+			$answer_rows
+			<tr>$poll_row</tr>
+			<tr>$sum_row</tr>
+		</table>
+	</div>
 	<div>
 		$guid_input
 		$submit_input
