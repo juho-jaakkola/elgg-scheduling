@@ -9,7 +9,7 @@ return array(
 	'scheduling:edit:time' => 'Edit times',
 	'scheduling:slot:title' => 'Slot %s',
 	'scheduling:column:add' => 'Add column',
-	'scheduling:error:invalid_format' => '"%s" is not a valid time',
+	'scheduling:error:invalid_format' => 'Time needs to be in format HH:MM',
 	'scheduling:add_day' => 'Add a new day',
 
 	'scheduling:save:success' => 'Schedule poll saved',

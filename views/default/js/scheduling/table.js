@@ -132,6 +132,16 @@ elgg.schedulingSubmit = function(event) {
 };
 
 /**
+ * Validate that time has been entered in format HH:MM
+ *
+ * @param String time
+ * @return boolean
+ */
+elgg.scheduling.isValidTime = function (time) {
+	return time.match(/^(([0-1]?[0-9])|([2][0-3])):([0-5]?[0-9])?$/);
+};
+
+/**
  * Initializes the javascript
  */
 elgg.scheduling.init = function() {
@@ -143,6 +153,18 @@ elgg.scheduling.init = function() {
 		dateFormat: 'yy-mm-dd', // ISO-8601
 		//dateFormat: '@', // Timestamp in microseconds
 		onSelect: elgg.scheduling.addRow,
+	});
+
+	$('#elgg-table-scheduling').bind('change', '.scheduling-slot', function(element) {
+		var input = $(element.target);
+
+		if (!elgg.scheduling.isValidTime(input.val())) {
+			input.addClass('scheduling-state-error');
+			elgg.register_error(elgg.echo('scheduling:error:invalid_format'));
+			input.focus();
+		} else {
+			input.removeClass('scheduling-state-error');
+		}
 	});
 };
 

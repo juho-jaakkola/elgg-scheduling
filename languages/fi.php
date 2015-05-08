@@ -9,7 +9,7 @@ return array(
 	'scheduling:edit:time' => 'Muokkaa aikoja',
 	'scheduling:slot:title' => 'Aika %s',
 	'scheduling:column:add' => 'Lisää sarake',
-	'scheduling:error:invalid_format' => '"%s" on virheellinen aika',
+	'scheduling:error:invalid_format' => 'Kellonajan täytyy olla muodossa HH:MM',
 	'scheduling:add_day' => 'Lisää päivä',
 
 	'scheduling:save:success' => 'Kysely tallennettu',

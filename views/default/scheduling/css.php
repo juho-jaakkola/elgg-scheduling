@@ -31,3 +31,8 @@
 	border: 0;
 	background: white;
 }
+
+.scheduling-state-error {
+	/* Important is needed to override the default :focus styles */
+	border: 1px solid red !important;
+}
