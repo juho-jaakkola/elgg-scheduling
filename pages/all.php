@@ -1,10 +1,18 @@
 <?php
 
-$content = elgg_list_entities(array(
+$options = array(
 	'type' => 'object',
 	'subtype' => 'scheduling_poll',
 	'full_view' => false,
-));
+);
+
+$container_guid = get_input('container_guid');
+
+if ($container_guid) {
+	$options['container_guid'] = $container_guid;
+}
+
+$content = elgg_list_entities($options);
 
 elgg_register_title_button();
 

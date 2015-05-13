@@ -25,6 +25,11 @@ $guid_input = elgg_view('input/hidden', array(
 	'value' => $vars['guid'],
 ));
 
+$container_guid_input = elgg_view('input/hidden', array(
+	'name' => 'container_guid',
+	'value' => elgg_get_page_owner_guid(),
+));
+
 $submit_input = elgg_view('input/submit', array(
 	'name' => 'submit',
 	'value' => elgg_echo('save'),
@@ -45,6 +50,7 @@ $form = <<<FORM
 	</div>
 	<div class="foot">
 		$guid_input
+		$container_guid_input
 		$submit_input
 	</div>
 FORM;

@@ -14,6 +14,7 @@ if (elgg_instanceof($entity, 'object', 'scheduling_poll')) {
 } else {
 	$entity = new ElggObject();
 	$entity->subtype = 'scheduling_poll';
+	$entity->container_guid = get_input('container_guid');
 }
 
 $title = get_input('title');

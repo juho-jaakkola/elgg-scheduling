@@ -17,7 +17,7 @@ function scheduling_init() {
 	elgg_register_page_handler('scheduling', 'scheduling_page_handler');
 
 	elgg_register_plugin_hook_handler('entity:url', 'object', 'scheduling_poll_url');
-
+	elgg_register_plugin_hook_handler('register', 'menu:owner_block', '\Elgg\Scheduling\OwnerBlockMenu::register');
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'scheduling_entity_menu');
 
 	// Notifications
@@ -25,6 +25,8 @@ function scheduling_init() {
 	elgg_register_plugin_hook_handler('prepare', 'notification:publish:object:scheduling_poll', '\Elgg\Scheduling\Notification::prepare');
 	elgg_register_plugin_hook_handler('prepare', 'notification:update:object:scheduling_poll', '\Elgg\Scheduling\Notification::prepare');
 	elgg_register_plugin_hook_handler('get', 'subscriptions', '\Elgg\Scheduling\Notification::subscribers');
+
+	add_group_tool_option('scheduling', elgg_echo('scheduling:group:enable'));
 
 	elgg_extend_view('css/elgg', 'scheduling/css');
 
@@ -70,6 +72,19 @@ function scheduling_page_handler($page) {
 		case 'days':
 			set_input('guid', $page[1]);
 			$page_path = 'days.php';
+			break;
+		case 'owner';
+			$user = get_user_by_username($page[1]);
+			if ($user) {
+				set_input('container_guid', $user->guid);
+			}
+			$page_path = 'all.php';
+			break;
+		case 'group':
+			if ($page[1]) {
+				set_input('container_guid', $page[1]);
+			}
+			$page_path = 'all.php';
 			break;
 		default:
 			$page_path = 'all.php';

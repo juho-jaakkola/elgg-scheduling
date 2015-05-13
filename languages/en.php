@@ -11,6 +11,10 @@ return array(
 	'scheduling:column:add' => 'Add column',
 	'scheduling:error:invalid_format' => 'Time needs to be in format HH:MM',
 	'scheduling:add_day' => 'Add a new day',
+	'scheduling:group:enable' => 'Enable group scheduling tool',
+
+	'scheduling:owner_block' => 'Scheduling',
+	'scheduling:owner_block:group' => 'Group scheduling',
 
 	'scheduling:save:success' => 'Schedule poll saved',
 	'scheduling:save:error' => 'Something went wrong. Check that the entered values are valid.',
