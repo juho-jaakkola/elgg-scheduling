@@ -24,7 +24,7 @@ if ($full_view) {
 
 	$owner_icon = elgg_view_entity_icon($owner, 'tiny');
 	$owner_link = elgg_view('output/url', array(
-		'href' => "blog/owner/$owner->username",
+		'href' => "scheduling/owner/$owner->username",
 		'text' => $owner->name,
 		'is_trusted' => true,
 	));
