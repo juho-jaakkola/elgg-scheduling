@@ -2,92 +2,108 @@
 
 $entity = elgg_extract('entity', $vars);
 
+$rows = array();
 $days = $entity->getSlotsGroupedByDays();
-
-$num_rows = $days ? count($days) : 1;
-$num_cols = count(reset($days)) ? count(reset($days)) : 1;
-
-$headings = '<th></th>';
-for ($heading = 0; $heading < $num_cols; $heading++) {
-	$text = elgg_echo('scheduling:slot:title', array($heading));
-	$headings .= "<th>$text</th>";
+$num_columns = 0;
+if (!empty($days)) {
+	foreach ($days as $date => $slots) {
+		foreach ($slots as $slot) {
+			$rows[$date][] = date("H:i", (int) $slot->title);
+		}
+		if (count($slots) > $num_columns) {
+			$num_columns = count($slots);
+		}
+	}
+} else {
+	$date = gmdate('Y-m-d');
+	$current_hour = gmdate('G');
+	$num_columns = 4;
+	for ($i = 1; $i <= $num_columns; $i++) {
+		$hour = $current_hour + $i;
+		if ($hour >= 24) {
+			$hour -= 24;
+		}
+		$rows[$date][] = gmdate('H:i', strtotime("$hour:00") - strtotime($date));
+	}
 }
 
-$current_day = 0;
-
-$rows = '';
-foreach ($days as $iso_date => $slots) {
-	// Convert YYYY-MM-DD into a timestamp
-	$timestamp = strtotime($iso_date);
-
-	$date = date(elgg_echo('scheduling:date_format'), $timestamp);
-
-	$day_number_input = elgg_view('input/hidden', array(
-		'name' => "day{$current_day}",
-		'value' => $timestamp,
-	));
-
-	$row = "<td>{$date}{$day_number_input}</td>";
-
-	$current_slot = 0;
+$index = 0;
+foreach ($rows as $date => $slots) {
+	$rows_html .= "<tr data-index='$index'>";
+	$rows_html .= '<td class="scheduling-input-date">' . elgg_view('input/scheduling/date', array(
+				'name' => "slots[$index][date]",
+				'value' => $date,
+			)) . '</td>';
 	foreach ($slots as $slot) {
-		$slot_name = "slot{$current_day}-{$current_slot}";
-
-		$field = elgg_view('input/text', array(
-			'name' => $slot_name,
-			'value' => date('H:i', $slot->title),
-			'class' => 'scheduling-slot',
-			'data-day' => $current_day,
-			'data-slot' => $current_slot,
-		));
-
-		$row .= "<td>$field</td>";
-
-		$current_slot++;
+		$rows_html .= '<td class="scheduling-input-time">' . elgg_view('input/scheduling/time', array(
+					'name' => "slots[$index][slot][]",
+					'value' => $slot,
+				)) . '</td>';
 	}
 
-	$rows .= "<tr id=\"$timestamp\">$row</tr>";
+	if (count($slots) < $num_columns) {
+		for ($i = 1; $i <= $num_columns - count($slots); $i++) {
+			$rows_html .= '<td class="scheduling-input-time">' . elgg_view('input/scheduling/time', array(
+						'name' => "slots[$index][slot][]",
+						'value' => '',
+					)) . '</td>';
+		}
+	}
 
-	$current_day++;
+	$rows_html .= '<td class="scheduling-actions">';
+	$rows_html .= elgg_view('output/url', array(
+		'text' => elgg_echo('scheduling:row:copy'),
+		'href' => 'javascript:void(0);',
+		'class' => 'scheduling-row-copy',
+	));
+	$rows_html .= elgg_view('output/url', array(
+		'text' => elgg_echo('scheduling:row:delete'),
+		'href' => 'javascript:void(0);',
+		'class' => 'scheduling-row-delete mll',
+	));
+	$rows_html .= '</td>';
+
+	$rows_html .= '</tr>';
+
+	$index++;
 }
 
-$add_day_label = elgg_echo('scheduling:add_day');
-$add_day_input = elgg_view('input/text', array(
-	'name' => elgg_echo('date'),
-	'id' => 'new_date',
-));
-
-// This field is populated using javascript
-$slots_input = elgg_view('input/hidden', array(
-	'name' => 'slots',
-	'id' => 'scheduling-slots',
-	'value' => null,
-));
+$headings = '<th class="scheduling-input-date"></th>';
+for ($i = 1; $i <= $num_columns; $i++) {
+	$headings .= '<th class="scheduling-input-time">' . elgg_echo('scheduling:slot:title', array($i)) . '</th>';
+}
+$headings .= '<th class="scheduling-input-actions">' . elgg_view('output/url', array(
+			'text' => elgg_echo('scheduling:column:add'),
+			'href' => 'javascript:void(0);',
+			'class' => 'scheduling-column-add',
+		)) . '</th>';
 
 $guid_input = elgg_view('input/hidden', array(
 	'name' => 'guid',
 	'value' => $vars['guid'],
-));
+		));
 
 $container_guid_input = elgg_view('input/hidden', array(
 	'name' => 'container_guid',
 	'value' => $vars['container_guid'],
-));
+		));
 
 $submit_input = elgg_view('input/submit', array(
 	'name' => elgg_echo('submit'),
-));
+		));
 
 echo <<<FORM
-	<table class="elgg-table" id="elgg-table-scheduling"><tr>{$headings}</tr>{$rows}</table>
-	<div>
-		<label>$add_day_label</label>
-		$add_day_input
-	</div>
-	<div>
-		$slots_input
-		$guid_input
-		$container_guid_input
-		$submit_input
+	<table class="elgg-table-alt" id="elgg-table-scheduling">
+		<thead>
+			<tr>
+				{$headings}
+			</tr>
+		</thead>
+		<tbody>
+			{$rows_html}
+		</tbody>
+	</table>
+	<div class="elgg-foot">
+		{$guid_input}{$container_guid_input}{$submit_input}
 	</div>
 FORM;

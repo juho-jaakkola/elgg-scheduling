@@ -8,13 +8,6 @@ if (!$entity instanceof ElggSchedulingPoll || !$entity->canEdit()) {
 	forward();
 }
 
-elgg_register_menu_item('title', array(
-	'name' => 'scheduling-column-add',
-	'id' => 'scheduling-column-add',
-	'text' => elgg_echo('scheduling:column:add'),
-	'class' => 'elgg-button elgg-button-submit',
-));
-
 elgg_load_js('elgg.scheduling');
 elgg_load_js('date.format');
 
