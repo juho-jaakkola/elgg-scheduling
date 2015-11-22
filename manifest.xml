@@ -3,7 +3,7 @@
 	<name>Scheduling</name>
 	<id>scheduling</id>
 	<author>Juho Jaakkola</author>
-	<version>1.9.0</version>
+	<version>1.9.1</version>
 	<category>tools</category>
 	<description>Tool for scheduling meetings and events</description>
 	<copyright>(C) Juho Jaakkola 2014-2015</copyright>
