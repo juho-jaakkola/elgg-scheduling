@@ -10,7 +10,20 @@ if (!$entity instanceof ElggSchedulingPoll || !$entity->canEdit()) {
 	forward();
 }
 
-$slots = explode(',', get_input('slots'));
+$slots = array();
+$input = (array) get_input('slots', array());
+
+foreach ($input as $index => $date_info) {
+
+	$date = $date_info['date'];
+	$date_slots = $date_info['slot'];
+	foreach ($date_slots as $slot) {
+		if (empty($slot)) {
+			continue;
+		}
+		$slots[] = strtotime("$date $slot");
+	}
+}
 
 if ($entity->setSlots($slots)) {
 	system_message(elgg_echo('scheduling:save:success'));

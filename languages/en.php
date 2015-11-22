@@ -9,6 +9,8 @@ return array(
 	'scheduling:edit:time' => 'Edit times',
 	'scheduling:slot:title' => 'Slot %s',
 	'scheduling:column:add' => 'Add column',
+	'scheduling:row:copy' => 'Duplicate row',
+	'scheduling:row:delete' => 'Delete row',
 	'scheduling:error:invalid_format' => 'Time needs to be in format HH:MM',
 	'scheduling:add_day' => 'Add a new day',
 	'scheduling:group:enable' => 'Enable group scheduling tool',
