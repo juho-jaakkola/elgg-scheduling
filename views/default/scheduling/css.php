@@ -1,4 +1,8 @@
 
+.elgg-form-scheduling-days .elgg-icon {
+	margin-left: 10px;
+}
+
 #elgg-scheduling-answer-container {
 	width: 710px;
 	overflow: auto;

@@ -28,6 +28,7 @@ if (!empty($days)) {
 }
 
 $index = 0;
+$rows_html = '';
 foreach ($rows as $date => $slots) {
 	$rows_html .= "<tr data-index='$index'>";
 	$rows_html .= '<td class="scheduling-input-date">' . elgg_view('input/scheduling/date', array(
@@ -70,7 +71,13 @@ foreach ($rows as $date => $slots) {
 
 $headings = '<th class="scheduling-input-date"></th>';
 for ($i = 1; $i <= $num_columns; $i++) {
-	$headings .= '<th class="scheduling-input-time">' . elgg_echo('scheduling:slot:title', array($i)) . '</th>';
+	$heading = elgg_echo('scheduling:slot:title', array($i));
+
+	if ($i > 2) {
+		$heading .= elgg_view_icon('delete-alt');
+	}
+
+	$headings .= '<th class="scheduling-input-time">' . $heading . '</th>';
 }
 $headings .= '<th class="scheduling-input-actions">' . elgg_view('output/url', array(
 			'text' => elgg_echo('scheduling:column:add'),
