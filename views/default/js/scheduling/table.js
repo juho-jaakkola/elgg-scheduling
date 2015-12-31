@@ -1,6 +1,17 @@
 
 elgg.provide('elgg.scheduling');
 
+elgg.scheduling.addRemovebutton = function () {
+  $( "th.scheduling-input-time" ).slice(2).append( " <span class='elgg-icon elgg-icon-delete'></span>" );
+};
+
+elgg.scheduling.removeColumn = function () {
+    var target = $(this).index()+1; 
+        if (target > '3'){ //should have at least 2 options to chose from,...
+        $("#elgg-table-scheduling").find("tr :nth-child("+target+")").remove(); 
+        }
+};
+
 /**
  * Add a new column to each of the existing rows
  * @return void
@@ -13,7 +24,7 @@ elgg.scheduling.addColumn = function () {
 		$clone.find('input,select').val('');
 		$last.after($clone);
 		if ($clone.is('th')) {
-			$clone.text(elgg.echo('scheduling:slot:title', [$clone.siblings('.scheduling-input-time').andSelf().length]));
+			$clone.text(elgg.echo('scheduling:slot:title', [$clone.siblings('.scheduling-input-time').andSelf().length])).append( " <span class='elgg-icon elgg-icon-delete'></span>");
 		}
 	});
 };
@@ -59,6 +70,8 @@ elgg.scheduling.init = function () {
 	$(document).delegate('.scheduling-column-add', 'click', elgg.scheduling.addColumn);
 	$(document).delegate('.scheduling-row-copy', 'click', elgg.scheduling.copyRow);
 	$(document).delegate('.scheduling-row-delete', 'click', elgg.scheduling.deleteRow);
+	$(document).delegate('th.scheduling-input-time', 'click', elgg.scheduling.removeColumn);
+    $(document).ready(elgg.scheduling.addRemovebutton);
 };
 
 elgg.scheduling.initDatepicker = function () {
