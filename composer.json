@@ -1,0 +1,20 @@
+{
+	"name": "juho-jaakkola/elgg-scheduling",
+	"description": "Tool for scheduling meetings and events.",
+	"type": "elgg-plugin",
+	"keywords": [
+		"elgg",
+		"plugin"
+	],
+	"license": "GPL-2.0",
+	"authors": [
+		{
+			"name": "Juho Jaakkola",
+			"email": "juho.a.jaakkola@gmail.com",
+			"role": "Developer"
+		}
+	],
+	"extra": {
+		"installer-name": "scheduling"
+	}
+}
