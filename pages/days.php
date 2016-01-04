@@ -8,8 +8,7 @@ if (!$entity instanceof ElggSchedulingPoll || !$entity->canEdit()) {
 	forward();
 }
 
-elgg_load_js('elgg.scheduling');
-elgg_load_js('date.format');
+elgg_require_js('scheduling/table');
 
 $form_vars = scheduling_prepare_form_vars($entity);
 $form_vars['entity'] = $entity;

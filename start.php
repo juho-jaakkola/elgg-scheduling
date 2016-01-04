@@ -35,9 +35,6 @@ function scheduling_init() {
 		'text' => elgg_echo('scheduling'),
 		'href' => 'scheduling',
 	));
-
-	elgg_register_js('elgg.scheduling', 'mod/scheduling/views/default/js/scheduling/table.js');
-	elgg_register_js('date.format', 'mod/scheduling/vendors/dateformat/date.format.js');
 }
 
 /**
