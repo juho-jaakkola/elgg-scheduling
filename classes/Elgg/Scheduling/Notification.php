@@ -13,7 +13,7 @@ class Notification {
 	 * @param array  $params       Hook parameters
 	 * @return object
 	 */
-	public static function prepare($hook, $type, $notification, $params) {
+	public static function prepare($hook, $type, $notification, $params) {
 		$event = elgg_extract('event', $params);
 		$action = $event->getAction();
 		$entity = $params['event']->getObject();
