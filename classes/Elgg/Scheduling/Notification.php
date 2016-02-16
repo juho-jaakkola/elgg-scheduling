@@ -44,7 +44,7 @@ class Notification {
 	 * @param array  $params        Hook parameters
 	 * @return array
 	 */
-	public static function subscribers($hook, $type, $subscriptions, $params) {
+	public static function subscribers($hook, $type, $subscriptions, $params) {
 		$poll = $params['event']->getObject();
 
 		if (!$poll instanceof \ElggSchedulingPoll) {
