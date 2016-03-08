@@ -2,6 +2,8 @@
 
 $guid = get_input('guid');
 
+elgg_entity_gatekeeper($guid);
+
 $entity = get_entity($guid);
 
 $title = $entity->title;
