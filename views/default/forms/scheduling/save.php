@@ -14,6 +14,12 @@ $description_input = elgg_view('input/longtext', array(
 	'value' => $vars['description'],
 ));
 
+$tags_label = elgg_echo('tags');
+$tags_input = elgg_view('input/tags', array(
+	'name' => 'tags',
+	'value' => $vars['tags']
+));
+
 $access_label = elgg_echo('access');
 $access_input = elgg_view('input/access', array(
 	'name' => 'access_id',
@@ -43,6 +49,10 @@ $form = <<<FORM
 	<div>
 		<label>$description_label</label>
 		$description_input
+	</div>
+	<div>
+		<label>$tags_label</label>
+		$tags_input
 	</div>
 	<div>
 		<label>$access_label</label>

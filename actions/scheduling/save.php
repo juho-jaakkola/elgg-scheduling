@@ -19,11 +19,13 @@ if (elgg_instanceof($entity, 'object', 'scheduling_poll')) {
 
 $title = get_input('title');
 $description = get_input('description');
+$tags = get_input('tags');
 $access_id = get_input('access_id');
 
 $entity->access_id = $access_id;
 $entity->title = $title;
 $entity->description = $description;
+$entity->tags = string_to_tag_array($tags);
 
 if ($entity->save()) {
 	system_message(elgg_echo('scheduling:save:success'));
