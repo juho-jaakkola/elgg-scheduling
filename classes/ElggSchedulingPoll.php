@@ -141,7 +141,7 @@ class ElggSchedulingPoll extends ElggObject {
 		// We don't want to notify about the create/update event of a
 		// scheduling_poll object because one may exist without any options.
 		// So we trigger an event manually once we're sure options exist.
-		elgg_trigger_event($event, 'scheduling_poll', $this);
+		elgg_trigger_event($event, 'object', $this);
 
 		return $success;
 	}

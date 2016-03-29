@@ -45,6 +45,13 @@ class Notification {
 	 * @return array
 	 */
 	public static function subscribers($hook, $type, $subscriptions, $params) {
+		if ($params['event']->getAction() === 'publish') {
+			// The poll wasn't published until now, so there is no need to
+			// notify people about updates. Instead we use the default
+			// notification settings (notify either friends or group members).
+			return $subscriptions;
+		}
+
 		$poll = $params['event']->getObject();
 
 		if (!$poll instanceof \ElggSchedulingPoll) {
