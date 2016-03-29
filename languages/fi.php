@@ -36,4 +36,6 @@ return array(
 Tarkista, vaikuttavatko muutokset aikaisemman antamaasi vastaukseen:
 %s',
 	'scheduling:notify:update:summary' => '%s on päivittänyt kyselyä: %s',
+
+	'river:create:object:scheduling_poll' => '%s lisäsi uuden aikataulukyselyn %s',
 );

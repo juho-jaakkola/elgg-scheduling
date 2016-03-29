@@ -138,6 +138,15 @@ class ElggSchedulingPoll extends ElggObject {
 			}
 		}
 
+		if ($event === 'publish') {
+			elgg_create_river_item(array(
+				'view' => 'river/object/scheduling_poll/create',
+				'action_type' => 'create',
+				'subject_guid' => $this->owner_guid,
+				'object_guid' => $this->guid,
+			));
+		}
+
 		// We don't want to notify about the create/update event of a
 		// scheduling_poll object because one may exist without any options.
 		// So we trigger an event manually once we're sure options exist.
