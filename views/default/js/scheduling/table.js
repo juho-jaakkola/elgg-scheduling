@@ -8,8 +8,8 @@ define(function(require) {
 	removeColumn = function () {
 		var target = $(this).index() + 1;
 
-		// 2 options is the minimum to choose from
-		if (target > 3){
+		// There must be at least one option
+		if (target > 2){
 			$("#elgg-table-scheduling").find("tr :nth-child(" + target + ")").remove();
 		}
 	};

@@ -73,7 +73,7 @@ $headings = '<th class="scheduling-input-date"></th>';
 for ($i = 1; $i <= $num_columns; $i++) {
 	$heading = elgg_echo('scheduling:slot:title', array($i));
 
-	if ($i > 2) {
+	if ($i > 1) {
 		$heading .= elgg_view_icon('delete-alt');
 	}
 
