@@ -10,9 +10,11 @@ $title = $entity->title;
 
 $view = elgg_view_entity($entity, array('full_view' => true));
 
+$comments .= elgg_view_comments($entity);
+
 $params = array(
 	'title' => $title,
-	'content' => $view,
+	'content' => $view . $comments,
 	'filter' => '',
 );
 
