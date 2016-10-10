@@ -6,26 +6,8 @@ $poll = $entity->getSlotsGroupedByDays();
 
 $date_row = '<td class="empty"></td>';
 $slot_row = '<td class="empty"></td>';
-$poll_row = '<td></td>';
-foreach ($poll as $day => $slots) {
-	$col_span = count($slots);
 
-	$date = date(elgg_echo('scheduling:date_format'), strtotime($day));
-	$date_row .= "<td colspan=\"{$col_span}\">$date</td>";
-
-	foreach ($slots as $timestamp => $slot) {
-		$time = date('H:i', (int) $timestamp);
-		$slot_row .= "<td>$time</td>";
-
-		$poll_input = elgg_view('input/checkbox', array(
-			'name' => $slot->guid,
-			'value' => null,
-		));
-
-		$poll_row .= "<td>$poll_input</td>";
-	}
-}
-
+$user_logged_in_guid = elgg_get_logged_in_user_guid();
 $answers = $entity->getVotesByUser();
 
 $answer_rows = '';
@@ -45,7 +27,32 @@ foreach ($answers as $user_guid => $slots) {
 	}
 
 	$answer_rows .= "<tr>$answer_row</tr>";
+	if ($user_guid == $user_logged_in_guid){
+            $user_logged_in_slots = $slots;
+        }
 }
+$poll_row = '<td></td>';
+foreach ($poll as $day => $slots) {
+	$col_span = count($slots);
+
+	$date = date(elgg_echo('scheduling:date_format'), strtotime($day));
+	$date_row .= "<td colspan=\"{$col_span}\">$date</td>";
+
+	foreach ($slots as $timestamp => $slot) {
+		$time = date('H:i', (int) $timestamp);
+		$slot_row .= "<td>$time</td>";
+
+		$poll_input = elgg_view('input/checkbox', array(
+			'name' => $slot->guid,
+			'value' => null,
+			'checked' => $user_logged_in_slots[$slot->guid]
+		));
+
+		$poll_row .= "<td>$poll_input</td>";
+	}
+}
+
+
 
 // Add a row that shows the total amount of votes for each time slot
 $answer_sums = $entity->getVoteCounts();
