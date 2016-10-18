@@ -39,4 +39,5 @@ echo elgg_view('object/elements/full', array(
 	'summary' => $summary,
 	'icon' => $owner_icon,
 	'body' => $body,
+	'entity' => $entity,
 ));
