@@ -10,7 +10,7 @@ $title = $entity->title;
 
 $view = elgg_view_entity($entity, array('full_view' => true));
 
-$comments .= elgg_view_comments($entity);
+$comments = elgg_view_comments($entity);
 
 $params = array(
 	'title' => $title,
