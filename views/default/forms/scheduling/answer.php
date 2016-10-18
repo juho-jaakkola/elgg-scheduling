@@ -2,6 +2,8 @@
 
 $entity = elgg_extract('entity', $vars);
 
+$answers = $entity->getVotesByUser();
+
 $poll = $entity->getSlotsGroupedByDays();
 
 $date_row = '<td class="empty"></td>';
@@ -17,16 +19,22 @@ foreach ($poll as $day => $slots) {
 		$time = date('H:i', (int) $timestamp);
 		$slot_row .= "<td>$time</td>";
 
+		if (elgg_is_logged_in()) {
+			$user = elgg_get_logged_in_user_entity();
+			$checked = $answers[$user->guid][$slot->guid];
+		} else {
+			$checked = false;
+		}
+
 		$poll_input = elgg_view('input/checkbox', array(
 			'name' => $slot->guid,
 			'value' => null,
+			'checked' => $checked,
 		));
 
 		$poll_row .= "<td>$poll_input</td>";
 	}
 }
-
-$answers = $entity->getVotesByUser();
 
 $answer_rows = '';
 foreach ($answers as $user_guid => $slots) {
