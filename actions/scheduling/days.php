@@ -13,6 +13,9 @@ if (!$entity instanceof ElggSchedulingPoll || !$entity->canEdit()) {
 $slots = array();
 $input = (array) get_input('slots', array());
 
+// type of poll, simple or advanced (2 or 3 answer possible)
+$entity->setPollType(get_input('pollType', false));
+
 foreach ($input as $index => $date_info) {
 
 	$date = $date_info['date'];

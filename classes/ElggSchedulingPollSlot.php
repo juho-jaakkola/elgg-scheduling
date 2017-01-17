@@ -16,16 +16,24 @@ class ElggSchedulingPollSlot extends ElggObject {
 	/**
 	 * Add a new answer to this slot
 	 *
+     * Reponse possible :
+     * 0 => pas voté(false)
+     * 1 => Oui
+     * 2 => (Oui) peut etre
+     * 3 => Non, pas disponible
+     * 
 	 * @param ElggUser $user The user who is voting
 	 * @return bool True on success
 	 */
-	public function vote(ElggUser $user) {
+	public function vote(ElggUser $user, $value=0) {
 		if ($this->hasVoted($user)) {
 			// Allow user to vote only once
 			return false;
 		}
 
-		return $this->annotate('scheduling_poll_answer', true, $this->access_id, $user->guid);
+        
+		//return $this->annotate('scheduling_poll_answer', true, $this->access_id, $user->guid);
+		return $this->annotate('scheduling_poll_answer', $value, $this->access_id, $user->guid);
 	}
 
 	/**

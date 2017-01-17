@@ -95,9 +95,18 @@ $container_guid_input = elgg_view('input/hidden', array(
 	'value' => $vars['container_guid'],
 		));
 
+$polltype_input = elgg_view("input/checkbox", array(
+    'label' => elgg_echo('scheduling:poll:type:label'),
+	'name' => 'poleType',
+	'id' => 'poleType',
+));
+
+
 $submit_input = elgg_view('input/submit', array(
 	'name' => elgg_echo('submit'),
 		));
+
+
 
 echo <<<FORM
 	<table class="elgg-table-alt" id="elgg-table-scheduling">
@@ -110,7 +119,11 @@ echo <<<FORM
 			{$rows_html}
 		</tbody>
 	</table>
+    <div>
+        $polltype_input
+   </div>
 	<div class="elgg-foot">
 		{$guid_input}{$container_guid_input}{$submit_input}
 	</div>
+
 FORM;

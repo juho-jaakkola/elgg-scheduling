@@ -13,11 +13,14 @@ if (!$entity instanceof ElggSchedulingPoll) {
 
 $user = elgg_get_logged_in_user_entity();
 
+
+
 $slots = $entity->getSlots();
 
 foreach ($slots as $slot) {
 	$answer = get_input($slot->guid);
-
+    $voteValue = get_input('voteValue', 0);
+    
 	if (empty($answer)) {
 		$slot->removeVote($user);
 	} else {

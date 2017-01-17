@@ -1,5 +1,5 @@
 <?php
-
+// scheduling Poll 
 $entity = elgg_extract('entity', $vars);
 
 $answers = $entity->getVotesByUser();

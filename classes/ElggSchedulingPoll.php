@@ -227,4 +227,14 @@ class ElggSchedulingPoll extends ElggObject {
 
 		return $counts;
 	}
+    
+    /**
+     * possible type :
+     * 0 simple poll
+     * 1 advance poll (3 anwser, yes, (yes), no)
+     * @param int $type
+     */
+    public function setPollType($type){
+        $this->pollType = $type;
+    }
 }
