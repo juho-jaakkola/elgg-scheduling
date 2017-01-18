@@ -24,6 +24,14 @@ return array(
 	'scheduling:delete:success' => 'Scheduling poll deleted',
 	'scheduling:delete:error' => 'Deleting the scheduling poll failed',
 
+    // form
+    'scheduling:form:anwser:yes' => 'Yes',
+    'scheduling:form:anwser:maybe' => '(Yes)',
+    'scheduling:form:anwser:no' => 'No',
+    'scheduling:form:anwser:title:yes' => 'Yes',
+    'scheduling:form:anwser:title:maybe' => 'If necessary',
+    'scheduling:form:anwser:title:no' => 'No',
+    
 	// Notifications
 	'scheduling:notify:publish:subject' => 'New scheduling poll',
 	'scheduling:notify:publish:body' => '%s has created a new scheduling poll: "%s"

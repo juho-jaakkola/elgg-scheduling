@@ -40,3 +40,19 @@
 	/* Important is needed to override the default :focus styles */
 	border: 1px solid red !important;
 }
+
+
+/* FORM answer */
+.hiddenRadio{ /* HIDE RADIO */
+    visibility: hidden; /* Makes input not-clickable */
+    position: absolute; /* Remove input from document flow */
+}
+
+.hiddenRadio + a{ 
+    cursor:pointer;
+    
+}
+
+.hiddenRadio:checked + a{ 
+    text-decoration: underline;
+}

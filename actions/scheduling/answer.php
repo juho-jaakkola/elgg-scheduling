@@ -13,8 +13,6 @@ if (!$entity instanceof ElggSchedulingPoll) {
 
 $user = elgg_get_logged_in_user_entity();
 
-
-
 $slots = $entity->getSlots();
 
 foreach ($slots as $slot) {
