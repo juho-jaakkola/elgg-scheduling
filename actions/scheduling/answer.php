@@ -15,13 +15,20 @@ $user = elgg_get_logged_in_user_entity();
 
 $slots = $entity->getSlots();
 
+/*elgg_dump("-----slots-------");
+elgg_dump($slots);
+elgg_dump("---------------------");//*/
 foreach ($slots as $slot) {
-	$answer = get_input($slot->guid);
+	$answer = get_input('slot-'.$slot->guid);
     $voteValue = get_input('voteValue', 0);
+    
+    elgg_dump("-----answer-------");
+    elgg_dump($answer);
+    elgg_dump("---------------------");
     
 	if (empty($answer)) {
 		$slot->removeVote($user);
 	} else {
-		$slot->vote($user);
+		$slot->vote($user, $answer);
 	}
 }

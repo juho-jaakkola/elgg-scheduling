@@ -22,12 +22,24 @@
 	text-align: center;
 }
 
-#elgg-table-scheduling-answer .selected {
+/*#elgg-table-scheduling-answer .selected {
+	background: lightgreen;
+}*/
+
+/*#elgg-table-scheduling-answer .unselected {
+	background: pink;
+}*/
+
+#elgg-table-scheduling-answer .yes {
 	background: lightgreen;
 }
-
-#elgg-table-scheduling-answer .unselected {
-	background: pink;
+#elgg-table-scheduling-answer .maybe {
+	/*background: yellow;*/
+	background: #FFFFAA;
+}
+#elgg-table-scheduling-answer .no {
+	/*background: pink;*/
+	background: #FFC8F2;
 }
 
 #elgg-table-scheduling-answer td.empty,

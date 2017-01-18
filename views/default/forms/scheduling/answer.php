@@ -20,14 +20,6 @@ foreach ($poll as $day => $slots) {
         $time = date('H:i', (int) $timestamp);
         $slot_row .= "<td>$time</td>";
 
-        if (elgg_is_logged_in()) {
-            $user = elgg_get_logged_in_user_entity();
-            $checked = $answers[$user->guid][$slot->guid];
-        } else {
-            $checked = false;
-        }
-
-
         if ($entity->getPollType() == PollType::SIMPLE) {
             $poll_input = elgg_view('input/checkbox', array(
                 'name' => $slot->guid,
@@ -35,17 +27,21 @@ foreach ($poll as $day => $slots) {
                 'checked' => $checked,
             ));
         } else {
+            $valueCheck = $slot->getVoteValue(elgg_get_logged_in_user_entity());
             $poll_input = " <label>
-                                <input type='radio' name='slot-" . $slot->guid . "' class='hiddenRadio' value='2'>
-                                <a title='" . elgg_echo("scheduling:form:anwser:title:yes") . "'>" . elgg_echo("scheduling:form:anwser:yes") . "</a><br>                        
+                                <input type='radio' name='slot-" . $slot->guid . "' class='hiddenRadio' value='3'";
+            $valueCheck == AwswerValue::YES ? $poll_input .= " checked='check'>" : $poll_input .= ">";
+            $poll_input .= "<a title='" . elgg_echo("scheduling:form:anwser:title:yes") . "'>" . elgg_echo("scheduling:form:anwser:yes") . "</a><br>                        
                             </label>";
             $poll_input .= "<label>
-                                <input type='radio' name='slot-" . $slot->guid . "' class='hiddenRadio' value='1'>
-                                <a title='" . elgg_echo("scheduling:form:anwser:title:maybe") . "'>" . elgg_echo("scheduling:form:anwser:maybe") . "</a><br>
+                                <input type='radio' name='slot-" . $slot->guid . "' class='hiddenRadio' value='2'";
+            $valueCheck == AwswerValue::MAYBE ? $poll_input .= " checked='check'>" : $poll_input .= ">";
+            $poll_input .= "    <a title='" . elgg_echo("scheduling:form:anwser:title:maybe") . "'>" . elgg_echo("scheduling:form:anwser:maybe") . "</a><br>
                             </label>";
             $poll_input .= "<label>
-                                <input type='radio' name='slot-" . $slot->guid . "' class='hiddenRadio' value='0'>
-                                <a title='" . elgg_echo("scheduling:form:anwser:title:no") . "'>" . elgg_echo("scheduling:form:anwser:no") . "</a><br>
+                                <input type='radio' name='slot-" . $slot->guid . "' class='hiddenRadio' value='1'";
+            $valueCheck == AwswerValue::NO ? $poll_input .= " checked='check'>" : $poll_input .= ">";
+            $poll_input .= "    <a title='" . elgg_echo("scheduling:form:anwser:title:no") . "'>" . elgg_echo("scheduling:form:anwser:no") . "</a><br>
                             </label>";
         }
 
@@ -54,24 +50,25 @@ foreach ($poll as $day => $slots) {
 }
 
 $answer_rows = '';
+
 foreach ($answers as $user_guid => $slots) {
     $user = get_entity($user_guid);
     $icon = elgg_view_entity_icon($user, 'tiny');
 
     $answer_row = "<td style=\"padding: 0;\">$icon</td>";
-    foreach ($slots as $slot) {
-        if ($slot) {
-            $class = 'selected';
+    foreach ($slots as $voteValue) {
+        if ($voteValue == AwswerValue::YES) {
+            $class = 'yes';
+        } else if ($voteValue == AwswerValue::MAYBE) {
+            $class = 'maybe';
         } else {
-            $class = 'unselected';
+            $class = 'no';
         }
-
         $answer_row .= "<td class=\"$class\"></td>";
     }
 
-    $answer_rows .= "<tr>$answer_row</tr>";
-}
-
+    $answer_rows .= "<tr>$answer_row</tr>"; //*/
+}//*/
 // Add a row that shows the total amount of votes for each time slot
 $answer_sums = $entity->getVoteCounts();
 $sum_row = '<td class="empty"></td>';
