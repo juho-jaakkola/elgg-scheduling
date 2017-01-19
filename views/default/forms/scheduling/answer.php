@@ -69,7 +69,7 @@ foreach ($answers as $user_guid => $slots) {
             $class = 'maybe';
         } else {
             $class = 'no';
-        }
+        }        
         
         $answer_row .= "<td class=\"$class\"></td>";
     }
