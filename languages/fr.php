@@ -33,6 +33,7 @@ return array(
     'scheduling:form:anwser:title:no' => 'Non',
     'scheduling:poll:type:label' => 'Sondage avancé',
     'scheduling:poll:type:title' => 'Réponse à 3 possibilités, Oui, Non, Peut être',
+    'scheduling:form:answer:not:available' => 'Pas disponible',
     
     // Notifications 
     'scheduling:notify:publish:subject' => 'Nouveau sondage du planificateur', 

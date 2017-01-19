@@ -20,7 +20,7 @@ $date_row = '<td class="empty"></td>';
 $slot_row = '<td class="empty"></td>';
 
 $poll_row = '<td>' . elgg_view('input/checkbox', array(
-            'label' => "<br/> Not Available",
+            'label' => "<br>" . elgg_echo("scheduling:form:answer:not:available"),
             'id' => "not-available",
             'name' => "not-available",
             'value' => true,

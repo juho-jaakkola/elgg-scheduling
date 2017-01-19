@@ -33,6 +33,7 @@ return array(
     'scheduling:form:anwser:title:no' => 'No',
     'scheduling:poll:type:label' => 'Advance Poll',
     'scheduling:poll:type:title' => 'Get 3 choices, Yes, Maybe, No',
+    'scheduling:form:answer:not:available' => 'Not available',
     
 	// Notifications
 	'scheduling:notify:publish:subject' => 'New scheduling poll',
