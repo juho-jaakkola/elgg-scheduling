@@ -21,8 +21,12 @@ foreach ($poll as $day => $slots) {
         $slot_row .= "<td>$time</td>";
 
         if ($entity->getPollType() == PollType::SIMPLE) {
+            $valueCheck = $slot->getVoteValue(elgg_get_logged_in_user_entity());
+
+            $valueCheck == AnswerValue::YES ? $checked = True : $checked = False;
+            
             $poll_input = elgg_view('input/checkbox', array(
-                'name' => $slot->guid,
+                'name' => "slot-" . $slot->guid,
                 'value' => null,
                 'checked' => $checked,
             ));
@@ -30,17 +34,17 @@ foreach ($poll as $day => $slots) {
             $valueCheck = $slot->getVoteValue(elgg_get_logged_in_user_entity());
             $poll_input = " <label>
                                 <input type='radio' name='slot-" . $slot->guid . "' class='hiddenRadio' value='3'";
-            $valueCheck == AwswerValue::YES ? $poll_input .= " checked='check'>" : $poll_input .= ">";
+            $valueCheck == AnswerValue::YES ? $poll_input .= " checked='check'>" : $poll_input .= ">";
             $poll_input .= "<a title='" . elgg_echo("scheduling:form:anwser:title:yes") . "'>" . elgg_echo("scheduling:form:anwser:yes") . "</a><br>                        
                             </label>";
             $poll_input .= "<label>
                                 <input type='radio' name='slot-" . $slot->guid . "' class='hiddenRadio' value='2'";
-            $valueCheck == AwswerValue::MAYBE ? $poll_input .= " checked='check'>" : $poll_input .= ">";
+            $valueCheck == AnswerValue::MAYBE ? $poll_input .= " checked='check'>" : $poll_input .= ">";
             $poll_input .= "    <a title='" . elgg_echo("scheduling:form:anwser:title:maybe") . "'>" . elgg_echo("scheduling:form:anwser:maybe") . "</a><br>
                             </label>";
             $poll_input .= "<label>
                                 <input type='radio' name='slot-" . $slot->guid . "' class='hiddenRadio' value='1'";
-            $valueCheck == AwswerValue::NO ? $poll_input .= " checked='check'>" : $poll_input .= ">";
+            $valueCheck == AnswerValue::NO ? $poll_input .= " checked='check'>" : $poll_input .= ">";
             $poll_input .= "    <a title='" . elgg_echo("scheduling:form:anwser:title:no") . "'>" . elgg_echo("scheduling:form:anwser:no") . "</a><br>
                             </label>";
         }
@@ -55,15 +59,18 @@ foreach ($answers as $user_guid => $slots) {
     $user = get_entity($user_guid);
     $icon = elgg_view_entity_icon($user, 'tiny');
 
+    
     $answer_row = "<td style=\"padding: 0;\">$icon</td>";
     foreach ($slots as $voteValue) {
-        if ($voteValue == AwswerValue::YES) {
+        
+        if ((int)$voteValue === AnswerValue::YES) {
             $class = 'yes';
-        } else if ($voteValue == AwswerValue::MAYBE) {
+        } else if ((int)$voteValue === AnswerValue::MAYBE) {
             $class = 'maybe';
         } else {
             $class = 'no';
         }
+        
         $answer_row .= "<td class=\"$class\"></td>";
     }
 

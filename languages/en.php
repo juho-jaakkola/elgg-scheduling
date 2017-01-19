@@ -31,6 +31,8 @@ return array(
     'scheduling:form:anwser:title:yes' => 'Yes',
     'scheduling:form:anwser:title:maybe' => 'If necessary',
     'scheduling:form:anwser:title:no' => 'No',
+    'scheduling:poll:type:label' => 'Advance Poll',
+    'scheduling:poll:type:title' => 'Get 3 choices, Yes, Maybe, No',
     
 	// Notifications
 	'scheduling:notify:publish:subject' => 'New scheduling poll',

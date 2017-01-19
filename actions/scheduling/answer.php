@@ -1,34 +1,36 @@
 <?php
+
 /**
  * Saves users answer to a scheduling poll
  */
-
 $guid = get_input('guid');
 $entity = get_entity($guid);
 
 if (!$entity instanceof ElggSchedulingPoll) {
-	register_error(elgg_echo('actionunauthorized'));
-	forward(REFERER);
+    register_error(elgg_echo('actionunauthorized'));
+    forward(REFERER);
 }
 
 $user = elgg_get_logged_in_user_entity();
 
 $slots = $entity->getSlots();
 
-/*elgg_dump("-----slots-------");
-elgg_dump($slots);
-elgg_dump("---------------------");//*/
+
 foreach ($slots as $slot) {
-	$answer = get_input('slot-'.$slot->guid);
-    $voteValue = get_input('voteValue', 0);
+    $answer = get_input('slot-' . $slot->guid);
     
-    elgg_dump("-----answer-------");
-    elgg_dump($answer);
-    elgg_dump("---------------------");
+    // for simple poll
+    if($answer){
+        if($answer == 'on'){
+            $answer = AnswerValue::YES;
+        }        
+    } else {
+            $answer = AnswerValue::NO;    
+    }
     
-	if (empty($answer)) {
-		$slot->removeVote($user);
-	} else {
-		$slot->vote($user, $answer);
-	}
+    if (empty($answer)) {
+        $slot->removeVote($user);
+    } else {
+        $slot->vote($user, $answer);
+    }
 }

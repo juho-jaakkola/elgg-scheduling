@@ -188,12 +188,12 @@ class ElggSchedulingPoll extends ElggObject {
 
         $votes = array();
         $votes_by_user = array();
-        if ($this->getPollType() == PollType::ADVANCE) {
+        /*if ($this->getPollType() == PollType::ADVANCE) {//*/
             foreach ($annotations as $annotation) {
                 $votes_by_user[$annotation->owner_guid][$annotation->entity_guid] = $annotation->value;
             }
-        } else {
-            foreach ($annotations as $annotation) {
+        /*} else {//*/
+        /*    foreach ($annotations as $annotation) {
                 $votes[$annotation->owner_guid][$annotation->entity_guid] = true;
             }
 
@@ -212,7 +212,7 @@ class ElggSchedulingPoll extends ElggObject {
 
             /*
               // */
-        }
+        //}
         //return $votes_by_user;
         return $votes_by_user;
     }
@@ -229,7 +229,8 @@ class ElggSchedulingPoll extends ElggObject {
             $vote = 0;
             foreach ($votes as $user_vote) {
                 if ($user_vote->entity_guid == $slot->guid) {
-                    if ((int) $slot->getVoteValue() !== AwswerValue::NO || (int) $slot->getVoteValue() !== AwswerValue::NO) {
+                    $voteValue = $slot->getVoteValue(get_entity($user_vote->owner_guid));
+                    if ((int)$voteValue !== AnswerValue::NO || (int)$voteValue !== AnswerValue::NO) {
                         $vote++;
                     }
                 }

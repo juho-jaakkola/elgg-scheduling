@@ -29,11 +29,11 @@ class ElggSchedulingPollSlot extends ElggObject {
         if ($this->hasVoted($user)) {
             // update annotation 
             $vote = $this->getVote($user);
-            
+
             $annotate = elgg_get_annotation_from_id($vote[0]->id);
             $annotate->value = $answer;
             $annotate->save();
-            
+
             $res = $annotate->guid;
         } else {
             $res = $this->annotate('scheduling_poll_answer', $answer, $this->access_id, $user->guid);
@@ -58,10 +58,10 @@ class ElggSchedulingPollSlot extends ElggObject {
     }
 
     /**
-     * Check if user has voted this slot
+     * Return the vote value for this slot
      *
      * @param ElggUser $user
-     * @return boolean
+     * @return string
      */
     public function getVote(ElggUser $user) {
         $vote = elgg_get_annotations(array(
@@ -95,7 +95,7 @@ class ElggSchedulingPollSlot extends ElggObject {
 
 }
 
-abstract class AwswerValue {
+abstract class AnswerValue {
 
     const YES = 3;
     const MAYBE = 2;
