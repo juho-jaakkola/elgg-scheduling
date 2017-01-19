@@ -6,15 +6,15 @@ $entity = get_entity($guid);
 
 $is_new = true;
 if (elgg_instanceof($entity, 'object', 'scheduling_poll')) {
-	if (!$entity->canEdit()) {
-		register_error(elgg_echo('scheduling:error:cannot_edit'));
-		forward(REFERER);
-	}
-	$is_new = false;
+    if (!$entity->canEdit()) {
+        register_error(elgg_echo('scheduling:error:cannot_edit'));
+        forward(REFERER);
+    }
+    $is_new = false;
 } else {
-	$entity = new ElggObject();
-	$entity->subtype = 'scheduling_poll';
-	$entity->container_guid = get_input('container_guid');
+    $entity = new ElggObject();
+    $entity->subtype = 'scheduling_poll';
+    $entity->container_guid = get_input('container_guid');
 }
 
 $title = get_input('title');
@@ -28,16 +28,16 @@ $entity->description = $description;
 $entity->tags = string_to_tag_array($tags);
 
 if ($entity->save()) {
-	system_message(elgg_echo('scheduling:save:success'));
+    system_message(elgg_echo('scheduling:save:success'));
 } else {
-	register_error(elgg_echo('scheduling:save:error'));
-	forward(REFERER);
+    register_error(elgg_echo('scheduling:save:error'));
+    forward(REFERER);
 }
 
 if ($is_new) {
-	$forward_url = "scheduling/days/{$entity->guid}";
+    $forward_url = "scheduling/days/{$entity->guid}";
 } else {
-	$forward_url = $entity->getURL();
+    $forward_url = $entity->getURL();
 }
 
 forward($forward_url);

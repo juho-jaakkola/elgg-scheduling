@@ -18,16 +18,16 @@ $slots = $entity->getSlots();
 
 foreach ($slots as $slot) {
     $answer = get_input('slot-' . $slot->guid);
-    
+
     // for simple poll
-    if($answer){
-        if($answer == 'on'){
+    if ($answer) {
+        if ($answer == 'on') {
             $answer = AnswerValue::YES;
-        }        
+        }
     } else {
-            $answer = AnswerValue::NO;    
+        $answer = AnswerValue::NO;
     }
-    
+
     if (empty($answer)) {
         $slot->removeVote($user);
     } else {

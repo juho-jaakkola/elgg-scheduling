@@ -97,6 +97,7 @@ $container_guid_input = elgg_view('input/hidden', array(
 
 $polltype_input = elgg_view("input/checkbox", array(
     'label' => elgg_echo('scheduling:poll:type:label'),
+    'title' => elgg_echo('scheduling:poll:type:title'),
 	'name' => 'pollType',
 	'id' => 'pollType',
 ));

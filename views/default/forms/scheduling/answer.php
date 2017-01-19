@@ -24,7 +24,7 @@ foreach ($poll as $day => $slots) {
             $valueCheck = $slot->getVoteValue(elgg_get_logged_in_user_entity());
 
             $valueCheck == AnswerValue::YES ? $checked = True : $checked = False;
-            
+
             $poll_input = elgg_view('input/checkbox', array(
                 'name' => "slot-" . $slot->guid,
                 'value' => null,
@@ -59,18 +59,18 @@ foreach ($answers as $user_guid => $slots) {
     $user = get_entity($user_guid);
     $icon = elgg_view_entity_icon($user, 'tiny');
 
-    
+
     $answer_row = "<td style=\"padding: 0;\">$icon</td>";
     foreach ($slots as $voteValue) {
-        
-        if ((int)$voteValue === AnswerValue::YES) {
+
+        if ((int) $voteValue === AnswerValue::YES) {
             $class = 'yes';
-        } else if ((int)$voteValue === AnswerValue::MAYBE) {
+        } else if ((int) $voteValue === AnswerValue::MAYBE) {
             $class = 'maybe';
         } else {
             $class = 'no';
-        }        
-        
+        }
+
         $answer_row .= "<td class=\"$class\"></td>";
     }
 

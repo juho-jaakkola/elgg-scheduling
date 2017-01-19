@@ -24,6 +24,16 @@ return array(
     'scheduling:delete:success' => 'Sondage supprimé', 
     'scheduling:delete:error' => 'La suppression du sondage à échouée', 
  
+    // form
+    'scheduling:form:anwser:yes' => 'Oui',
+    'scheduling:form:anwser:maybe' => '(Oui)',
+    'scheduling:form:anwser:no' => 'Non',
+    'scheduling:form:anwser:title:yes' => 'Oui',
+    'scheduling:form:anwser:title:maybe' => 'Si nécessaire',
+    'scheduling:form:anwser:title:no' => 'Non',
+    'scheduling:poll:type:label' => 'Sondage avancé',
+    'scheduling:poll:type:title' => 'Réponse à 3 possibilités, Oui, Non, Peut être',
+    
     // Notifications 
     'scheduling:notify:publish:subject' => 'Nouveau sondage du planificateur', 
     'scheduling:notify:publish:body' => '%s as créé un nouveau sondage du planificateur: "%s" 

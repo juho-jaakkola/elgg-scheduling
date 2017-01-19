@@ -184,36 +184,11 @@ class ElggSchedulingPoll extends ElggObject {
      */
     public function getVotesByUser() {
         $annotations = $this->getVotes();
-        $slots = $this->getSlots();
 
-        $votes = array();
         $votes_by_user = array();
-        /*if ($this->getPollType() == PollType::ADVANCE) {//*/
-            foreach ($annotations as $annotation) {
-                $votes_by_user[$annotation->owner_guid][$annotation->entity_guid] = $annotation->value;
-            }
-        /*} else {//*/
-        /*    foreach ($annotations as $annotation) {
-                $votes[$annotation->owner_guid][$annotation->entity_guid] = true;
-            }
-
-            foreach ($votes as $user_guid => $slot_guid) {
-
-                foreach ($slots as $slot) {
-                    if (isset($votes[$user_guid][$slot->guid])) {
-                        $vote = true;
-                    } else {
-                        $vote = false;
-                    }
-
-                    $votes_by_user[$user_guid][$slot->guid] = $vote;
-                }
-            }
-
-            /*
-              // */
-        //}
-        //return $votes_by_user;
+        foreach ($annotations as $annotation) {
+            $votes_by_user[$annotation->owner_guid][$annotation->entity_guid] = $annotation->value;
+        }
         return $votes_by_user;
     }
 
@@ -230,7 +205,7 @@ class ElggSchedulingPoll extends ElggObject {
             foreach ($votes as $user_vote) {
                 if ($user_vote->entity_guid == $slot->guid) {
                     $voteValue = $slot->getVoteValue(get_entity($user_vote->owner_guid));
-                    if ((int)$voteValue !== AnswerValue::NO || (int)$voteValue !== AnswerValue::NO) {
+                    if ((int) $voteValue !== AnswerValue::NO || (int) $voteValue !== AnswerValue::NO) {
                         $vote++;
                     }
                 }
@@ -251,11 +226,15 @@ class ElggSchedulingPoll extends ElggObject {
         $this->pollType = $type;
     }
 
+    /**
+     * Return the pollType
+     * @return int
+     */
     public function getPollType() {
         if ($this->pollType) {
             return $this->pollType;
         } else {
-            return 0;
+            return PollType::SIMPLE;
         }
     }
 
