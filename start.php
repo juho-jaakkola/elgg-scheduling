@@ -13,6 +13,12 @@ function scheduling_init() {
 	elgg_register_action('scheduling/delete', $actions_path . 'delete.php');
 
 	elgg_register_library('scheduling', elgg_get_plugins_path() . 'scheduling/lib/scheduling.php');
+        
+    elgg_define_js('poll_js', [
+        'src' => 'mod/scheduling/views/default/js/scheduling/poll.js',
+        'deps' => ['jquery'],
+        'exports' => 'poll_js',
+    ]);
 
 	elgg_register_page_handler('scheduling', 'scheduling_page_handler');
 

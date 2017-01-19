@@ -7,10 +7,11 @@ $answers = $entity->getVotesByUser();
 
 $poll = $entity->getSlotsGroupedByDays();
 
+// user is not avaiable by default after he voted once
 $isNotAvailable = true;
-
 foreach ($answers[elgg_get_logged_in_user_guid()] as $answer) {
-    if($answer !== AnswerValue::NO){
+    // if there is one answer that not "No", he's availble
+    if ($answer !== AnswerValue::NO) {
         $isNotAvailable = false;
     }
 }
@@ -20,6 +21,7 @@ $slot_row = '<td class="empty"></td>';
 
 $poll_row = '<td>' . elgg_view('input/checkbox', array(
             'label' => "<br/> Not Available",
+            'id' => "not-available",
             'name' => "not-available",
             'value' => true,
             'checked' => $isNotAvailable,
@@ -44,6 +46,7 @@ foreach ($poll as $day => $slots) {
                 'name' => "slot-" . $slot->guid,
                 'value' => null,
                 'checked' => $checked,
+                'class' => 'possible-answer'
             ));
         } else {
             $valueCheck = $slot->getVoteValue(elgg_get_logged_in_user_entity());
@@ -122,3 +125,11 @@ echo <<<FORM
 		$submit_input
 	</div>
 FORM;
+
+echo "  <script>       
+            require(['poll_js'], function() {
+                window.poll_js = require('poll_js');
+            });     
+        </script>";
+
+
