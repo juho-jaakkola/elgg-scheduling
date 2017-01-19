@@ -7,9 +7,24 @@ $answers = $entity->getVotesByUser();
 
 $poll = $entity->getSlotsGroupedByDays();
 
+$isNotAvailable = true;
+
+foreach ($answers[elgg_get_logged_in_user_guid()] as $answer) {
+    if($answer !== AnswerValue::NO){
+        $isNotAvailable = false;
+    }
+}
+
 $date_row = '<td class="empty"></td>';
 $slot_row = '<td class="empty"></td>';
-$poll_row = '<td></td>';
+
+$poll_row = '<td>' . elgg_view('input/checkbox', array(
+            'label' => "<br/> Not Available",
+            'name' => "not-available",
+            'value' => true,
+            'checked' => $isNotAvailable,
+        )) . '</td>';
+
 foreach ($poll as $day => $slots) {
     $col_span = count($slots);
 
@@ -61,6 +76,8 @@ foreach ($answers as $user_guid => $slots) {
 
 
     $answer_row = "<td style=\"padding: 0;\">$icon</td>";
+
+
     foreach ($slots as $voteValue) {
 
         if ((int) $voteValue === AnswerValue::YES) {
@@ -92,6 +109,7 @@ $guid_input = elgg_view('input/hidden', array(
 echo <<<FORM
 	<div id="elgg-scheduling-answer-container">
 		<table class="elgg-table" id="elgg-table-scheduling-answer">
+            
 			<tr>$date_row</tr>
 			<tr>$slot_row</tr>
 			$answer_rows
