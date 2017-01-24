@@ -238,6 +238,10 @@ class ElggSchedulingPoll extends ElggObject {
         }
     }
 
+    function getAddSlotsUrl() {
+        return "scheduling/addSlot/" . $this->guid;
+    }
+
 }
 
 abstract class PollType {

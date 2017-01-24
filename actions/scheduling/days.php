@@ -53,4 +53,5 @@ if ($entity->setSlots($slots)) {
 
 elgg_clear_sticky_form('scheduling');
 
-forward($entity->getURL());
+forward($entity->getAddSlotsUrl());
+//forward($entity->getURL());

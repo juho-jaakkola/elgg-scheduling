@@ -1,6 +1,6 @@
 <?php
 
-/* ***************************************************************************
+/* * **************************************************************************
  * Copyright (C) 2017 Jade <http://www.jade.fr>
  * 
  * Benoit MOTTIN <benoitmottin@jade.fr>
@@ -24,112 +24,129 @@ $entity = elgg_extract('entity', $vars);
 $rows = array();
 // entity = ElggSchedulingPoll
 $days = $entity->getSlotsGroupedByDays();
+
+// generate columns
 $num_columns = 0;
 if (!empty($days)) {
-	foreach ($days as $date => $slots) {
-		foreach ($slots as $slot) {
-			$rows[$date][] = date("H:i", (int) $slot->title);
-		}
-		if (count($slots) > $num_columns) {
-			$num_columns = count($slots);
-		}
-	}
+    foreach ($days as $date => $slots) {
+        foreach ($slots as $slot) {
+            $rows[$date][] = date("H:i", (int) $slot->title);
+        }
+        if (count($slots) > $num_columns) {
+            $num_columns = count($slots);
+        }
+    }
 } else {
-	$date = gmdate('Y-m-d');
-	$current_hour = gmdate('G');
-	$num_columns = 4;
-	for ($i = 1; $i <= $num_columns; $i++) {
-		$hour = $current_hour + $i;
-		if ($hour >= 24) {
-			$hour -= 24;
-		}
-		$rows[$date][] = gmdate('H:i', strtotime("$hour:00") - strtotime($date));
-	}
+    $date = gmdate('Y-m-d');
+    $current_hour = gmdate('G');
+    $num_columns = 4;
+    for ($i = 1; $i <= $num_columns; $i++) {
+        $hour = $current_hour + $i;
+        if ($hour >= 24) {
+            $hour -= 24;
+        }
+        $rows[$date][] = gmdate('H:i', strtotime("$hour:00") - strtotime($date));
+    }
 }
 
 
 $index = 0;
 $rows_html = '';
+// foreach date show slot
 foreach ($rows as $date => $slots) {
-	$rows_html .= "<tr data-index='$index'>";
-	$rows_html .= '<td class="scheduling-input-date">' . elgg_view('input/scheduling/date', array(
-				'name' => "slots[$index][date]",
-				'value' => $date,
-			)) . '</td>';
-	foreach ($slots as $slot) {
-		$rows_html .= '<td class="scheduling-input-time">' . elgg_view('input/scheduling/time', array(
-					'name' => "slots[$index][slot][]",
-					'value' => $slot,
-				)) . '</td>';
-	}
+    $rows_html .= "<tr data-index='$index' id='row-" . $index . "' class='scheduling-row'><td>";
+    $rows_html .= elgg_view('output/url', array(
+        'text' => "",
+        'href' => 'javascript:void(0);',
+        'class' => 'scheduling-row-delete mll elgg-icon elgg-icon-trash',
+    ));
+    $rows_html .= "</td>";
+    $rows_html .= '<td class="scheduling-input-date">' . elgg_view('input/scheduling/date', array(
+                'name' => "slots[$index][date]",
+                'value' => $date,
+            )) . '</td>';
+    $j = 0;
+    // Slot
+    foreach ($slots as $slot) {
 
-	if (count($slots) < $num_columns) {
-		for ($i = 1; $i <= $num_columns - count($slots); $i++) {
-			$rows_html .= '<td class="scheduling-input-time">' . elgg_view('input/scheduling/time', array(
-						'name' => "slots[$index][slot][]",
-						'value' => '',
-					)) . '</td>';
-		}
-	}
-    
-    
-	$rows_html .= '<td class="scheduling-actions">';
-	$rows_html .= elgg_view('output/url', array(
-		'text' => elgg_echo('scheduling:row:copy'),
-		'href' => 'javascript:void(0);',
-		'class' => 'scheduling-row-copy',
-	));
-	$rows_html .= elgg_view('output/url', array(
-		'text' => elgg_echo('scheduling:row:delete'),
-		'href' => 'javascript:void(0);',
-		'class' => 'scheduling-row-delete mll',
-	));
-	$rows_html .= '</td>';
+        $rows_html .= '<td class="scheduling-input-time">' . elgg_view('input/scheduling/time', array(
+                    'name' => "slots[$index][slot][]",
+                    'value' => $slot,
+                )) . '</td>';
+    }
+    // Time
+    if (count($slots) < $num_columns) {
+        for ($i = 1; $i <= $num_columns - count($slots); $i++) {
+            $rows_html .= '<td class="scheduling-input-time">' . elgg_view('input/scheduling/time', array(
+                        'name' => "slots[$index][slot][]",
+                        'value' => '',
+                    )) . '</td>';
+        }
+    }
 
-	$rows_html .= '</tr>';
+    // Action Dupplicate colum and delete 
+    /* $rows_html .= '<td class="scheduling-actions">';
+      $rows_html .= elgg_view('output/url', array(
+      'text' => elgg_echo('scheduling:row:copy'),
+      'href' => 'javascript:void(0);',
+      'class' => 'scheduling-row-copy',
+      ));
 
-	$index++;
+
+      $rows_html .= '</td>';// */
+
+    $rows_html .= '</tr>';
+
+    $index++;
 }
+
+
 
 $headings = '<th class="scheduling-input-date"></th>';
 for ($i = 1; $i <= $num_columns; $i++) {
-	$heading = elgg_echo('scheduling:slot:title', array($i));
+    $heading = elgg_echo('scheduling:slot:title', array($i));
 
-	if ($i > 1) {
-		$heading .= elgg_view_icon('delete-alt');
-	}
+    if ($i > 1) {
+        $heading .= elgg_view_icon('delete-alt');
+    }
 
-	$headings .= '<th class="scheduling-input-time">' . $heading . '</th>';
+    $headings .= '<th class="scheduling-input-time">' . $heading . '</th>';
 }
 $headings .= '<th class="scheduling-input-actions">' . elgg_view('output/url', array(
-			'text' => elgg_echo('scheduling:column:add'),
-			'href' => 'javascript:void(0);',
-			'class' => 'scheduling-column-add',
-		)) . '</th>';
+            'text' => elgg_echo('scheduling:column:add'),
+            'href' => 'javascript:void(0);',
+            'class' => 'scheduling-column-add',
+        )) . '</th>';
 
 $guid_input = elgg_view('input/hidden', array(
-	'name' => 'guid',
-	'value' => $vars['guid'],
-		));
+    'name' => 'guid',
+    'value' => $vars['guid'],
+        ));
 
 $container_guid_input = elgg_view('input/hidden', array(
-	'name' => 'container_guid',
-	'value' => $vars['container_guid'],
-		));
+    'name' => 'container_guid',
+    'value' => $vars['container_guid'],
+        ));
+
+$addrow_input .= elgg_view('output/url', array(
+    'text' => elgg_echo('scheduling:row:copy'),
+    'href' => 'javascript:void(0);',
+    'class' => 'scheduling-row-copy',
+        ));
 
 $polltype_input = elgg_view("input/checkbox", array(
     'label' => elgg_echo('scheduling:poll:type:label'),
     'title' => elgg_echo('scheduling:poll:type:title'),
-	'name' => 'pollType',
-	'id' => 'pollType',
-));
+    'name' => 'pollType',
+    'id' => 'pollType',
+        ));
 
 
 $submit_input = elgg_view('input/submit', array(
-	'name' => elgg_echo('submit'),
-		));
+    'name' => elgg_echo('submit'),
+        ));
 
-
+$copy_first_input = "<a id='copyFirst' name='copyFirst'> " . elgg_echo('scheduling:poll:copy:first:line') . "</a>";
 
 echo <<<FORM
 	<table class="elgg-table-alt" id="elgg-table-scheduling">
@@ -143,10 +160,22 @@ echo <<<FORM
 		</tbody>
 	</table>
     <div>
-        $polltype_input
+        {$copy_first_input}
+    </div>
+    <div>
+        {$polltype_input} 
    </div>
+        
 	<div class="elgg-foot">
 		{$guid_input}{$container_guid_input}{$submit_input}
 	</div>
 
 FORM;
+
+
+echo "  <script>       
+            require(['addslot_js'], function() {
+                window.addslot_js = require('addslot_js');
+            });     
+        </script>";
+
