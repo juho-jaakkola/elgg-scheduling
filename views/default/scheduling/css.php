@@ -58,3 +58,26 @@
 .hiddenRadio:checked + a{ 
     text-decoration: underline;
 }
+
+.td-scheduling-date{
+    width: 100px;
+}
+
+#scheduling-datepicker{
+    margin:60px;
+    width:230px;
+    display:inline-block;
+    backgroung-color: red;
+}
+
+.scheduling-actions{
+    width: 40px;
+}
+
+#date-selected{
+    width:300px;
+    padding: 20px;
+    marging: 50px;
+    height:200px;
+    background-color: yellow;
+}

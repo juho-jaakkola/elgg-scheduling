@@ -1,6 +1,6 @@
 <?php
 
-/* ***************************************************************************
+/* * **************************************************************************
  * Copyright (C) 2017 Jade <http://www.jade.fr>
  * 
  * Benoit MOTTIN <benoitmottin@jade.fr>
@@ -22,14 +22,10 @@
 $guid = get_input('guid');
 $entity = get_entity($guid);
 
-elgg_dump("-----entity-------", true);
-elgg_dump($entity, true);
-elgg_dump("---------------------", true);
-
-/*if (!$entity instanceof ElggSchedulingPoll || !$entity->canEdit()) {
-	register_error(elgg_echo('scheduling:error:cannot_edit'));
-	forward();
-}//*/
+if (!$entity instanceof ElggSchedulingPoll || !$entity->canEdit()) {
+    register_error(elgg_echo('scheduling:error:cannot_edit'));
+    forward();
+}
 
 elgg_require_js('scheduling/table');
 
@@ -41,9 +37,9 @@ $content .= elgg_view('page/layouts/content/header', array('title' => $entity->t
 $content .= elgg_view_form('scheduling/slots', array(), $form_vars);
 
 $params = array(
-	'title' => '',
-	'content' => $content,
-	'filter' => '',
+    'title' => '',
+    'content' => $content,
+    'filter' => '',
 );
 
 $body = elgg_view_layout('one_column', $params);

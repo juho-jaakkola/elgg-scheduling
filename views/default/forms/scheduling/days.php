@@ -25,24 +25,22 @@ $rows = array();
 
 
 $guid_input = elgg_view('input/hidden', array(
-	'name' => 'guid',
-	'value' => $vars['guid'],
-		));
-
+    'name' => 'guid',
+    'value' => $vars['guid'],
+        ));
 
 $submit_input = elgg_view('input/submit', array(
     'name' => elgg_echo('submit'),
         ));
 
-
 // Add picker for date multi selection
-echo '<p>Pick some Date:</p>
-<div id="datepicker" style="width:300px; display:inline-block"></div>
+/* echo '<p>Pick some Date:</p>
+  <div id="datepicker" style="width:300px; display:inline-block"></div>';// */
+
+echo "<p><label>" . elgg_echo("scheduling:poll:pick:date") . "</label></p>";
 
 
-';
-
-
+echo "<div id='scheduling-datepicker' data-gueule='{}'></div>"; //*/
 // show selected date on the right column
 // onclick this event get class "selected" so he can't be 
 
@@ -61,38 +59,11 @@ echo <<<FORM
     <form>
     
 FORM;
-?>
+
+echo "  <script>       
+            require(['adddays_js'], function() {
+                window.adddays_js = require('adddays_js');
+            });     
+        </script>";
 
 
-<script>
-
-    $("#datepicker").datepicker({
-        onSelect: function (dateText) {
-            var dateSelected = this.value;
-
-            // check if element is checked
-
-            // add class selected if not already
-
-            // add date to the list
-            $("#date-selected").find("ul").append("<input type='hidden' name='poll-days[]' id='poll-days' value='" + dateSelected + "'><li>" + dateSelected + "</li>");
-
-            // else remove it
-
-
-
-
-            //
-
-        }
-
-
-    });
-
-</script>
-
-<script>
-    $(function () {
-        $("#datepicker").datepicker();
-    });
-</script>

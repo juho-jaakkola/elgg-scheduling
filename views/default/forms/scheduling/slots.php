@@ -49,23 +49,31 @@ if (!empty($days)) {
     }
 }
 
-
 $index = 0;
 $rows_html = '';
 // foreach date show slot
 foreach ($rows as $date => $slots) {
-    $rows_html .= "<tr data-index='$index' id='row-" . $index . "' class='scheduling-row'><td>";
+    $rows_html .= "<tr data-index='$index' id='row-" . $index . "' class='scheduling-row'>";
+    $rows_html .= "<td class='scheduling-actions'>";
     $rows_html .= elgg_view('output/url', array(
         'text' => "",
         'href' => 'javascript:void(0);',
         'class' => 'scheduling-row-delete mll elgg-icon elgg-icon-trash',
+        'title' => elgg_echo("scheduling:poll:delete:title")
+    ));
+    $rows_html .= elgg_view('output/url', array(
+        'text' => "",
+        'href' => 'javascript:void(0);',
+        'class' => 'scheduling-row-copy elgg-icon elgg-icon-round-plus',
+        'title' => elgg_echo("scheduling:poll:duplicate:title")
     ));
     $rows_html .= "</td>";
-    $rows_html .= '<td class="scheduling-input-date">' . elgg_view('input/scheduling/date', array(
+    $rows_html .= '<td class="scheduling-input-date td-scheduling-date">' . elgg_view('input/scheduling/date', array(
                 'name' => "slots[$index][date]",
                 'value' => $date,
-            )) . '</td>';
-    $j = 0;
+            ));
+    $rows_html .= "</td>";
+    
     // Slot
     foreach ($slots as $slot) {
 
@@ -85,11 +93,11 @@ foreach ($rows as $date => $slots) {
     }
 
     // Action Dupplicate colum and delete 
-    /* $rows_html .= '<td class="scheduling-actions">';
+    /*     $rows_html .= '<td class="scheduling-actions">';
       $rows_html .= elgg_view('output/url', array(
       'text' => elgg_echo('scheduling:row:copy'),
       'href' => 'javascript:void(0);',
-      'class' => 'scheduling-row-copy',
+      'class' => 'scheduling-row-copy elgg-icon elgg-icon-round-plus',
       ));
 
 

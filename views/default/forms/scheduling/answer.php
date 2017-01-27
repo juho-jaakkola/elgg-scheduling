@@ -9,10 +9,12 @@ $poll = $entity->getSlotsGroupedByDays();
 
 // user is not avaiable by default after he voted once
 $isNotAvailable = true;
-foreach ($answers[elgg_get_logged_in_user_guid()] as $answer) {
-    // if there is one answer that not "No", he's availble
-    if ($answer !== AnswerValue::NO) {
-        $isNotAvailable = false;
+if ($answers[elgg_get_logged_in_user_guid()]) {
+    foreach ($answers[elgg_get_logged_in_user_guid()] as $answer) {
+        // if there is one answer that not "No", he's availble
+        if ($answer !== AnswerValue::NO) {
+            $isNotAvailable = false;
+        }
     }
 }
 
@@ -94,8 +96,8 @@ foreach ($answers as $user_guid => $slots) {
         $answer_row .= "<td class=\"$class\"></td>";
     }
 
-    $answer_rows .= "<tr>$answer_row</tr>"; //*/
-}//*/
+    $answer_rows .= "<tr>$answer_row</tr>"; 
+}
 // Add a row that shows the total amount of votes for each time slot
 $answer_sums = $entity->getVoteCounts();
 $sum_row = '<td class="empty"></td>';

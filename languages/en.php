@@ -33,6 +33,8 @@ return array(
     'scheduling:form:anwser:title:no' => 'No',
     'scheduling:poll:type:label' => 'Advance Poll',
     'scheduling:poll:type:title' => 'Get 3 choices, Yes, Maybe, No',
+    'scheduling:poll:pick:date' => 'Pick some dates',
+    'scheduling:poll:copy:first:line' => 'Copy all the first line value to others',
     'scheduling:form:answer:not:available' => 'Not available',
     
 	// Notifications

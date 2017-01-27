@@ -26,6 +26,12 @@ function scheduling_init() {
         'deps' => ['jquery'],
         'exports' => 'addslot_js',
     ]);
+    
+    elgg_define_js('adddays_js', [
+        'src' => 'mod/scheduling/views/default/js/scheduling/days.js',
+        'deps' => ['jquery'],
+        'exports' => 'adddays_js',
+    ]);
 
     elgg_register_page_handler('scheduling', 'scheduling_page_handler');
 
