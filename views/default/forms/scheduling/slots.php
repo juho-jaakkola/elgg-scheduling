@@ -26,27 +26,19 @@ $rows = array();
 $days = $entity->getSlotsGroupedByDays();
 
 // generate columns
-$num_columns = 0;
-if (!empty($days)) {
+$date = gmdate('Y-m-d');
+$current_hour = gmdate('G');
+$num_columns = 4;
+for ($i = 1; $i <= $num_columns; $i++) {
+    $hour = $current_hour + $i;
+
+    if ($hour >= 24) {
+        $hour -= 24;
+    }
     foreach ($days as $date => $slots) {
         foreach ($slots as $slot) {
-            $rows[$date][] = date("H:i", (int) $slot->title);
+            $rows[$date][] = gmdate('H:i', strtotime("$hour:00") - strtotime($date));
         }
-        if (count($slots) > $num_columns) {
-            $num_columns = count($slots);
-        }
-    }
-} else {
-    $date = gmdate('Y-m-d');
-    $current_hour = gmdate('G');
-    $num_columns = 4;
-    for ($i = 1; $i <= $num_columns; $i++) {
-        $hour = $current_hour + $i;
-        
-        if ($hour >= 24) {
-            $hour -= 24;
-        }
-        $rows[$date][] = gmdate('H:i', strtotime("$hour:00") - strtotime($date));
     }
 }
 
@@ -78,7 +70,7 @@ foreach ($rows as $date => $slots) {
     // Slot
     foreach ($slots as $slot) {
 
-        $rows_html .= '<td class="scheduling-input-time">' . elgg_view('input/scheduling/time', array(
+        $rows_html .= '<td class="scheduling-input-time select-time-slot">' . elgg_view('input/scheduling/time', array(
                     'name' => "slots[$index][slot][]",
                     'value' => $slot,
                 )) . '</td>';
@@ -86,7 +78,7 @@ foreach ($rows as $date => $slots) {
     // Time
     if (count($slots) < $num_columns) {
         for ($i = 1; $i <= $num_columns - count($slots); $i++) {
-            $rows_html .= '<td class="scheduling-input-time">' . elgg_view('input/scheduling/time', array(
+            $rows_html .= '<td class="scheduling-input-time select-time-slot">' . elgg_view('input/scheduling/time', array(
                         'name' => "slots[$index][slot][]",
                         'value' => '',
                     )) . '</td>';
@@ -100,7 +92,9 @@ foreach ($rows as $date => $slots) {
 
 
 
-$headings = '<th class="scheduling-input-date"></th>';
+$headings = '<th class=""></th>';
+$headings .= '<th class="scheduling-input-date"></th>';
+
 for ($i = 1; $i <= $num_columns; $i++) {
     $heading = elgg_echo('scheduling:slot:title', array($i));
 

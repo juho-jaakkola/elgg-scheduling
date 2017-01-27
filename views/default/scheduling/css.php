@@ -67,7 +67,7 @@
         width: 325px;
         margin-left: 30px;
         margin-top: 10px;
-        
+
         float:left;
     }
 
@@ -79,16 +79,16 @@
         width:300px;
         height:300px;
         max-height: 600px;
-        
+
         margin-top: 10px;
         margin-left: 50px;
-        
+
         float:left;
         overflow: auto;
-        
+
         font-size:20px;
         line-height: 1.5em;      
-        
+
     }
 
     div.ui-datepicker{
@@ -103,7 +103,7 @@
         margin:10px;
         padding: 3px;
         display: inline-block;
-        
+
         border: 1px grey groove;
         border-radius: 10px;
     }    
