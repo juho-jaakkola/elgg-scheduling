@@ -22,7 +22,7 @@
 $entity = elgg_extract('entity', $vars);
 
 $rows = array();
-// entity = ElggSchedulingPoll
+// entity => ElggSchedulingPoll
 $days = $entity->getSlotsGroupedByDays();
 
 // generate columns
@@ -42,6 +42,7 @@ if (!empty($days)) {
     $num_columns = 4;
     for ($i = 1; $i <= $num_columns; $i++) {
         $hour = $current_hour + $i;
+        
         if ($hour >= 24) {
             $hour -= 24;
         }
@@ -91,17 +92,6 @@ foreach ($rows as $date => $slots) {
                     )) . '</td>';
         }
     }
-
-    // Action Dupplicate colum and delete 
-    /*     $rows_html .= '<td class="scheduling-actions">';
-      $rows_html .= elgg_view('output/url', array(
-      'text' => elgg_echo('scheduling:row:copy'),
-      'href' => 'javascript:void(0);',
-      'class' => 'scheduling-row-copy elgg-icon elgg-icon-round-plus',
-      ));
-
-
-      $rows_html .= '</td>';// */
 
     $rows_html .= '</tr>';
 

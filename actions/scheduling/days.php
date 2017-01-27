@@ -16,15 +16,10 @@ $slots = array();
 $input = (array) get_input('poll-days', array());
 
 foreach ($input as $index => $date_info) {
-
-    /*
-      $date = $date_info['date'];
-      $date_slots = $date_info['slot'];
-      foreach ($date_slots as $slot) {
-      /*if (empty($slot)) {
-      continue;
-      }// */
-    $slots[] = strtotime("$date_info");
+    // add the current hour
+    $date_info .= date('G:i');
+    
+    $slots[] = strtotime("$date_info");    
 }
 
 if ($entity->setSlots($slots)) {

@@ -71,8 +71,8 @@
         float:left;
     }
 
-    .scheduling-actions{
-        width: 40px;
+    .elgg-table-alt td:first-child{
+        width: 70px;
     }
 
     #date-selected{
