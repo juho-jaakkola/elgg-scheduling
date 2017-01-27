@@ -71,9 +71,9 @@ foreach ($rows as $date => $slots) {
     $rows_html .= '<td class="scheduling-input-date td-scheduling-date">' . elgg_view('input/scheduling/date', array(
                 'name' => "slots[$index][date]",
                 'value' => $date,
-            ));
+    ));
     $rows_html .= "</td>";
-    
+
     // Slot
     foreach ($slots as $slot) {
 

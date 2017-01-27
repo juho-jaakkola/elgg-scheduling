@@ -29,7 +29,7 @@ $("#scheduling-datepicker").datepicker({
     onSelect: function () {
         var dateSelected = this.value;
         var flag = true;
-
+        
         // if there is some date already selected
         if (dayChoose.length > 0) {
             for (i = 0; i < dayChoose.length; i++) {
@@ -43,7 +43,7 @@ $("#scheduling-datepicker").datepicker({
 
         if (flag) {
             dayChoose.push({dateKey: dateKey, dateSelected: dateSelected});
-            $("#date-selected").find("ul").append("<li id='list-" + dateKey + "' class='listElm'><span class='elgg-icon elgg-icon-trash'></span><input type='hidden' name='poll-days[]' id='poll-days-" + dateKey + "' value='" + dateSelected + "'>" + dateSelected + "</li>");
+            $("#date-selected").find("ul").append("<li id='list-" + dateKey + "' class='listElm'><input type='hidden' name='poll-days[]' id='poll-days-" + dateKey + "' value='" + dateSelected + "'>" + dateSelected + "</li>");
             dateKey++;
         }
     }

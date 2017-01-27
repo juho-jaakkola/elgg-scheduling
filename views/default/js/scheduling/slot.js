@@ -17,7 +17,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * ************************************************************************ */
 
-
 $("#copyFirst").on("click", function () {
 
     var allHours = new Array();

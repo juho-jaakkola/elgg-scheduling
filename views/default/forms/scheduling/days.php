@@ -1,4 +1,5 @@
 <?php
+
 /* * **************************************************************************
  * Copyright (C) 2017 Jade <http://www.jade.fr>
  * 
@@ -18,11 +19,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * ************************************************************************ */
 
-
 $entity = elgg_extract('entity', $vars);
 
 $rows = array();
-
 
 $guid_input = elgg_view('input/hidden', array(
     'name' => 'guid',
@@ -33,14 +32,13 @@ $submit_input = elgg_view('input/submit', array(
     'name' => elgg_echo('submit'),
         ));
 
+$labelPickedDate = elgg_echo("scheduling:poll:picked:date:label");
+
 // Add picker for date multi selection
-/* echo '<p>Pick some Date:</p>
-  <div id="datepicker" style="width:300px; display:inline-block"></div>';// */
-
 echo "<p><label>" . elgg_echo("scheduling:poll:pick:date") . "</label></p>";
+echo "<p><label>" . elgg_echo("scheduling:poll:pick:date:instruction") . "</label></p>";
 
-
-echo "<div id='scheduling-datepicker' data-gueule='{}'></div>"; //*/
+echo "<div id='scheduling-datepicker'></div>"; 
 // show selected date on the right column
 // onclick this event get class "selected" so he can't be 
 
@@ -48,12 +46,13 @@ echo <<<FORM
 	
     <form>
         <div id='date-selected' style='display:inline-block'>
+            <label> {$labelPickedDate} </label>
             <ul>
                 
             </ul>  
         </div>
         <div class="elgg-foot">
-{$guid_input}
+            {$guid_input}
             {$submit_input}
         </div>
     <form>
