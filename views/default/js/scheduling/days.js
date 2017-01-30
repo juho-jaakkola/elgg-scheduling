@@ -19,7 +19,6 @@
 
 
 $(function () {
-    $("#scheduling-datepicker").datepicker();
     dayChoose = new Array();
     dateKey = 0;
 });
@@ -29,7 +28,7 @@ $("#scheduling-datepicker").datepicker({
     onSelect: function () {
         var dateSelected = this.value;
         var flag = true;
-        
+
         // if there is some date already selected
         if (dayChoose.length > 0) {
             for (i = 0; i < dayChoose.length; i++) {

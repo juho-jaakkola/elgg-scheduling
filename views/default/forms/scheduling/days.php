@@ -59,8 +59,8 @@ echo <<<FORM
     
 FORM;
 
-echo "  <script>       
-            require(['adddays_js'], function() {
+echo "  <script>
+            require(['adddays_js'], function() {                
                 window.adddays_js = require('adddays_js');
             });     
         </script>";

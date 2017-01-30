@@ -34,8 +34,8 @@ define(function(require) {
 				var deleteIcon = $last.find('span').clone();
 
 				var slot_number = $clone.siblings('.scheduling-input-time').andSelf().length;
-                console.log(slot_number);
-				$clone.text(elgg.echo('scheduling:slot:title', slot_number));
+
+				$clone.text(elgg.echo('scheduling:slot:title', [slot_number]));
 
 				$clone.append(deleteIcon);
 			}
