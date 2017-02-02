@@ -18,18 +18,39 @@
  * ************************************************************************ */
 
 $('.possible-answer').on('click', function () {
-    //$('#not-available').checked;
     if ($('.possible-answer:checkbox:checked').length > 0) {
         $('#not-available').prop('checked', false);
     } else {
         $('#not-available').prop('checked', true);
     }
 
+    if ($(this).prop('checked') === true) {
+        $(this).closest('td').addClass('yes');
+        $(this).closest('td').removeClass('no');
+    } else {
+        $(this).closest('td').addClass('no');
+        $(this).closest('td').removeClass('yes');
+    }
+});
+
+$(document).ready(function () {
+    $('.possible-answer').each(function () {
+
+        if ($(this).prop('checked') === true) {
+            $(this).closest('td').addClass('yes');
+            $(this).closest('td').removeClass('no');
+        } else {
+            $(this).closest('td').addClass('no');
+            $(this).closest('td').removeClass('yes');
+        }
+    });
+
 });
 
 $('.hiddenRadio').on('click', function () {
 
     if ($(this).hasClass("answerYes")) {
+        // get the first td parent
         $(this).closest('td').addClass('yes');
     } else if ($(this).hasClass("answerMaybe")) {
         $(this).closest('td').addClass('maybe');

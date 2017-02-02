@@ -41,8 +41,9 @@ foreach ($poll as $day => $slots) {
 
         if ($entity->getPollType() == PollType::SIMPLE) {
             $valueCheck = $slot->getVoteValue(elgg_get_logged_in_user_entity());
-
+            
             $valueCheck == AnswerValue::YES ? $checked = True : $checked = False;
+            
 
             $poll_input = elgg_view('input/checkbox', array(
                 'name' => "slot-" . $slot->guid,
