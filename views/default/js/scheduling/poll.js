@@ -18,10 +18,22 @@
  * ************************************************************************ */
 
 $('.possible-answer').on('click', function () {
-    $('#not-available').checked;
+    //$('#not-available').checked;
     if ($('.possible-answer:checkbox:checked').length > 0) {
         $('#not-available').prop('checked', false);
     } else {
         $('#not-available').prop('checked', true);
+    }
+
+});
+
+$('.hiddenRadio').on('click', function () {
+
+    if ($(this).hasClass("answerYes")) {
+        $(this).closest('td').addClass('yes');
+    } else if ($(this).hasClass("answerMaybe")) {
+        $(this).closest('td').addClass('maybe');
+    } else {
+        $(this).closest('td').addClass('no');
     }
 });

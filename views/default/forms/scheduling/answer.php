@@ -53,17 +53,17 @@ foreach ($poll as $day => $slots) {
         } else {
             $valueCheck = $slot->getVoteValue(elgg_get_logged_in_user_entity());
             $poll_input = " <label>
-                                <input type='radio' name='slot-" . $slot->guid . "' class='hiddenRadio' value='3'";
+                                <input type='radio' name='slot-" . $slot->guid . "' class='hiddenRadio answerYes' value='3'";
             $valueCheck == AnswerValue::YES ? $poll_input .= " checked='check'>" : $poll_input .= ">";
             $poll_input .= "<a title='" . elgg_echo("scheduling:form:anwser:title:yes") . "'>" . elgg_echo("scheduling:form:anwser:yes") . "</a><br>                        
                             </label>";
             $poll_input .= "<label>
-                                <input type='radio' name='slot-" . $slot->guid . "' class='hiddenRadio' value='2'";
+                                <input type='radio' name='slot-" . $slot->guid . "' class='hiddenRadio answerMaybe' value='2'";
             $valueCheck == AnswerValue::MAYBE ? $poll_input .= " checked='check'>" : $poll_input .= ">";
             $poll_input .= "    <a title='" . elgg_echo("scheduling:form:anwser:title:maybe") . "'>" . elgg_echo("scheduling:form:anwser:maybe") . "</a><br>
                             </label>";
             $poll_input .= "<label>
-                                <input type='radio' name='slot-" . $slot->guid . "' class='hiddenRadio' value='1'";
+                                <input type='radio' name='slot-" . $slot->guid . "' class='hiddenRadio answerNo' value='1'";
             $valueCheck == AnswerValue::NO ? $poll_input .= " checked='check'>" : $poll_input .= ">";
             $poll_input .= "    <a title='" . elgg_echo("scheduling:form:anwser:title:no") . "'>" . elgg_echo("scheduling:form:anwser:no") . "</a><br>
                             </label>";
@@ -96,7 +96,7 @@ foreach ($answers as $user_guid => $slots) {
         $answer_row .= "<td class=\"$class\"></td>";
     }
 
-    $answer_rows .= "<tr>$answer_row</tr>"; 
+    $answer_rows .= "<tr>$answer_row</tr>";
 }
 // Add a row that shows the total amount of votes for each time slot
 $answer_sums = $entity->getVoteCounts();
