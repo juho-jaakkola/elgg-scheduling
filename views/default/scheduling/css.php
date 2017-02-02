@@ -88,10 +88,9 @@
 
         font-size:20px;
         line-height: 1.5em;      
-
     }
 
-    div.ui-datepicker{
+    #scheduling-datepicker{
         font-size:25px;
     }
 
