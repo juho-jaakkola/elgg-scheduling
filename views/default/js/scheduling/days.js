@@ -20,7 +20,12 @@
 
 $(function () {
     dayChoose = new Array();
+
     dateKey = 0;
+    $(".elemDay").each(function () {
+        dayChoose.push({dateKey: dateKey, dateSelected: $(this).val()});
+        dateKey++;
+    });
 });
 
 $("#scheduling-datepicker").datepicker({
@@ -42,7 +47,7 @@ $("#scheduling-datepicker").datepicker({
 
         if (flag) {
             dayChoose.push({dateKey: dateKey, dateSelected: dateSelected});
-            $("#date-selected").find("ul").append("<li id='list-" + dateKey + "' class='listElm'><input type='hidden' name='poll-days[]' id='poll-days-" + dateKey + "' value='" + dateSelected + "'>" + dateSelected + "</li>");
+            $("#date-selected").find("ul").append("<li id='list-" + dateKey + "' class='listElm'><input type='hidden' class='elemDay' name='poll-days[]' id='poll-days-" + dateKey + "' value='" + dateSelected + "'>" + dateSelected + "</li>");
             dateKey++;
         }
     }

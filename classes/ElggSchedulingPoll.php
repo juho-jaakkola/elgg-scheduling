@@ -73,12 +73,12 @@ class ElggSchedulingPoll extends ElggObject {
      *
      * @return array $grouped_slots
      */
-    public function getSlotsGroupedByDays() {
+    public function getSlotsGroupedByDays($format='Y-m-d') {
         $slots = $this->getSlots();
 
         $grouped_slots = array();
         foreach ($slots as $slot) {
-            $day = date('Y-m-d', $slot->title);
+            $day = date($format, $slot->title);
 
             $grouped_slots[$day][$slot->title] = $slot;
         }
@@ -242,6 +242,7 @@ class ElggSchedulingPoll extends ElggObject {
         return "scheduling/addSlot/" . $this->guid;
     }
 
+    
 }
 
 abstract class PollType {

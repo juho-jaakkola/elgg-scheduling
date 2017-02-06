@@ -34,7 +34,7 @@ return array(
     'scheduling:poll:type:label' => 'Sondage avancé',
     'scheduling:poll:type:title' => 'Réponse à 3 possibilités, Oui, Non, Peut être',
     'scheduling:poll:picked:date:label' => 'Dates selectionnées:',
-    'scheduling:poll:pick:date' => 'Choississez des dates',
+    'scheduling:poll:pick:date' => 'Choisissez des dates',
     'scheduling:poll:pick:date:instruction' => 'Cliquez sur le calendrier pour ajouter une date. Cliquez sur une des dates dans la liste pour la supprimer.',
     'scheduling:poll:copy:first:line' => 'Copiez les valeurs de la premiere ligne sur l\'ensemble des colonnes.',
     'scheduling:form:answer:not:available' => 'Pas disponible',
