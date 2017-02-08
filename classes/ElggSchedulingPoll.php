@@ -5,244 +5,244 @@
  */
 class ElggSchedulingPoll extends ElggObject {
 
-    private $slots = array();
+	private $slots = array();
 
-    /**
-     *
-     */
-    protected function initializeAttributes() {
-        parent::initializeAttributes();
-        $this->attributes['subtype'] = 'scheduling_poll';
-    }
+	/**
+	 *
+	 */
+	protected function initializeAttributes() {
+		parent::initializeAttributes();
+		$this->attributes['subtype'] = 'scheduling_poll';
+	}
 
-    /**
-     * Makes sure access_id of the poll slots matches access_id of the poll
-     *
-     * @return boolean
-     */
-    public function save() {
-        $success = parent::save();
+	/**
+	 * Makes sure access_id of the poll slots matches access_id of the poll
+	 *
+	 * @return boolean
+	 */
+	public function save() {
+		$success = parent::save();
 
-        if (!$success) {
-            return false;
-        }
+		if (!$success) {
+			return false;
+		}
 
-        // Update slot access_ids if necessary
-        foreach ($this->getSlots() as $slot) {
-            if ($slot->access_id === $this->access_id) {
-                // They're already the same so no need to continue
-                break;
-            }
+		// Update slot access_ids if necessary
+		foreach ($this->getSlots() as $slot) {
+			if ($slot->access_id === $this->access_id) {
+				// They're already the same so no need to continue
+				break;
+			}
 
-            $slot->access_id = $this->access_id;
-            $slot->save();
-        }
+			$slot->access_id = $this->access_id;
+			$slot->save();
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    /**
-     * Get all the time slots saved for this poll
-     *
-     * @return array $slots
-     */
-    public function getSlots() {
-        if (!empty($this->slots)) {
-            return $this->slots;
-        }
+	/**
+	 * Get all the time slots saved for this poll
+	 *
+	 * @return array $slots
+	 */
+	public function getSlots() {
+		if (!empty($this->slots)) {
+			return $this->slots;
+		}
 
-        $slots = elgg_get_entities(array(
-            'type' => 'object',
-            'subtype' => 'scheduling_poll_slot',
-            'container_guid' => $this->guid,
-            'limit' => 0,
-        ));
+		$slots = elgg_get_entities(array(
+			'type' => 'object',
+			'subtype' => 'scheduling_poll_slot',
+			'container_guid' => $this->guid,
+			'limit' => 0,
+		));
 
-        foreach ($slots as $slot) {
-            $this->slots[$slot->title] = $slot;
-        }
+		foreach ($slots as $slot) {
+			$this->slots[$slot->title] = $slot;
+		}
 
-        // Sort by the timestamp (object title)
-        ksort($this->slots);
+		// Sort by the timestamp (object title)
+		ksort($this->slots);
 
-        return $this->slots;
-    }
+		return $this->slots;
+	}
 
-    /**
-     * Get slots grouped by poll days
-     *
-     * @return array $grouped_slots
-     */
-    public function getSlotsGroupedByDays() {
-        $slots = $this->getSlots();
+	/**
+	 * Get slots grouped by poll days
+	 *
+	 * @return array $grouped_slots
+	 */
+	public function getSlotsGroupedByDays() {
+		$slots = $this->getSlots();
 
-        $grouped_slots = array();
-        foreach ($slots as $slot) {
-            $day = date('Y-m-d', $slot->title);
+		$grouped_slots = array();
+		foreach ($slots as $slot) {
+			$day = date('Y-m-d', $slot->title);
 
-            $grouped_slots[$day][$slot->title] = $slot;
-        }
+			$grouped_slots[$day][$slot->title] = $slot;
+		}
 
-        return $grouped_slots;
-    }
+		return $grouped_slots;
+	}
 
-    /**
-     * Save time slot options
-     *
-     * @param array $slots Array of timestamps
-     * @return bool Were all slots saved succesfully?
-     */
-    public function setSlots($slots) {
-        $this->getSlots();
+	/**
+	 * Save time slot options
+	 *
+	 * @param array $slots Array of timestamps
+	 * @return bool Were all slots saved succesfully?
+	 */
+	public function setSlots($slots) {
+		$this->getSlots();
 
-        if ($this->slots) {
-            $event = 'update';
-        } else {
-            // No slots were found, so we assume this is a new poll
-            $event = 'publish';
-        }
+		if ($this->slots) {
+			$event = 'update';
+		} else {
+			// No slots were found, so we assume this is a new poll
+			$event = 'publish';
+		}
 
-        $success = true;
+		$success = true;
 
-        // Delete the slots that were removed from the timetable
-        foreach ($this->slots as $existing_slot) {
-            $existing_timestamp = $existing_slot->title;
+		// Delete the slots that were removed from the timetable
+		foreach ($this->slots as $existing_slot) {
+			$existing_timestamp = $existing_slot->title;
 
-            if (!in_array($existing_timestamp, $slots)) {
-                $success = $existing_slot->delete();
+			if (!in_array($existing_timestamp, $slots)) {
+				$success = $existing_slot->delete();
 
-                if ($success) {
-                    unset($this->slots[$existing_timestamp]);
-                } else {
-                    $success = false;
-                }
-            }
-        }
+				if ($success) {
+					unset($this->slots[$existing_timestamp]);
+				} else {
+					$success = false;
+				}
+			}
+		}
 
-        // Add new slots
-        foreach ($slots as $slot) {
-            foreach ($this->slots as $existing_slot) {
-                if ($slot == $existing_slot->title) {
-                    // This slot already exists. Continue to next one.
-                    continue 2;
-                }
-            }
+		// Add new slots
+		foreach ($slots as $slot) {
+			foreach ($this->slots as $existing_slot) {
+				if ($slot == $existing_slot->title) {
+					// This slot already exists. Continue to next one.
+					continue 2;
+				}
+			}
 
-            $new_slot = new ElggSchedulingPollSlot();
-            $new_slot->title = $slot;
-            $new_slot->container_guid = $this->guid;
-            $new_slot->access_id = $this->access_id;
+			$new_slot = new ElggSchedulingPollSlot();
+			$new_slot->title = $slot;
+			$new_slot->container_guid = $this->guid;
+			$new_slot->access_id = $this->access_id;
 
-            if (!$new_slot->save()) {
-                $success = false;
-            }
-        }
+			if (!$new_slot->save()) {
+				$success = false;
+			}
+		}
 
-        if ($event === 'publish') {
-            elgg_create_river_item(array(
-                'view' => 'river/object/scheduling_poll/create',
-                'action_type' => 'create',
-                'subject_guid' => $this->owner_guid,
-                'object_guid' => $this->guid,
-            ));
-        }
+		if ($event === 'publish') {
+			elgg_create_river_item(array(
+				'view' => 'river/object/scheduling_poll/create',
+				'action_type' => 'create',
+				'subject_guid' => $this->owner_guid,
+				'object_guid' => $this->guid,
+			));
+		}
 
-        // We don't want to notify about the create/update event of a
-        // scheduling_poll object because one may exist without any options.
-        // So we trigger an event manually once we're sure options exist.
-        elgg_trigger_event($event, 'object', $this);
+		// We don't want to notify about the create/update event of a
+		// scheduling_poll object because one may exist without any options.
+		// So we trigger an event manually once we're sure options exist.
+		elgg_trigger_event($event, 'object', $this);
 
-        return $success;
-    }
+		return $success;
+	}
 
-    /**
-     * Get all votes as unordered list
-     *
-     * @return ElggAnnotation[]
-     */
-    private function getVotes() {
-        $slots = $this->getSlots();
+	/**
+	 * Get all votes as unordered list
+	 *
+	 * @return ElggAnnotation[]
+	 */
+	private function getVotes() {
+		$slots = $this->getSlots();
 
-        $guids = array();
-        foreach ($slots as $slot) {
-            $guids[] = $slot->guid;
-        }
+		$guids = array();
+		foreach ($slots as $slot) {
+			$guids[] = $slot->guid;
+		}
 
-        $options = array(
-            'guids' => $guids,
-            'limit' => 0,
-            'annotation_name' => 'scheduling_poll_answer',
-        );
+		$options = array(
+			'guids' => $guids,
+			'limit' => 0,
+			'annotation_name' => 'scheduling_poll_answer',
+		);
 
-        return elgg_get_annotations($options);
-    }
+		return elgg_get_annotations($options);
+	}
 
-    /**
-     * Get answers
-     *
-     * @return array $answers
-     */
-    public function getVotesByUser() {
-        $annotations = $this->getVotes();
+	/**
+	 * Get answers
+	 *
+	 * @return array $answers
+	 */
+	public function getVotesByUser() {
+		$annotations = $this->getVotes();
 
-        $votes_by_user = array();
-        foreach ($annotations as $annotation) {
-            $votes_by_user[$annotation->owner_guid][$annotation->entity_guid] = $annotation->value;
-        }
-        return $votes_by_user;
-    }
+		$votes_by_user = array();
+		foreach ($annotations as $annotation) {
+			$votes_by_user[$annotation->owner_guid][$annotation->entity_guid] = $annotation->value;
+		}
+		return $votes_by_user;
+	}
 
-    /**
-     *
-     */
-    public function getVoteCounts() {
-        $votes = $this->getVotes();
-        $slots = $this->getSlots();
+	/**
+	 *
+	 */
+	public function getVoteCounts() {
+		$votes = $this->getVotes();
+		$slots = $this->getSlots();
 
-        $counts = array();
-        foreach ($slots as $slot) {
-            $vote = 0;
-            foreach ($votes as $user_vote) {
-                if ($user_vote->entity_guid == $slot->guid) {
-                    $voteValue = $slot->getVoteValue(get_entity($user_vote->owner_guid));
-                    if ((int) $voteValue !== AnswerValue::NO || (int) $voteValue !== AnswerValue::NO) {
-                        $vote++;
-                    }
-                }
-            }
-            $counts[$slot->guid] = $vote;
-        }
+		$counts = array();
+		foreach ($slots as $slot) {
+			$vote = 0;
+			foreach ($votes as $user_vote) {
+				if ($user_vote->entity_guid == $slot->guid) {
+					$voteValue = $slot->getVoteValue(get_entity($user_vote->owner_guid));
+					if ((int) $voteValue !== AnswerValue::NO || (int) $voteValue !== AnswerValue::NO) {
+						$vote++;
+					}
+				}
+			}
+			$counts[$slot->guid] = $vote;
+		}
 
-        return $counts;
-    }
+		return $counts;
+	}
 
-    /**
-     * possible type :
-     * 0 simple poll
-     * 1 advance poll (3 anwser, yes, (yes), no)
-     * @param int $type
-     */
-    public function setPollType($type) {
-        $this->pollType = $type;
-    }
+	/**
+	 * possible type :
+	 * 0 simple poll
+	 * 1 advance poll (3 anwser, yes, (yes), no)
+	 * @param int $type
+	 */
+	public function setPollType($type) {
+		$this->pollType = $type;
+	}
 
-    /**
-     * Return the pollType
-     * @return int
-     */
-    public function getPollType() {
-        if ($this->pollType) {
-            return $this->pollType;
-        } else {
-            return PollType::SIMPLE;
-        }
-    }
+	/**
+	 * Return the pollType
+	 * @return int
+	 */
+	public function getPollType() {
+		if ($this->pollType) {
+			return $this->pollType;
+		} else {
+			return PollType::SIMPLE;
+		}
+	}
 
 }
 
 abstract class PollType {
 
-    const SIMPLE = 0;
-    const ADVANCE = 1;
+	const SIMPLE = 0;
+	const ADVANCE = 1;
 
 }
