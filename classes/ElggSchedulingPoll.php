@@ -68,17 +68,30 @@ class ElggSchedulingPoll extends ElggObject {
         return $this->slots;
     }
 
+    public function getDaysOfSlots($slots, $format = 'Y-m-d') {
+
+        $dates = array();
+
+
+        foreach ($slots as $slot) {
+            $dates[] = date($format, $slot);
+        }
+
+
+        return $dates;
+    }
+
     /**
      * Get slots grouped by poll days
      *
      * @return array $grouped_slots
      */
-    public function getSlotsGroupedByDays($format='Y-m-d') {
+    public function getSlotsGroupedByDays($format = 'Y-m-d') {
         $slots = $this->getSlots();
 
         $grouped_slots = array();
         foreach ($slots as $slot) {
-            $day = date($format, $slot->title);
+            $day = gmdate($format, $slot->title);
 
             $grouped_slots[$day][$slot->title] = $slot;
         }
@@ -92,7 +105,7 @@ class ElggSchedulingPoll extends ElggObject {
      * @param array $slots Array of timestamps
      * @return bool Were all slots saved succesfully?
      */
-    public function setSlots($slots) {
+    public function setSlots($slots, $guids = array()) {
         $this->getSlots();
 
         if ($this->slots) {
@@ -151,6 +164,56 @@ class ElggSchedulingPoll extends ElggObject {
         // scheduling_poll object because one may exist without any options.
         // So we trigger an event manually once we're sure options exist.
         elgg_trigger_event($event, 'object', $this);
+
+        return $success;
+    }
+
+    public function setSlotsDays($slots, $format = 'Y-m-d') {
+        $this->getSlots();
+        // convert all slot in date for checking
+        $existing_dates = $this->getSlotsGroupedByDays($format);
+        $new_dates = $this->getDaysOfSlots($slots, $format);
+
+        $success = true;
+
+        // Delete the slots that were removed from the timetable
+        foreach ($existing_dates as $key => $slot) {
+            // compare it with others 
+            // delete associated slot with the day
+            if (!in_array($key, $new_dates)) {
+                foreach ($slot as $ts => $sl) {
+                    $success = $sl->delete();
+                    if ($success) {
+                        unset($this->slots[$ts]);
+                    } else {
+                        $success = false;
+                    }
+                }
+            }
+
+            if (in_array($key, $new_dates)) {
+                foreach ($slot as $ts => $sl) {
+                    // convert to date
+                    $date2check = date($format, $ts);
+                    // convert this date to timestamp to check if date doesn't exist
+                    $ts2check = strtotime($date2check);
+                    $key2del = array_keys($slots, $ts2check);
+                    unset($slots[$key2del[0]]);
+                }
+            }
+        }
+        // Add new slots        
+        foreach ($slots as $slot) {
+
+            $new_slot = new ElggSchedulingPollSlot();
+            $new_slot->title = $slot;
+            $new_slot->container_guid = $this->guid;
+            $new_slot->access_id = $this->access_id;
+
+            if (!$new_slot->save()) {
+                $success = false;
+            }
+        }
 
         return $success;
     }
@@ -242,7 +305,6 @@ class ElggSchedulingPoll extends ElggObject {
         return "scheduling/addSlot/" . $this->guid;
     }
 
-    
 }
 
 abstract class PollType {

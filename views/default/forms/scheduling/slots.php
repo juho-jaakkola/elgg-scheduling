@@ -29,23 +29,21 @@ $days = $entity->getSlotsGroupedByDays();
 $date = gmdate('Y-m-d');
 $current_hour = gmdate('G');
 $num_columns = 4;
-for ($i = 1; $i <= $num_columns; $i++) {
-    $hour = $current_hour + $i;
 
-    if ($hour >= 24) {
-        $hour -= 24;
-    }
-    foreach ($days as $date => $slots) {
-        foreach ($slots as $slot) {
-            $rows[$date][] = gmdate('H:i', strtotime("$hour:00") - strtotime($date));
-        }
+foreach ($days as $date => $slots) {
+    foreach ($slots as $key => $slot) {
+
+        $hour = $slot->title;
+        $rows[$date][] = date("H:i", $hour);
     }
 }
 
 $index = 0;
 $rows_html = '';
+
 // foreach date show slot
 foreach ($rows as $date => $slots) {
+
     $rows_html .= "<tr data-index='$index' id='row-" . $index . "' class='scheduling-row'>";
     $rows_html .= "<td class='scheduling-actions'>";
     $rows_html .= elgg_view('output/url', array(
@@ -69,24 +67,28 @@ foreach ($rows as $date => $slots) {
 
     // Slot
     foreach ($slots as $slot) {
+        $hour = roundToQuarterHour($slot);
 
+        // Time 
         $rows_html .= '<td class="scheduling-input-time select-time-slot">' . elgg_view('input/scheduling/time', array(
                     'name' => "slots[$index][slot][]",
-                    'value' => $slot,
+                    'value' => $hour,
                 )) . '</td>';
     }
-    // Time
+
+    // complete if necessary
     if (count($slots) < $num_columns) {
+
+
         for ($i = 1; $i <= $num_columns - count($slots); $i++) {
+
             $rows_html .= '<td class="scheduling-input-time select-time-slot">' . elgg_view('input/scheduling/time', array(
                         'name' => "slots[$index][slot][]",
                         'value' => '',
                     )) . '</td>';
         }
     }
-
     $rows_html .= '</tr>';
-
     $index++;
 }
 

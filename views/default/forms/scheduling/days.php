@@ -23,41 +23,16 @@ $entity = elgg_extract('entity', $vars);
 
 $rows = array();
 
-/* elgg_get_entities(array(
-  'type' =>'object',
-  'subtype' => 'scheduling_poll_slot',
+$slots = $entity->getSlotsGroupedByDays("m/j/Y");
 
-  ));// */
-
-//$slots = elgg_get_entities(array(
-//    'type' => 'object',
-//    'subtype' => 'scheduling_poll_slot',
-//    'container_guid' => $entity->guid,
-//    'limit' => 0,
-//    ));
-
-
-$slots = $entity->getSlotsGroupedByDays("m/d/Y");
-$slots1 = $entity->getSlotsGroupedByDays();
-/*
-  elgg_dump("-----slots-------");
-  elgg_dump($slots);
-  elgg_dump("---------------------");
- */
-
-
-//<li id='list-" + dateKey + "' class='listElm'><input type='hidden' name='poll-days[]' id='poll-days-" + dateKey + "' value='" + dateSelected + "'>" + dateSelected + "</li>
 $days = "";
 $dateKey = 0;
 foreach ($slots as $day => $slot) {
-    echo $day . "<br>";
-    $days .= "<li id='list-" . $dateKey . "' class='listElm'><input type='hidden' class='elemDay' name='poll-days[]' id='poll-days-" . $dateKey . "' value='" . $day . "'>" . $day . "</li>";
-
+    $days .= "  <li id='list-" . $dateKey . "' class='listElm'>
+                    <input type='hidden' class='elemDay' name='poll-days[]' id='poll-days-" . $dateKey . "' value='" . $day . "'>"
+            . $day . "
+                </li>";
     $dateKey ++;
-}
-
-foreach ($slots1 as $day => $slot) {
-    echo $day . "<br>";
 }
 
 $guid_input = elgg_view('input/hidden', array(
@@ -76,7 +51,6 @@ echo "<p><label>" . elgg_echo("scheduling:poll:pick:date") . "</label></p>";
 echo "<p><label>" . elgg_echo("scheduling:poll:pick:date:instruction") . "</label></p>";
 
 echo "<div id='scheduling-datepicker'></div>";
-
 
 // show selected date on the right column
 // onclick this event get class "selected" so he can't be 

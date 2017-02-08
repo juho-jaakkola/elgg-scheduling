@@ -92,6 +92,10 @@ class ElggSchedulingPollSlot extends ElggObject {
             'limit' => 0,
         ));
     }
+    
+    public function getTitle(){
+        return $this->title;
+    }
 
 }
 

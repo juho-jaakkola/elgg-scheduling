@@ -12,17 +12,17 @@ if (!$entity instanceof ElggSchedulingPoll || !$entity->canEdit()) {
     forward();
 }
 
-$slots = array();
 $input = (array) get_input('poll-days', array());
 
 foreach ($input as $index => $date_info) {
-    // add the current hour
-    $date_info .= date('G:i');
     
-    $slots[] = strtotime("$date_info");    
-}
+    // add the current hour
+    //$date_info .= date('G:i');
+    
+    $slots[] = strtotime("$date_info");        
+}//*/
 
-if ($entity->setSlots($slots)) {
+if ($entity->setSlotsDays($slots)) {
     system_message(elgg_echo('scheduling:save:success'));
 } else {
     register_error(elgg_echo('scheduling:save:error'));

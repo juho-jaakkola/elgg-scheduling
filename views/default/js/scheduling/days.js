@@ -17,7 +17,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * ************************************************************************ */
 
-
 $(function () {
     dayChoose = new Array();
 
@@ -47,7 +46,12 @@ $("#scheduling-datepicker").datepicker({
 
         if (flag) {
             dayChoose.push({dateKey: dateKey, dateSelected: dateSelected});
-            $("#date-selected").find("ul").append("<li id='list-" + dateKey + "' class='listElm'><input type='hidden' class='elemDay' name='poll-days[]' id='poll-days-" + dateKey + "' value='" + dateSelected + "'>" + dateSelected + "</li>");
+            $("#date-selected").find("ul").append(
+                    "<li id='list-" + dateKey + "' class='listElm'>\n\
+                        <input type='hidden' class='elemDay' name='poll-days[]' id='poll-days-" + dateKey + "' value='" + dateSelected + "'>\n\
+                        " + dateSelected + "\
+                    </li>"
+                    );
             dateKey++;
         }
     }
