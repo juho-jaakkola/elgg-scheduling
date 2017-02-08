@@ -39,6 +39,7 @@ return array(
     'scheduling:poll:copy:first:line' => 'Copiez les valeurs de la premiere ligne sur l\'ensemble des colonnes.',
     'scheduling:form:answer:not:available' => 'Pas disponible',
     
+	
     // Notifications 
     'scheduling:notify:publish:subject' => 'Nouveau sondage du planificateur', 
     'scheduling:notify:publish:body' => '%s as créé un nouveau sondage du planificateur: "%s" 
@@ -53,4 +54,8 @@ Vous devriez vérifier si votre réponse nécessite  une mise à jour:
     'scheduling:notify:update:summary' => '%s as mis à jour le sondage du planificateur: %s', 
  
     'river:create:object:scheduling_poll' => '%s as créé un nouveau sondage du planificateur %s', 
+	
+	// Breadcrumb
+	'scheduling:breadcrumb:add:days' => 'Ajout de jours',
+	'scheduling:breadcrumb:add:slots' => 'Ajout de créneaux',
 ); 

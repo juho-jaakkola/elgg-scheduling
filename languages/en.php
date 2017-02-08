@@ -54,4 +54,9 @@ You should check if your answer needs to be updated:
 	'scheduling:notify:update:summary' => '%s has updated the scheduling poll: %s',
 
 	'river:create:object:scheduling_poll' => '%s created a new scheduling poll %s',
+	
+	// Breadcrumb
+	'scheduling:breadcrumb:add:days' => 'Add days',
+	'scheduling:breadcrumb:add:slots' => 'Add Slots',
+	
 );

@@ -22,6 +22,9 @@
 $guid = get_input('guid');
 $entity = get_entity($guid);
 
+elgg_push_breadcrumb(elgg_echo('scheduling:breadcrumb:add:days'), "scheduling/days/".$entity->guid);
+elgg_push_breadcrumb(elgg_echo('scheduling:breadcrumb:add:slots'));
+
 if (!$entity instanceof ElggSchedulingPoll || !$entity->canEdit()) {
     register_error(elgg_echo('scheduling:error:cannot_edit'));
     forward();
