@@ -20,6 +20,7 @@ return array(
 
 	'scheduling:save:success' => 'Schedule poll saved',
 	'scheduling:save:error' => 'Something went wrong. Check that the entered values are valid.',
+	'scheduling:save:error:no:days' => 'You must select at least one date.',
 	'scheduling:error:cannot_edit' => 'You are unauthorized to edit this content',
 	'scheduling:delete:success' => 'Scheduling poll deleted',
 	'scheduling:delete:error' => 'Deleting the scheduling poll failed',

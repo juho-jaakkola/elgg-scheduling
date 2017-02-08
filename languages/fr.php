@@ -20,6 +20,7 @@ return array(
  
     'scheduling:save:success' => 'Sondage enregistré', 
     'scheduling:save:error' => 'Une erreur s\'est produit. Vérifier que les valeurs soient correctes.', 
+	'scheduling:save:error:no:days' => 'Vous devez selectionner au moins une date.',
     'scheduling:error:cannot_edit' => 'Vous n\'êtes pas autorisé à modifier ce contenu', 
     'scheduling:delete:success' => 'Sondage supprimé', 
     'scheduling:delete:error' => 'La suppression du sondage à échouée', 
