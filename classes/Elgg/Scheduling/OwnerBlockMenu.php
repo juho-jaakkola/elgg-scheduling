@@ -10,7 +10,7 @@ class OwnerBlockMenu {
 	/**
 	 * Add menu item to the ownerblock
 	 */
-	public static function register ($hook, $type, $return, $params) {
+	public static function register($hook, $type, $return, $params) {
 		$entity = $params['entity'];
 
 		if ($entity instanceof ElggUser) {

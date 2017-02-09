@@ -46,24 +46,24 @@ $(document).ready(function () {
     });
 
     $('.hiddenRadio').each(function () {
-         
+
         console.log($(this).html('input:checked').val());
-        
-        if ($(this).html('input:checked').prop('checked') === true){
+
+        if ($(this).html('input:checked').prop('checked') === true) {
             console.log("Check");
-            if($(this).html('input:checked').val() == 3) {
+            if ($(this).html('input:checked').val() == 3) {
                 console.log("Vert");
                 $(this).closest('td').addClass('yes');
             }
-            if($(this).html('input:checked').val() == 2) {
+            if ($(this).html('input:checked').val() == 2) {
                 console.log("Vert");
                 $(this).closest('td').addClass('maybe');
             }
-            if($(this).html('input:checked').val() == 1) {
+            if ($(this).html('input:checked').val() == 1) {
                 console.log("Vert");
                 $(this).closest('td').addClass('no');
             }
-        }        
+        }
     });
 });
 
@@ -74,7 +74,7 @@ $('.hiddenRadio').on('click', function () {
         $(this).closest('td').addClass('yes');
         $(this).closest('td').removeClass('maybe');
         $(this).closest('td').removeClass('no');
-        
+
     } else if ($(this).hasClass("answerMaybe")) {
         $(this).closest('td').addClass('maybe');
         $(this).closest('td').removeClass('yes');

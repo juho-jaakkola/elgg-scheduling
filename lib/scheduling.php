@@ -44,13 +44,13 @@ function scheduling_prepare_form_vars(ElggEntity $schedule = null) {
  * @return string of formated hour
  */
 function roundToQuarterHour($timestring) {
-    $minutes = date('i', strtotime($timestring));
-    
-    $minutes = $minutes - ($minutes % 15);
-    
-    if($minutes == "0"){
-        $minutes = "00";
-    }
-    $hour = date('H', strtotime($timestring));
-    return $hour . ":" . $minutes;
+	$minutes = date('i', strtotime($timestring));
+
+	$minutes = $minutes - ($minutes % 15);
+
+	if ($minutes == "0") {
+		$minutes = "00";
+	}
+	$hour = date('H', strtotime($timestring));
+	return $hour . ":" . $minutes;
 }

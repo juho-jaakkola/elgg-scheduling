@@ -6,40 +6,40 @@ $title_label = elgg_echo('title');
 $title_input = elgg_view('input/text', array(
 	'name' => 'title',
 	'value' => $vars['title'],
-));
+		));
 
 $description_label = elgg_echo('description');
 $description_input = elgg_view('input/longtext', array(
 	'name' => 'description',
 	'value' => $vars['description'],
-));
+		));
 
 $tags_label = elgg_echo('tags');
 $tags_input = elgg_view('input/tags', array(
 	'name' => 'tags',
 	'value' => $vars['tags']
-));
+		));
 
 $access_label = elgg_echo('access');
 $access_input = elgg_view('input/access', array(
 	'name' => 'access_id',
 	'value' => $vars['access_id']
-));
+		));
 
 $guid_input = elgg_view('input/hidden', array(
 	'name' => 'guid',
 	'value' => $vars['guid'],
-));
+		));
 
 $container_guid_input = elgg_view('input/hidden', array(
 	'name' => 'container_guid',
 	'value' => elgg_get_page_owner_guid(),
-));
+		));
 
 $submit_input = elgg_view('input/submit', array(
 	'name' => 'submit',
 	'value' => elgg_echo('save'),
-));
+		));
 
 $form = <<<FORM
 	<div>

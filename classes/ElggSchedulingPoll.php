@@ -74,7 +74,7 @@ class ElggSchedulingPoll extends ElggObject {
 
 
 		foreach ($slots as $slot) {
-			$dates[] = gmdate($format, $slot);
+			$dates[] = date($format, $slot);
 		}
 
 
@@ -91,7 +91,7 @@ class ElggSchedulingPoll extends ElggObject {
 
 		$grouped_slots = array();
 		foreach ($slots as $slot) {
-			$day = gmdate($format, $slot->title);
+			$day = date($format, $slot->title);
 
 			$grouped_slots[$day][$slot->title] = $slot;
 		}
@@ -191,10 +191,11 @@ class ElggSchedulingPoll extends ElggObject {
 				}
 			}
 
+
 			if (in_array($key, $new_dates)) {
 				foreach ($slot as $ts => $sl) {
 					// convert to date
-					$date2check = gmdate($format, $ts);
+					$date2check = date($format, $ts);
 					// convert this date to timestamp to check if date doesn't exist
 					$ts2check = strtotime($date2check);
 					$key2del = array_keys($slots, $ts2check);
@@ -202,6 +203,13 @@ class ElggSchedulingPoll extends ElggObject {
 				}
 			}
 		}
+
+
+//*/
+
+
+		/*
+		  // */
 		// Add new slots        
 		foreach ($slots as $slot) {
 

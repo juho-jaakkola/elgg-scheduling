@@ -22,12 +22,12 @@
 $guid = get_input('guid');
 $entity = get_entity($guid);
 
-elgg_push_breadcrumb(elgg_echo('scheduling:breadcrumb:add:days'), "scheduling/days/".$entity->guid);
+elgg_push_breadcrumb(elgg_echo('scheduling:breadcrumb:add:days'), "scheduling/days/" . $entity->guid);
 elgg_push_breadcrumb(elgg_echo('scheduling:breadcrumb:add:slots'));
 
 if (!$entity instanceof ElggSchedulingPoll || !$entity->canEdit()) {
-    register_error(elgg_echo('scheduling:error:cannot_edit'));
-    forward();
+	register_error(elgg_echo('scheduling:error:cannot_edit'));
+	forward();
 }
 
 elgg_require_js('scheduling/table');
@@ -40,9 +40,9 @@ $content .= elgg_view('page/layouts/content/header', array('title' => $entity->t
 $content .= elgg_view_form('scheduling/slots', array(), $form_vars);
 
 $params = array(
-    'title' => '',
-    'content' => $content,
-    'filter' => '',
+	'title' => '',
+	'content' => $content,
+	'filter' => '',
 );
 
 $body = elgg_view_layout('one_column', $params);

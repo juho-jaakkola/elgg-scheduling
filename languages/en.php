@@ -25,20 +25,20 @@ return array(
 	'scheduling:delete:success' => 'Scheduling poll deleted',
 	'scheduling:delete:error' => 'Deleting the scheduling poll failed',
 
-    // form
-    'scheduling:form:anwser:yes' => 'Yes',
-    'scheduling:form:anwser:maybe' => '(Yes)',
-    'scheduling:form:anwser:no' => 'No',
-    'scheduling:form:anwser:title:yes' => 'Yes',
-    'scheduling:form:anwser:title:maybe' => 'If necessary',
-    'scheduling:form:anwser:title:no' => 'No',
-    'scheduling:poll:type:label' => 'Advance Poll',
-    'scheduling:poll:type:title' => 'Get 3 choices, Yes, Maybe, No',
-    'scheduling:poll:picked:date:label' => 'Selected Dates:',
-    'scheduling:poll:pick:date' => 'Pick some dates',
-    'scheduling:poll:pick:date:instruction' => 'Just click on date in the calendar to add it. Just click on it in the list to delete this date.',
-    'scheduling:poll:copy:first:line' => 'Copy all the first line value to others',
-    'scheduling:form:answer:not:available' => 'Not available',
+	// form
+	'scheduling:form:anwser:yes' => 'Yes',
+	'scheduling:form:anwser:maybe' => '(Yes)',
+	'scheduling:form:anwser:no' => 'No',
+	'scheduling:form:anwser:title:yes' => 'Yes',
+	'scheduling:form:anwser:title:maybe' => 'If necessary',
+	'scheduling:form:anwser:title:no' => 'No',
+	'scheduling:poll:type:label' => 'Advance Poll',
+	'scheduling:poll:type:title' => 'Get 3 choices, Yes, Maybe, No',
+	'scheduling:poll:picked:date:label' => 'Selected Dates:',
+	'scheduling:poll:pick:date' => 'Pick some dates',
+	'scheduling:poll:pick:date:instruction' => 'Just click on date in the calendar to add it. Just click on it in the list to delete this date.',
+	'scheduling:poll:copy:first:line' => 'Copy all the first line value to others',
+	'scheduling:form:answer:not:available' => 'Not available',
     
     
 	// Notifications

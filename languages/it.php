@@ -1,6 +1,6 @@
 <?php
 
-return array (
+return array(
 	'scheduling:date_format' => 'D j/n/Y',
 	'scheduling' => 'Programmazione',
 	'scheduling:add' => 'Nuovo sondaggio',

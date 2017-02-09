@@ -25,7 +25,7 @@ class Notification {
 			$owner->name,
 			$entity->title,
 			$entity->getURL()
-		), $language);
+				), $language);
 		$notification->summary = elgg_echo("scheduling:notify:{$action}:summary", array($owner->name, $entity->title), $language);
 
 		return $notification;

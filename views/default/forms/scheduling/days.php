@@ -28,21 +28,21 @@ $slots = $entity->getSlotsGroupedByDays("m/j/Y");
 $days = "";
 $dateKey = 0;
 foreach ($slots as $day => $slot) {
-    $days .= "  <li id='list-" . $dateKey . "' class='listElm'>
+	$days .= "  <li id='list-" . $dateKey . "' class='listElm'>
                     <input type='hidden' class='elemDay' name='poll-days[]' id='poll-days-" . $dateKey . "' value='" . $day . "'>"
-            . $day . "
+			. $day . "
                 </li>";
-    $dateKey ++;
+	$dateKey ++;
 }
 
 $guid_input = elgg_view('input/hidden', array(
-    'name' => 'guid',
-    'value' => $vars['guid'],
-        ));
+	'name' => 'guid',
+	'value' => $vars['guid'],
+		));
 
 $submit_input = elgg_view('input/submit', array(
-    'name' => elgg_echo('submit'),
-        ));
+	'name' => elgg_echo('submit'),
+		));
 
 $labelPickedDate = elgg_echo("scheduling:poll:picked:date:label");
 
