@@ -29,7 +29,6 @@ $days = $entity->getSlotsGroupedByDays();
 $date = date('Y-m-d');
 $current_hour = date('G');
 $num_columns = 4;
-
 foreach ($days as $date => $slots) {
 	foreach ($slots as $key => $slot) {
 

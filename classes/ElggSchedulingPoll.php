@@ -140,11 +140,26 @@ class ElggSchedulingPoll extends ElggObject {
 					continue 2;
 				}
 			}
-
+			elgg_dump("-----slot-------");
+			elgg_dump($slot);
+			elgg_dump("---------------------");
 			$new_slot = new ElggSchedulingPollSlot();
 			$new_slot->title = $slot;
 			$new_slot->container_guid = $this->guid;
-			$new_slot->access_id = $this->access_id;
+			$new_slot->access_id = $this->access_id;			
+
+			if ($event === 'update') {
+				$users = $this->getVotesByUser();
+				foreach ($users as $guid => $u) {
+					$user = get_entity($guid);
+
+					elgg_dump("-----user-------");
+					elgg_dump($user);
+					elgg_dump("---------------------");
+					$new_slot->vote($user, AnswerValue::UNDEFINED, $new_slot->title);
+				}
+			}
+
 
 			if (!$new_slot->save()) {
 				$success = false;
@@ -191,7 +206,6 @@ class ElggSchedulingPoll extends ElggObject {
 				}
 			}
 
-
 			if (in_array($key, $new_dates)) {
 				foreach ($slot as $ts => $sl) {
 					// convert to date
@@ -204,12 +218,6 @@ class ElggSchedulingPoll extends ElggObject {
 			}
 		}
 
-
-//*/
-
-
-		/*
-		  // */
 		// Add new slots        
 		foreach ($slots as $slot) {
 
@@ -255,10 +263,12 @@ class ElggSchedulingPoll extends ElggObject {
 	 */
 	public function getVotesByUser() {
 		$annotations = $this->getVotes();
-
+		elgg_dump("-----annotation-------");
+		elgg_dump($annotations);
+		elgg_dump("---------------------");
 		$votes_by_user = array();
 		foreach ($annotations as $annotation) {
-			$votes_by_user[$annotation->owner_guid][$annotation->entity_guid] = $annotation->value;
+			$votes_by_user[$annotation->owner_guid][$annotation->valueBis] = $annotation->value;
 		}
 		return $votes_by_user;
 	}

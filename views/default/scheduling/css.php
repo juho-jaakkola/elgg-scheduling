@@ -22,16 +22,20 @@
         text-align: center;
     }
 
-    #elgg-table-scheduling-answer .yes {
+    #elgg-table-scheduling-answer .answerYes {
         background: lightgreen;
     }
 
-    #elgg-table-scheduling-answer .maybe {
+    #elgg-table-scheduling-answer .answerMaybe {
         background: #FFFFAA;
     }
 
-    #elgg-table-scheduling-answer .no {
+    #elgg-table-scheduling-answer .answerNo {
         background: #FFC8F2;
+    }
+	
+    #elgg-table-scheduling-answer .answerUndefined {
+        background: #CCC;
     }
 
     #elgg-table-scheduling-answer td.empty,

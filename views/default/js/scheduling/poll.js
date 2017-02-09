@@ -25,11 +25,11 @@ $('.possible-answer').on('click', function () {
     }
 
     if ($(this).prop('checked') === true) {
-        $(this).closest('td').addClass('yes');
-        $(this).closest('td').removeClass('no');
+        $(this).closest('td').addClass('answerYes');
+        $(this).closest('td').removeClass('answerNo');
     } else {
-        $(this).closest('td').addClass('no');
-        $(this).closest('td').removeClass('yes');
+        $(this).closest('td').addClass('answerNo');
+        $(this).closest('td').removeClass('answerYes');
     }
 });
 
@@ -37,11 +37,11 @@ $(document).ready(function () {
     $('.possible-answer').each(function () {
 
         if ($(this).prop('checked') === true) {
-            $(this).closest('td').addClass('yes');
-            $(this).closest('td').removeClass('no');
+            $(this).closest('td').addClass('answerYes');
+            $(this).closest('td').removeClass('answerNo');
         } else {
-            $(this).closest('td').addClass('no');
-            $(this).closest('td').removeClass('yes');
+            $(this).closest('td').addClass('answerNo');
+            $(this).closest('td').removeClass('answerYes');
         }
     });
 
@@ -53,15 +53,15 @@ $(document).ready(function () {
             console.log("Check");
             if ($(this).html('input:checked').val() == 3) {
                 console.log("Vert");
-                $(this).closest('td').addClass('yes');
+                $(this).closest('td').addClass('answerYes');
             }
             if ($(this).html('input:checked').val() == 2) {
                 console.log("Vert");
-                $(this).closest('td').addClass('maybe');
+                $(this).closest('td').addClass('answerMaybe');
             }
             if ($(this).html('input:checked').val() == 1) {
                 console.log("Vert");
-                $(this).closest('td').addClass('no');
+                $(this).closest('td').addClass('answerNo');
             }
         }
     });
@@ -71,17 +71,17 @@ $('.hiddenRadio').on('click', function () {
 
     if ($(this).hasClass("answerYes")) {
         // get the first td parent
-        $(this).closest('td').addClass('yes');
-        $(this).closest('td').removeClass('maybe');
-        $(this).closest('td').removeClass('no');
+        $(this).closest('td').addClass('answerYes');
+        $(this).closest('td').removeClass('answerMaybe');
+        $(this).closest('td').removeClass('answerNo');
 
     } else if ($(this).hasClass("answerMaybe")) {
-        $(this).closest('td').addClass('maybe');
-        $(this).closest('td').removeClass('yes');
-        $(this).closest('td').removeClass('no');
+        $(this).closest('td').addClass('answerMaybe');
+        $(this).closest('td').removeClass('answerYes');
+        $(this).closest('td').removeClass('answerNo');
     } else {
-        $(this).closest('td').addClass('no');
-        $(this).closest('td').removeClass('maybe');
-        $(this).closest('td').removeClass('yes');
+        $(this).closest('td').addClass('answerNo');
+        $(this).closest('td').removeClass('answerMaybe');
+        $(this).closest('td').removeClass('answerYes');
     }
 });

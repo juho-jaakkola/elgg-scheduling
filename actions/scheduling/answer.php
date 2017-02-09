@@ -13,13 +13,14 @@ if (!$entity instanceof ElggSchedulingPoll) {
 
 $user = elgg_get_logged_in_user_entity();
 
+
 $slots = $entity->getSlots();
 $notAvailableInput = get_input("not-available", false);
 
 if ($notAvailableInput) {
 	foreach ($slots as $slot) {
 		$answer = AnswerValue::NO;
-		$slot->vote($user, $answer);
+		$slot->vote($user, $answer, $slot->title);
 	}
 } else {
 	foreach ($slots as $slot) {
@@ -37,7 +38,7 @@ if ($notAvailableInput) {
 		if (empty($answer)) {
 			$slot->removeVote($user);
 		} else {
-			$slot->vote($user, $answer);
+			$slot->vote($user, $answer, $slot->title);
 		}
 	}
 }

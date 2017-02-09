@@ -18,6 +18,11 @@ if ($answers[elgg_get_logged_in_user_guid()]) {
 	}
 }
 
+
+elgg_dump("-----answer-------");
+elgg_dump($answers);
+elgg_dump("---------------------");
+
 $date_row = '<td class="empty"></td>';
 $slot_row = '<td class="empty"></td>';
 
@@ -82,19 +87,24 @@ foreach ($answers as $user_guid => $slots) {
 
 
 	$answer_row = "<td style=\"padding: 0;\">$icon</td>";
-
-
+	
 	foreach ($slots as $voteValue) {
-
+		
 		if ((int) $voteValue === AnswerValue::YES) {
-			$class = 'yes';
+			$class = 'answerYes';
+			$txt = "";
 		} else if ((int) $voteValue === AnswerValue::MAYBE) {
-			$class = 'maybe';
+			$class = 'answerMaybe';
+			$txt = "";
+		} else if ((int) $voteValue === AnswerValue::UNDEFINED) {
+			$class = 'answerUndefined';
+			$txt = "?";
 		} else {
-			$class = 'no';
+			$class = 'answerNo';
+			$txt = "";
 		}
 
-		$answer_row .= "<td class=\"$class\"></td>";
+		$answer_row .= "<td id='' class=\"$class\">$txt</td>";
 	}
 
 	$answer_rows .= "<tr>$answer_row</tr>";
