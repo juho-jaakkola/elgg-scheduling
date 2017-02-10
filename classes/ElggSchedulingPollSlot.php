@@ -17,10 +17,11 @@ class ElggSchedulingPollSlot extends ElggObject {
 	 * Add a new answer to this slot
 	 *
 	 * Reponse possible :
-	 * 0 => pas voté(false)
-	 * 1 => Oui
-	 * 2 => (Oui) peut etre
-	 * 3 => Non, pas disponible
+	 * -1 => undefined (only if the poll has changed)
+	 * 0  => not voted yet(false)
+	 * 1  => yes
+	 * 2  => (yes) maybe
+	 * 3  => no, not available
 	 * 
 	 * @param ElggUser $user The user who is voting
 	 * @return bool True on success
@@ -28,25 +29,20 @@ class ElggSchedulingPollSlot extends ElggObject {
 	public function vote($user, $answer = 0, $valueTosave = 0) {
 
 		if ($this->hasVoted($user) && $answer != AnswerValue::UNDEFINED) {
-			// update annotation 
+			// update OBJECT
 			$vote = $this->getVote($user);
-			
-			$annotate = elgg_get_annotation_from_id($vote[0]->id);
+			$userAnswer = new ElggSchedulingPollAnswer($vote->guid);
+			$userAnswer->setAnswer($answer);
 
-			$annotate->value = $answer;
-			$annotate->valueBis = $valueTosave;
-			$annotate->save();
-
-			$res = $annotate->guid;
+			$userAnswer->save();
 		} else {
-			
-			$res = $this->annotate('scheduling_poll_answer', $answer, $this->access_id, $user->guid);
-			elgg_dump("-----res-------");
-			elgg_dump($this->getAnnotations());
-			elgg_dump("---------------------");
-			$annotate = elgg_get_annotation_from_id($res);
-			$annotate->valueBis = $valueTosave;
-			$annotate->save();
+			$userAnswer = new ElggSchedulingPollAnswer();
+
+			$userAnswer->setAnswer($answer);
+			$userAnswer->title = $valueTosave;
+			$userAnswer->setSlotGuid($this->guid);
+
+			$res = $userAnswer->save();
 		}
 		return $res;
 	}
@@ -58,11 +54,7 @@ class ElggSchedulingPollSlot extends ElggObject {
 	 * @return boolean
 	 */
 	private function hasVoted(ElggUser $user) {
-		$vote = elgg_get_annotations(array(
-			'guid' => $this->guid,
-			'annotation_owner_guid' => $user->guid,
-			'annotation_name' => 'scheduling_poll_answer',
-		));
+		$vote = $this->getVote($user);
 
 		return !empty($vote);
 	}
@@ -74,19 +66,23 @@ class ElggSchedulingPollSlot extends ElggObject {
 	 * @return string
 	 */
 	public function getVote(ElggUser $user) {
-		/*$vote = elgg_get_annotations(array(
-			'guid' => $this->guid,
-			'annotation_owner_guid' => $user->guid,
-			'annotation_name' => 'scheduling_poll_answer',
-		));//*/
-		
-		$vote = elgg_get_entities(array(
+		$vote = elgg_get_entities_from_metadata(array(
 			'type' => 'object',
 			'subtype' => 'scheduling_poll_answer',
-			'owner' => $user->guid
+			'owner' => $user->guid,
+			'metadata_name_value_pair' => array(
+				array('name' => 'slot_guid', 'value' => $this->guid, 'operand' => '='),
+			),
 		));
 
-		return $vote;
+		if ($vote) {
+			// only the first result
+			$res = $vote[0];
+		} else {
+			$res = array();
+		}
+
+		return $res;
 	}
 
 	public function getVoteValue(ElggUser $user) {
@@ -101,6 +97,8 @@ class ElggSchedulingPollSlot extends ElggObject {
 	 * @return bool True on success
 	 */
 	public function removeVote(ElggUser $user) {
+
+		// @TODO remove this function
 		return elgg_delete_annotations(array(
 			'guid' => $this->guid,
 			'annotation_owner_guid' => $user->guid,
@@ -112,7 +110,6 @@ class ElggSchedulingPollSlot extends ElggObject {
 	public function getTitle() {
 		return $this->title;
 	}
-
 }
 
 abstract class AnswerValue {
@@ -121,6 +118,6 @@ abstract class AnswerValue {
 	const MAYBE = 2;
 	const NO = 1;
 	const VOID = 0;
-	const UNDEFINED = -1;
+	const UNDEFINED = 4;
 
 }

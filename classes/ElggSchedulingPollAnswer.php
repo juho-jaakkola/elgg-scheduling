@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * ************************************************************************ */
 
-class ElggSchedulingPollAnswer extends Elgg {
+class ElggSchedulingPollAnswer extends ElggObject {
 	
 	/**
 	 * Intialize attributes
@@ -29,15 +29,32 @@ class ElggSchedulingPollAnswer extends Elgg {
 		$this->attributes['subtype'] = 'scheduling_poll_answer';
 	}
 	
+	public function __construct($guid=null){
+		parent::__construct();
+        if ($guid) {
+            $this->load($guid);
+        }
+	}
+	
 	public function getAnswer(){
 		return $this->answer;
 	}
 	
-	public function setAnswer(AnswerValue $answer){
+	public function setAnswer($answer){
 		$this->answer = $answer;
 	}
 	
-	public function SetSlotTimestamp(integer $ts){
+	public function setSlotGuid($sguid){
+		$this->slot_guid = $sguid;
+	}
+	
+	public function getSlotGuid(){
+		return $this->slot_guid;
+	}
+	
+	
+	
+	public function SetSlotTimestamp($ts){
 		$this->slotTimestamp = $ts;
 	}
 	

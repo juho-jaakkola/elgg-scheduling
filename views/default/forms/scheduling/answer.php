@@ -18,11 +18,6 @@ if ($answers[elgg_get_logged_in_user_guid()]) {
 	}
 }
 
-
-elgg_dump("-----answer-------");
-elgg_dump($answers);
-elgg_dump("---------------------");
-
 $date_row = '<td class="empty"></td>';
 $slot_row = '<td class="empty"></td>';
 
@@ -48,7 +43,6 @@ foreach ($poll as $day => $slots) {
 			$valueCheck = $slot->getVoteValue(elgg_get_logged_in_user_entity());
 
 			$valueCheck == AnswerValue::YES ? $checked = True : $checked = False;
-
 
 			$poll_input = elgg_view('input/checkbox', array(
 				'name' => "slot-" . $slot->guid,
@@ -87,9 +81,9 @@ foreach ($answers as $user_guid => $slots) {
 
 
 	$answer_row = "<td style=\"padding: 0;\">$icon</td>";
-	
+
 	foreach ($slots as $voteValue) {
-		
+
 		if ((int) $voteValue === AnswerValue::YES) {
 			$class = 'answerYes';
 			$txt = "";

@@ -35,6 +35,9 @@ foreach ($days as $date => $slots) {
 		$hour = $slot->title;
 		$rows[$date][] = date("H:i", $hour);
 	}
+	if ($num_columns <= count($slots)) {
+		$num_columns = count($slots);
+	}
 }
 
 $index = 0;
@@ -42,6 +45,8 @@ $rows_html = '';
 
 // foreach date show slot
 foreach ($rows as $date => $slots) {
+
+
 
 	$rows_html .= "<tr data-index='$index' id='row-" . $index . "' class='scheduling-row'>";
 	$rows_html .= "<td class='scheduling-actions'>";
@@ -65,6 +70,7 @@ foreach ($rows as $date => $slots) {
 	$rows_html .= "</td>";
 
 	// Slot
+
 	foreach ($slots as $slot) {
 		$hour = roundToQuarterHour($slot);
 
@@ -77,7 +83,6 @@ foreach ($rows as $date => $slots) {
 
 	// complete if necessary
 	if (count($slots) < $num_columns) {
-
 
 		for ($i = 1; $i <= $num_columns - count($slots); $i++) {
 

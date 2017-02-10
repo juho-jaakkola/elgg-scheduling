@@ -57,7 +57,6 @@ class ElggSchedulingPoll extends ElggObject {
 			'container_guid' => $this->guid,
 			'limit' => 0,
 		));
-
 		foreach ($slots as $slot) {
 			$this->slots[$slot->title] = $slot;
 		}
@@ -140,29 +139,22 @@ class ElggSchedulingPoll extends ElggObject {
 					continue 2;
 				}
 			}
-			elgg_dump("-----slot-------");
-			elgg_dump($slot);
-			elgg_dump("---------------------");
 			$new_slot = new ElggSchedulingPollSlot();
 			$new_slot->title = $slot;
 			$new_slot->container_guid = $this->guid;
-			$new_slot->access_id = $this->access_id;			
-
-			if ($event === 'update') {
-				$users = $this->getVotesByUser();
-				foreach ($users as $guid => $u) {
-					$user = get_entity($guid);
-
-					elgg_dump("-----user-------");
-					elgg_dump($user);
-					elgg_dump("---------------------");
-					$new_slot->vote($user, AnswerValue::UNDEFINED, $new_slot->title);
-				}
-			}
-
+			$new_slot->access_id = $this->access_id;
 
 			if (!$new_slot->save()) {
 				$success = false;
+			}
+
+			if ($event === 'update') {
+				$users = $this->getVotesByUser();
+
+				foreach ($users as $guid => $u) {
+					$user = get_entity($guid);
+					$new_slot->vote($user, AnswerValue::UNDEFINED, $new_slot->title);
+				}
 			}
 		}
 
@@ -248,12 +240,17 @@ class ElggSchedulingPoll extends ElggObject {
 		}
 
 		$options = array(
-			'guids' => $guids,
-			'limit' => 0,
-			'annotation_name' => 'scheduling_poll_answer',
-		);
+			'type' => 'object',
+			'subtype' => 'scheduling_poll_answer',
+			'metadata_name_value_pair' => array(
+				array('name' => 'slot_guid', 'value' => $guids, 'operand' => 'in'),
+			), //*/
+			'limit' => 0
+		); //*/
 
-		return elgg_get_annotations($options);
+
+
+		return elgg_get_entities_from_metadata($options);
 	}
 
 	/**
@@ -262,14 +259,18 @@ class ElggSchedulingPoll extends ElggObject {
 	 * @return array $answers
 	 */
 	public function getVotesByUser() {
-		$annotations = $this->getVotes();
-		elgg_dump("-----annotation-------");
-		elgg_dump($annotations);
-		elgg_dump("---------------------");
+		$votes = $this->getVotes();
+
 		$votes_by_user = array();
-		foreach ($annotations as $annotation) {
-			$votes_by_user[$annotation->owner_guid][$annotation->valueBis] = $annotation->value;
+		foreach ($votes as $vote) {
+			$vote = new ElggSchedulingPollAnswer($vote->guid);
+			$votes_by_user[$vote->owner_guid][$vote->title] = $vote->getAnswer();
 		}
+		foreach ($votes_by_user as $user => $vote) {
+			// order answer by title
+			ksort($votes_by_user[$user]);
+		}
+
 		return $votes_by_user;
 	}
 
