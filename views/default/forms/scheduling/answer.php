@@ -41,7 +41,6 @@ foreach ($poll as $day => $slots) {
 
 		if ($entity->getPollType() == PollType::SIMPLE) {
 			$valueCheck = $slot->getVoteValue(elgg_get_logged_in_user_entity());
-
 			$valueCheck == AnswerValue::YES ? $checked = True : $checked = False;
 
 			$poll_input = elgg_view('input/checkbox', array(
@@ -78,7 +77,6 @@ $answer_rows = '';
 foreach ($answers as $user_guid => $slots) {
 	$user = get_entity($user_guid);
 	$icon = elgg_view_entity_icon($user, 'tiny');
-
 
 	$answer_row = "<td style=\"padding: 0;\">$icon</td>";
 

@@ -87,7 +87,7 @@ class ElggSchedulingPollSlot extends ElggObject {
 
 	public function getVoteValue(ElggUser $user) {
 		$vote = $this->getVote($user);
-		return $vote[0]->value;
+		return $vote->getAnswer();
 	}
 
 	/**
@@ -110,6 +110,7 @@ class ElggSchedulingPollSlot extends ElggObject {
 	public function getTitle() {
 		return $this->title;
 	}
+
 }
 
 abstract class AnswerValue {

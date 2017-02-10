@@ -31,10 +31,10 @@ $current_hour = date('G');
 $num_columns = 4;
 foreach ($days as $date => $slots) {
 	foreach ($slots as $key => $slot) {
-
 		$hour = $slot->title;
 		$rows[$date][] = date("H:i", $hour);
 	}
+	// get the number of columns to display
 	if ($num_columns <= count($slots)) {
 		$num_columns = count($slots);
 	}
@@ -45,8 +45,6 @@ $rows_html = '';
 
 // foreach date show slot
 foreach ($rows as $date => $slots) {
-
-
 
 	$rows_html .= "<tr data-index='$index' id='row-" . $index . "' class='scheduling-row'>";
 	$rows_html .= "<td class='scheduling-actions'>";

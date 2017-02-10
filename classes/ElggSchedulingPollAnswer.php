@@ -1,6 +1,6 @@
 <?php
 
-/* ***************************************************************************
+/* * **************************************************************************
  * Copyright (C) 2017 Jade <http://www.jade.fr>
  * 
  * Benoit MOTTIN <benoitmottin@jade.fr>
@@ -20,7 +20,7 @@
  * ************************************************************************ */
 
 class ElggSchedulingPollAnswer extends ElggObject {
-	
+
 	/**
 	 * Intialize attributes
 	 */
@@ -28,34 +28,28 @@ class ElggSchedulingPollAnswer extends ElggObject {
 		parent::initializeAttributes();
 		$this->attributes['subtype'] = 'scheduling_poll_answer';
 	}
-	
-	public function __construct($guid=null){
+
+	public function __construct($guid = null) {
 		parent::__construct();
-        if ($guid) {
-            $this->load($guid);
-        }
+		if ($guid) {
+			$this->load($guid);
+		}
 	}
-	
-	public function getAnswer(){
+
+	public function getAnswer() {
 		return $this->answer;
 	}
-	
-	public function setAnswer($answer){
+
+	public function setAnswer($answer) {
 		$this->answer = $answer;
 	}
-	
-	public function setSlotGuid($sguid){
+
+	public function setSlotGuid($sguid) {
 		$this->slot_guid = $sguid;
 	}
-	
-	public function getSlotGuid(){
+
+	public function getSlotGuid() {
 		return $this->slot_guid;
 	}
-	
-	
-	
-	public function SetSlotTimestamp($ts){
-		$this->slotTimestamp = $ts;
-	}
-	
+
 }
