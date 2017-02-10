@@ -85,9 +85,18 @@ class ElggSchedulingPollSlot extends ElggObject {
 		return $res;
 	}
 
+	/**
+	 * 
+	 * @param ElggUser $user
+	 * @return type
+	 */
 	public function getVoteValue(ElggUser $user) {
 		$vote = $this->getVote($user);
-		return $vote->getAnswer();
+		if (!empty($vote)) {
+			return $vote->getAnswer();
+		} else {
+			return array();
+		}
 	}
 
 	/**

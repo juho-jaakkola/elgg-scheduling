@@ -50,17 +50,13 @@ $(document).ready(function () {
         console.log($(this).html('input:checked').val());
 
         if ($(this).html('input:checked').prop('checked') === true) {
-            console.log("Check");
             if ($(this).html('input:checked').val() == 3) {
-                console.log("Vert");
                 $(this).closest('td').addClass('answerYes');
             }
             if ($(this).html('input:checked').val() == 2) {
-                console.log("Vert");
                 $(this).closest('td').addClass('answerMaybe');
             }
             if ($(this).html('input:checked').val() == 1) {
-                console.log("Vert");
                 $(this).closest('td').addClass('answerNo');
             }
         }
