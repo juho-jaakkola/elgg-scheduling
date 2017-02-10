@@ -76,7 +76,6 @@ class ElggSchedulingPoll extends ElggObject {
 			$dates[] = date($format, $slot);
 		}
 
-
 		return $dates;
 	}
 
@@ -177,6 +176,11 @@ class ElggSchedulingPoll extends ElggObject {
 
 	public function setSlotsDays($slots, $format = 'Y-m-d') {
 		$this->getSlots();
+
+		if ($this->slots) {
+			$event = 'update';
+		} 
+		
 		// convert all slot in date for checking
 		$existing_dates = $this->getSlotsGroupedByDays($format);
 		$new_dates = $this->getDaysOfSlots($slots, $format);
@@ -210,6 +214,7 @@ class ElggSchedulingPoll extends ElggObject {
 			}
 		}
 
+		//$ia = elgg_set_ignore_access(true);
 		// Add new slots        
 		foreach ($slots as $slot) {
 
@@ -218,11 +223,25 @@ class ElggSchedulingPoll extends ElggObject {
 			$new_slot->container_guid = $this->guid;
 			$new_slot->access_id = $this->access_id;
 
+			
+			
 			if (!$new_slot->save()) {
 				$success = false;
 			}
+			if ($event === 'update') {
+				$users = $this->getVotesByUser();
+					
+				foreach ($users as $guid => $u) {
+					$user = get_entity($guid);
+				
+					$new_slot->vote($user, AnswerValue::UNDEFINED, $new_slot->title);
+				}
+				
+	//				$new_slot->vote(elgg_get_logged_in_user_entity(), AnswerValue::UNDEFINED, $new_slot->title);
+				
+			}
 		}
-
+		elgg_set_ignore_access($ia);
 		return $success;
 	}
 
@@ -270,7 +289,7 @@ class ElggSchedulingPoll extends ElggObject {
 			// order answer by title
 			ksort($votes_by_user[$user]);
 		}
-
+		ksort($votes_by_user);
 		return $votes_by_user;
 	}
 

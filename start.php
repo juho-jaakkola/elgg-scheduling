@@ -54,6 +54,9 @@ function scheduling_init() {
 		'text' => elgg_echo('scheduling'),
 		'href' => 'scheduling',
 	));
+	
+	// subtype
+	update_subtype("object", "scheduling_poll_answer", "ElggSchedulingPollAnswer");
 }
 
 /**

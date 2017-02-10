@@ -36,6 +36,8 @@ class ElggSchedulingPollAnswer extends ElggObject {
 		}
 	}
 
+	
+
 	public function getAnswer() {
 		return $this->answer;
 	}

@@ -72,6 +72,7 @@ foreach ($poll as $day => $slots) {
 	}
 }
 
+
 $answer_rows = '';
 
 foreach ($answers as $user_guid => $slots) {
