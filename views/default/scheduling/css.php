@@ -20,6 +20,7 @@
     #elgg-table-scheduling-answer td,
     #elgg-table-scheduling-answer th {
         text-align: center;
+		vertical-align: middle;
     }
 
     #elgg-table-scheduling-answer .answerYes {
@@ -111,15 +112,3 @@
         border-radius: 10px;
     }    
 
-	.fixed{
-		position:sticky; 
-		/*width:70px; */
-		/*height:70px;*/
-		left:0;
-		top:auto;
-		/*padding-top: 50px;*/
-		border-right: 0px none black; 
-		border-top-width:3px; /*only relevant for first row*/
-		margin-top:-3px; /*compensate for top border*/
-	
-	}

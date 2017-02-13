@@ -34,6 +34,8 @@ $('.possible-answer').on('click', function () {
 });
 
 $(document).ready(function () {
+    // when the page is loaded, check all the answer checkbox, 
+    // and change the background color
     $('.possible-answer').each(function () {
 
         if ($(this).prop('checked') === true) {
@@ -47,8 +49,6 @@ $(document).ready(function () {
 
     $('.hiddenRadio').each(function () {
 
-        console.log($(this).html('input:checked').val());
-
         if ($(this).html('input:checked').prop('checked') === true) {
             if ($(this).html('input:checked').val() == 3) {
                 $(this).closest('td').addClass('answerYes');
@@ -61,6 +61,7 @@ $(document).ready(function () {
             }
         }
     });
+
 });
 
 $('.hiddenRadio').on('click', function () {
@@ -81,3 +82,4 @@ $('.hiddenRadio').on('click', function () {
         $(this).closest('td').removeClass('answerYes');
     }
 });
+

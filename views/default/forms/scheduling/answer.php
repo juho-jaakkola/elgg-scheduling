@@ -77,6 +77,7 @@ $cpt_line = 0;
 foreach ($answers as $user_guid => $slots) {
 	$user = get_entity($user_guid);
 	$icon = elgg_view_entity_icon($user, 'tiny');
+	// repeat the date and slot line to ease reading this grid
 	if ($cpt_line == 10) {
 		$answer_rows .= "<tr>" . $date_row . "</tr>";
 		$answer_rows .= "<tr>" . $slot_row . "</tr>";

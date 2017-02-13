@@ -130,13 +130,19 @@ $addrow_input .= elgg_view('output/url', array(
 	'class' => 'scheduling-row-copy',
 		));
 
+if($entity->getPollType() == PollType::ADVANCE){
+	$check = true;
+}else{
+	$check = false;
+}
+
 $polltype_input = elgg_view("input/checkbox", array(
 	'label' => elgg_echo('scheduling:poll:type:label'),
 	'title' => elgg_echo('scheduling:poll:type:title'),
 	'name' => 'pollType',
 	'id' => 'pollType',
+	'checked' => $check
 		));
-
 
 $submit_input = elgg_view('input/submit', array(
 	'name' => elgg_echo('submit'),
