@@ -179,8 +179,8 @@ class ElggSchedulingPoll extends ElggObject {
 
 		if ($this->slots) {
 			$event = 'update';
-		} 
-		
+		}
+
 		// convert all slot in date for checking
 		$existing_dates = $this->getSlotsGroupedByDays($format);
 		$new_dates = $this->getDaysOfSlots($slots, $format);
@@ -214,7 +214,7 @@ class ElggSchedulingPoll extends ElggObject {
 			}
 		}
 
-		
+
 		// Add new slots        
 		foreach ($slots as $slot) {
 
@@ -223,23 +223,21 @@ class ElggSchedulingPoll extends ElggObject {
 			$new_slot->container_guid = $this->guid;
 			$new_slot->access_id = $this->access_id;
 
-			
-			
+
+
 			if (!$new_slot->save()) {
 				$success = false;
 			}
 			if ($event === 'update') {
 				$users = $this->getVotesByUser();
-					
+
 				foreach ($users as $guid => $u) {
 					$user = get_entity($guid);
-					
+
 					$new_slot->vote($user, AnswerValue::UNDEFINED, $new_slot->title);
-					
 				}
-				
-	//				$new_slot->vote(elgg_get_logged_in_user_entity(), AnswerValue::UNDEFINED, $new_slot->title);
-				
+
+				//				$new_slot->vote(elgg_get_logged_in_user_entity(), AnswerValue::UNDEFINED, $new_slot->title);
 			}
 		}
 		return $success;
@@ -301,17 +299,21 @@ class ElggSchedulingPoll extends ElggObject {
 		$slots = $this->getSlots();
 
 		$counts = array();
-		foreach ($slots as $slot) {
-			$vote = 0;
-			foreach ($votes as $user_vote) {
-				if ($user_vote->entity_guid == $slot->guid) {
-					$voteValue = $slot->getVoteValue(get_entity($user_vote->owner_guid));
-					if ((int) $voteValue !== AnswerValue::NO || (int) $voteValue !== AnswerValue::NO) {
-						$vote++;
-					}
+
+		// initialise array to have each slot set to 0
+		if ($slots) {
+			foreach ($slots as $key => $slot) {
+				$counts[$slot->title] = 0;
+			}
+		}
+
+		// count the value only for Yes and Maybe answers
+		foreach ($votes as $key => $vote) {
+			if ($vote->getAnswer() !== AnswerValue::NO && $vote->getAnswer() !== AnswerValue::UNDEFINED) {
+				if (array_key_exists($vote->title, $counts)) {
+					$counts[$vote->title] = $counts[$vote->title] + 1;
 				}
 			}
-			$counts[$slot->guid] = $vote;
 		}
 
 		return $counts;
