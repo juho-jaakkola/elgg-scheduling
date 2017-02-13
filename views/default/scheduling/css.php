@@ -33,7 +33,7 @@
     #elgg-table-scheduling-answer .answerNo {
         background: #FFC8F2;
     }
-	
+
     #elgg-table-scheduling-answer .answerUndefined {
         background: #CCC;
     }
@@ -110,3 +110,16 @@
         border: 1px grey groove;
         border-radius: 10px;
     }    
+
+	.fixed{
+		position:sticky; 
+		/*width:70px; */
+		/*height:70px;*/
+		left:0;
+		top:auto;
+		/*padding-top: 50px;*/
+		border-right: 0px none black; 
+		border-top-width:3px; /*only relevant for first row*/
+		margin-top:-3px; /*compensate for top border*/
+	
+	}

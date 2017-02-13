@@ -72,14 +72,18 @@ foreach ($poll as $day => $slots) {
 	}
 }
 
-
 $answer_rows = '';
-
+$cpt_line = 0;
 foreach ($answers as $user_guid => $slots) {
 	$user = get_entity($user_guid);
 	$icon = elgg_view_entity_icon($user, 'tiny');
+	if ($cpt_line == 10) {
+		$answer_rows .= "<tr>" . $date_row . "</tr>";
+		$answer_rows .= "<tr>" . $slot_row . "</tr>";
 
-	$answer_row = "<td style=\"padding: 0;\">$icon <br/> $user->name</td>";
+		$cpt_line = 0;
+	}
+	$answer_row = "<td class='fixed' style=\"padding: 0;\">$icon <br/> $user->name</td>";
 
 	foreach ($slots as $voteValue) {
 
@@ -101,11 +105,12 @@ foreach ($answers as $user_guid => $slots) {
 	}
 
 	$answer_rows .= "<tr>$answer_row</tr>";
+	$cpt_line++;
 }
 // Add a row that shows the total amount of votes for each time slot
 $answer_sums = $entity->getVoteCounts();
 $voter_num = $entity->getVotersCount();
-$sum_row = '<td class="empty">'.$voter_num.'</td>';
+$sum_row = '<td class="empty">' . $voter_num . '</td>';
 foreach ($answer_sums as $sum) {
 	$sum_row .= "<td>$sum</td>";
 }
