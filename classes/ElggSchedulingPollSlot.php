@@ -28,10 +28,11 @@ class ElggSchedulingPollSlot extends ElggObject {
 	 * @return bool True on success
 	 */
 	public function vote($user, $answer = 0, $valueTosave = 0) {
-		$ia = elgg_set_ignore_access();
+		elgg_set_ignore_access(true);
 		if ($this->hasVoted($user) && $answer != AnswerValue::UNDEFINED) {
 			// update OBJECT
 			$vote = $this->getVote($user);
+			$userAnswer->owner_guid = $user->guid;
 			$userAnswer = get_entity($vote->guid);
 			$userAnswer->access_id = $this->access_id;
 			//$userAnswer = new ElggSchedulingPollAnswer($vote->guid);
@@ -39,21 +40,21 @@ class ElggSchedulingPollSlot extends ElggObject {
 
 			$userAnswer->save();
 		} else {
-						
 			$userAnswer = new ElggSchedulingPollAnswer();
 			//$userAnswer = new ElggObject();
+			
+			$userAnswer->owner_guid = $user->guid;
 			$userAnswer->subtype = 'scheduling_poll_answer';
 			$userAnswer->container_guid = get_input('container_guid');
 			$userAnswer->access_id = $this->access_id;
 			$userAnswer->setAnswer($answer);
 			$userAnswer->title = $valueTosave;
 			$userAnswer->setSlotGuid($this->guid);
-
-			
 			
 			$res = $userAnswer->save();
+			
 		}
-		elgg_set_ignore_access($ia);
+		elgg_set_ignore_access(false);
 		return $res;
 	}
 
@@ -76,7 +77,7 @@ class ElggSchedulingPollSlot extends ElggObject {
 	 * @return string
 	 */
 	public function getVote(ElggUser $user) {
-		elgg_set_ignore_access();
+		$ia = elgg_set_ignore_access();
 		$vote = elgg_get_entities_from_metadata(array(
 			'type' => 'object',
 			'subtype' => 'scheduling_poll_answer',
@@ -92,7 +93,7 @@ class ElggSchedulingPollSlot extends ElggObject {
 		} else {
 			$res = array();
 		}
-
+		elgg_set_ignore_access($ia);
 		return $res;
 	}
 
