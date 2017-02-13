@@ -79,7 +79,7 @@ foreach ($answers as $user_guid => $slots) {
 	$user = get_entity($user_guid);
 	$icon = elgg_view_entity_icon($user, 'tiny');
 
-	$answer_row = "<td style=\"padding: 0;\">$icon</td>";
+	$answer_row = "<td style=\"padding: 0;\">$icon <br/> $user->name</td>";
 
 	foreach ($slots as $voteValue) {
 
