@@ -104,7 +104,8 @@ foreach ($answers as $user_guid => $slots) {
 }
 // Add a row that shows the total amount of votes for each time slot
 $answer_sums = $entity->getVoteCounts();
-$sum_row = '<td class="empty"></td>';
+$voter_num = $entity->getVotersCount();
+$sum_row = '<td class="empty">'.$voter_num.'</td>';
 foreach ($answer_sums as $sum) {
 	$sum_row .= "<td>$sum</td>";
 }

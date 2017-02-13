@@ -318,6 +318,12 @@ class ElggSchedulingPoll extends ElggObject {
 
 		return $counts;
 	}
+	
+	public function getVotersCount(){
+		$votes = $this->getVotesByUser();
+		
+		return count($votes);
+	}
 
 	/**
 	 * possible type :
