@@ -23,7 +23,7 @@ $entity = elgg_extract('entity', $vars);
 
 $rows = array();
 
-$slots = $entity->getSlotsGroupedByDays("m/j/Y");
+$slots = $entity->getSlotsGroupedByDays("m/d/Y");
 
 $days = "";
 $dateKey = 0;

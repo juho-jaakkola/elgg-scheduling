@@ -214,7 +214,7 @@ class ElggSchedulingPoll extends ElggObject {
 			}
 		}
 
-		//$ia = elgg_set_ignore_access(true);
+		
 		// Add new slots        
 		foreach ($slots as $slot) {
 
@@ -233,16 +233,15 @@ class ElggSchedulingPoll extends ElggObject {
 					
 				foreach ($users as $guid => $u) {
 					$user = get_entity($guid);
-					elgg_set_ignore_access(true);
+					
 					$new_slot->vote($user, AnswerValue::UNDEFINED, $new_slot->title);
-					elgg_set_ignore_access(false);
+					
 				}
 				
 	//				$new_slot->vote(elgg_get_logged_in_user_entity(), AnswerValue::UNDEFINED, $new_slot->title);
 				
 			}
 		}
-		elgg_set_ignore_access($ia);
 		return $success;
 	}
 
