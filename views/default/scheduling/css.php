@@ -96,7 +96,7 @@
     }
 
     #scheduling-datepicker{
-        font-size:25px;
+        /*font-size:25px;*/
     }
 
     .elgg-foot{
