@@ -314,7 +314,7 @@ class ElggSchedulingPoll extends ElggObject {
 					$counts[$vote->title] = $counts[$vote->title] + 1;
 				}
 			}
-		}
+					}
 
 		return $counts;
 	}
