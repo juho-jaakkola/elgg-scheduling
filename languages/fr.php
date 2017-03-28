@@ -14,14 +14,17 @@ return array(
 	'scheduling:error:invalid_format' => 'L\'horaire doit être au format HH:MM',
 	'scheduling:add_day' => 'Ajouter une nouvelle journée',
 	'scheduling:group:enable' => 'Autorisé la création de planification dans les groupes',
+	
 	'scheduling:owner_block' => 'planificateur',
 	'scheduling:owner_block:group' => 'planificateur de groupe',
+	
 	'scheduling:save:success' => 'Sondage enregistré',
 	'scheduling:save:error' => 'Une erreur s\'est produit. Vérifier que les valeurs soient correctes.',
 	'scheduling:save:error:no:days' => 'Vous devez selectionner au moins une date.',
 	'scheduling:error:cannot_edit' => 'Vous n\'êtes pas autorisé à modifier ce contenu',
 	'scheduling:delete:success' => 'Sondage supprimé',
 	'scheduling:delete:error' => 'La suppression du sondage à échouée',
+	
 	// form
 	'scheduling:form:anwser:yes' => 'Oui',
 	'scheduling:form:anwser:maybe' => '(Oui)',
@@ -35,7 +38,10 @@ return array(
 	'scheduling:poll:pick:date' => 'Choisissez des dates',
 	'scheduling:poll:pick:date:instruction' => 'Cliquez sur le calendrier pour ajouter une date. Cliquez sur une des dates dans la liste pour la supprimer.',
 	'scheduling:poll:copy:first:line' => 'Copiez les valeurs de la premiere ligne sur l\'ensemble des colonnes.',
+	'scheduling:poll:delete:title' => 'Supprimer cette ligne',
+	'scheduling:poll:duplicate:title' => 'Dupliquer cette ligne',
 	'scheduling:form:answer:not:available' => 'Pas disponible',
+	
 	// Notifications 
 	'scheduling:notify:publish:subject' => 'Nouveau sondage du planificateur',
 	'scheduling:notify:publish:body' => '%s as créé un nouveau sondage du planificateur: "%s" 

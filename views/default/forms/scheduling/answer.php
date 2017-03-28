@@ -9,6 +9,7 @@ $poll = $entity->getSlotsGroupedByDays();
 
 // user is not avaiable by default after he voted once
 $isNotAvailable = true;
+if($answers){
 if ($answers[elgg_get_logged_in_user_guid()]) {
 	foreach ($answers[elgg_get_logged_in_user_guid()] as $answer) {
 		// if there is one answer that not "No", he's availble
@@ -16,6 +17,7 @@ if ($answers[elgg_get_logged_in_user_guid()]) {
 			$isNotAvailable = false;
 		}
 	}
+}
 }
 
 $date_row = '<td class="empty"></td>';

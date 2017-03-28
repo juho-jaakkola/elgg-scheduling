@@ -38,9 +38,10 @@ return array(
 	'scheduling:poll:pick:date' => 'Pick some dates',
 	'scheduling:poll:pick:date:instruction' => 'Just click on date in the calendar to add it. Just click on it in the list to delete this date.',
 	'scheduling:poll:copy:first:line' => 'Copy all the first line value to others',
+	'scheduling:poll:delete:title' => 'Delete this row',
+	'scheduling:poll:duplicate:title' => 'Duplicate this row',
 	'scheduling:form:answer:not:available' => 'Not available',
-    
-    
+        
 	// Notifications
 	'scheduling:notify:publish:subject' => 'New scheduling poll',
 	'scheduling:notify:publish:body' => '%s has created a new scheduling poll: "%s"
@@ -53,11 +54,8 @@ return array(
 You should check if your answer needs to be updated:
 %s',
 	'scheduling:notify:update:summary' => '%s has updated the scheduling poll: %s',
-
-	'river:create:object:scheduling_poll' => '%s created a new scheduling poll %s',
-	
+	'river:create:object:scheduling_poll' => '%s created a new scheduling poll %s',	
 	// Breadcrumb
 	'scheduling:breadcrumb:add:days' => 'Add days',
-	'scheduling:breadcrumb:add:slots' => 'Add Slots',
-	
+	'scheduling:breadcrumb:add:slots' => 'Add Slots',	
 );

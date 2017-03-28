@@ -19,4 +19,4 @@ $params = array(
 
 $body = elgg_view_layout('content', $params);
 
-echo elgg_view_page('title here', $body);
+echo elgg_view_page(elgg_echo('scheduling'), $body);

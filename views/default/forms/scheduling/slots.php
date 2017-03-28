@@ -51,13 +51,13 @@ foreach ($rows as $date => $slots) {
 	$rows_html .= elgg_view('output/url', array(
 		'text' => "",
 		'href' => 'javascript:void(0);',
-		'class' => 'scheduling-row-delete mll elgg-icon elgg-icon-trash',
+		'class' => 'scheduling-row-delete mll elgg-icon elgg-icon-trash fa fa-trash',
 		'title' => elgg_echo("scheduling:poll:delete:title")
 	));
 	$rows_html .= elgg_view('output/url', array(
 		'text' => "",
 		'href' => 'javascript:void(0);',
-		'class' => 'scheduling-row-copy elgg-icon elgg-icon-round-plus',
+		'class' => 'scheduling-row-copy elgg-icon elgg-icon-round-plus fa fa-plus-circle',
 		'title' => elgg_echo("scheduling:poll:duplicate:title")
 	));
 	$rows_html .= "</td>";
@@ -124,11 +124,11 @@ $container_guid_input = elgg_view('input/hidden', array(
 	'value' => $vars['container_guid'],
 		));
 
-$addrow_input .= elgg_view('output/url', array(
+/*$addrow_input = elgg_view('output/url', array(
 	'text' => elgg_echo('scheduling:row:copy'),
 	'href' => 'javascript:void(0);',
 	'class' => 'scheduling-row-copy',
-		));
+		));//*/
 
 if($entity->getPollType() == PollType::ADVANCE){
 	$check = true;

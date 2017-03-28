@@ -176,9 +176,11 @@ class ElggSchedulingPoll extends ElggObject {
 
 	public function setSlotsDays($slots, $format = 'Y-m-d') {
 		$this->getSlots();
-
+		
 		if ($this->slots) {
 			$event = 'update';
+		} else {
+			$event = 'create';
 		}
 
 		// convert all slot in date for checking
@@ -279,6 +281,7 @@ class ElggSchedulingPoll extends ElggObject {
 		$votes = $this->getVotes();
 
 		$votes_by_user = array();
+		if($votes){
 		foreach ($votes as $vote) {
 			$vote = new ElggSchedulingPollAnswer($vote->guid);
 			$votes_by_user[$vote->owner_guid][$vote->title] = $vote->getAnswer();
@@ -286,6 +289,8 @@ class ElggSchedulingPoll extends ElggObject {
 		foreach ($votes_by_user as $user => $vote) {
 			// order answer by title
 			ksort($votes_by_user[$user]);
+		}
+		
 		}
 		ksort($votes_by_user);
 		return $votes_by_user;
@@ -308,6 +313,7 @@ class ElggSchedulingPoll extends ElggObject {
 		}
 
 		// count the value only for Yes and Maybe answers
+		if($votes){
 		foreach ($votes as $key => $vote) {
 			if ($vote->getAnswer() !== AnswerValue::NO && $vote->getAnswer() !== AnswerValue::UNDEFINED) {
 				if (array_key_exists($vote->title, $counts)) {
@@ -315,7 +321,7 @@ class ElggSchedulingPoll extends ElggObject {
 				}
 			}
 					}
-
+		}
 		return $counts;
 	}
 	
