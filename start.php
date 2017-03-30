@@ -54,9 +54,9 @@ function scheduling_init() {
 		'text' => elgg_echo('scheduling'),
 		'href' => 'scheduling',
 	));
-	
+
 	// subtype
-	update_subtype("object", "scheduling_poll_answer", "ElggSchedulingPollAnswer");
+	add_subtype("object", "scheduling_poll_answer", "ElggSchedulingPollAnswer");
 }
 
 /**
@@ -67,78 +67,51 @@ function scheduling_init() {
 function scheduling_page_handler($page) {
 	elgg_load_library('elgg:scheduling');
 
-	//elgg_push_breadcrumb(elgg_echo('scheduling'), 'scheduling/all');
-    //elgg_push_context('scheduling');
-	
 	$page_type = elgg_extract(0, $page, 'all');
 	$resource_vars = [
 		'page_type' => $page_type,
 	];
 
-	
-	/*if (!isset($page[0])) {
-		$page[0] = 'all';
-	}//*/
-
 	elgg_push_breadcrumb(elgg_echo('scheduling'));
-
-	//$base_path = elgg_get_plugins_path() . 'scheduling/pages/';
 
 	switch ($page_type) {
 		case 'add':
 			set_input('container_guid', $page[1]);
-			//$resource_vars['container_guid'] = elgg_extract(1, $page);
 			echo elgg_view_resource('scheduling/save', $resource_vars);
-			//$page_path = 'save.php';
 			break;
 		case 'edit':
 			set_input('guid', $page[1]);
-			//$resource_vars['guid'] = elgg_extract(1, $page);
 			echo elgg_view_resource('scheduling/save', $resource_vars);
-			//$page_path = 'save.php';
 			break;
 		case 'addSlot':
 			set_input('guid', $page[1]);
-			//$resource_vars['guid'] = elgg_extract(1, $page);
 			echo elgg_view_resource('scheduling/slots', $resource_vars);
-			//$page_path = 'slots.php';
 			break;
 		case 'view':
 			set_input('guid', $page[1]);
-			//$resource_vars['guid'] = elgg_extract(1, $page);
 			echo elgg_view_resource('scheduling/view', $resource_vars);
-			//$page_path = 'view.php';
 			break;
 		case 'days':
 			set_input('guid', $page[1]);
-			//$resource_vars['guid'] = elgg_extract(1, $page);
 			echo elgg_view_resource('scheduling/days', $resource_vars);
-			//$page_path = 'days.php';
 			break;
 		case 'owner';
 			$user = get_user_by_username($page[1]);
 			if ($user) {
 				set_input('container_guid', $user->guid);
-				//$resource_vars['container_guid'] = $user->guid;
 			}
 			echo elgg_view_resource('scheduling/all', $resource_vars);
-			$page_path = 'all.php';
 			break;
 		case 'group':
 			if ($page[1]) {
-				//$resource_vars['guid'] = elgg_extract(1, $page);
 				set_input('container_guid', $page[1]);
 			}
 			echo elgg_view_resource('scheduling/all', $resource_vars);
-			//$page_path = 'all.php';
 			break;
 		default:
 			echo elgg_view_resource('scheduling/all', $resource_vars);
-			//$page_path = 'all.php';
 			break;
 	}
-
-	//include_once($base_path . $page_path);
 
 	return true;
 }
