@@ -13,7 +13,6 @@ class ElggSchedulingPollSlot extends ElggObject {
 		$this->attributes['subtype'] = 'scheduling_poll_slot';
 	}
 
-	
 	/**
 	 * Add a new answer to this slot
 	 *
@@ -28,21 +27,19 @@ class ElggSchedulingPollSlot extends ElggObject {
 	 * @return bool True on success
 	 */
 	public function vote($user, $answer = 0, $valueTosave = 0) {
-		
+		$res = "";
 		if ($this->hasVoted($user) && $answer != AnswerValue::UNDEFINED) {
 			// update OBJECT
 			$vote = $this->getVote($user);
-			$userAnswer->owner_guid = $user->guid;
 			$userAnswer = get_entity($vote->guid);
+			$userAnswer->owner_guid = $user->guid;
 			$userAnswer->access_id = $this->access_id;
-			//$userAnswer = new ElggSchedulingPollAnswer($vote->guid);
 			$userAnswer->setAnswer($answer);
 
 			$userAnswer->save();
 		} else {
 			$userAnswer = new ElggSchedulingPollAnswer();
-			//$userAnswer = new ElggObject();
-			
+
 			$userAnswer->owner_guid = $user->guid;
 			$userAnswer->subtype = 'scheduling_poll_answer';
 			$userAnswer->container_guid = get_input('container_guid');
@@ -50,9 +47,8 @@ class ElggSchedulingPollSlot extends ElggObject {
 			$userAnswer->setAnswer($answer);
 			$userAnswer->title = $valueTosave;
 			$userAnswer->setSlotGuid($this->guid);
-			
+
 			$res = $userAnswer->save();
-			
 		}
 		return $res;
 	}
@@ -130,13 +126,15 @@ class ElggSchedulingPollSlot extends ElggObject {
 	}
 
 }
-
+/**
+ * contains the possible value
+ */
 abstract class AnswerValue {
 
-	const YES = 3;
-	const MAYBE = 2;
-	const NO = 1;
 	const VOID = 0;
+	const NO = 1;
+	const MAYBE = 2;
+	const YES = 3;
 	const UNDEFINED = 4;
-
+	
 }
