@@ -103,10 +103,10 @@ class ElggSchedulingPoll extends ElggObject {
 	 * @param array $slots Array of timestamps
 	 * @return bool Were all slots saved succesfully?
 	 */
-	public function setSlots($slots, $guids = array()) {
+	public function setSlots($slots) {
 		$this->getSlots();
 
-		if ($this->slots) {
+		if ($this->getVotesByUser()) {
 			$event = 'update';
 		} else {
 			// No slots were found, so we assume this is a new poll
@@ -165,7 +165,7 @@ class ElggSchedulingPoll extends ElggObject {
 				'object_guid' => $this->guid,
 			));
 		}
-
+		
 		// We don't want to notify about the create/update event of a
 		// scheduling_poll object because one may exist without any options.
 		// So we trigger an event manually once we're sure options exist.
