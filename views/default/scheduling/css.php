@@ -4,7 +4,6 @@
 }
 
 #elgg-scheduling-answer-container {
-	width: 710px;
 	overflow: auto;
 	margin: 0 0 30px 0;
 }
