@@ -5,7 +5,7 @@ return array(
 	'scheduling:add' => 'Ajouter une nouvelle réunion à planifier',
 	'item:object:scheduling_poll' => 'Sondage planificateur',
 	'item:object:scheduling_poll_slot' => 'Créneaux horaire',
-	'scheduling:date_format' => 'D n/j/Y',
+	'scheduling:date_format' => 'd/m/Y',
 	'scheduling:edit:time' => 'Changer les horaires',
 	'scheduling:slot:title' => 'Créneau %s',
 	'scheduling:column:add' => 'Ajouter une colonne',
