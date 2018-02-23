@@ -1,8 +1,8 @@
 <?php
+
 /**
  * River view
  */
-
 $item = $vars['item'];
 /* @var ElggRiverItem $item */
 

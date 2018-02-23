@@ -10,7 +10,7 @@ $interval = (int) elgg_extract('interval', $vars, 900);
 $format = elgg_extract('format', $vars, "H:i");
 $options = range(0, 86400, $interval);
 foreach ($options as $option) {
-	$time = gmdate($format, $option);
+	$time = date($format, $option);
 	$vars['options_values'][$time] = $time;
 }
 echo elgg_view('input/dropdown', $vars);

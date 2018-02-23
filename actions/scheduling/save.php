@@ -37,7 +37,7 @@ if ($entity->save()) {
 if ($is_new) {
 	$forward_url = "scheduling/days/{$entity->guid}";
 } else {
-	$forward_url = $entity->getURL();
+	$forward_url = "scheduling/days/{$entity->guid}";
 }
 
 forward($forward_url);

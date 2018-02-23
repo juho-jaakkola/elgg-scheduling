@@ -20,10 +20,28 @@ return array(
 
 	'scheduling:save:success' => 'Schedule poll saved',
 	'scheduling:save:error' => 'Something went wrong. Check that the entered values are valid.',
+	'scheduling:save:error:no:days' => 'You must select at least one date.',
 	'scheduling:error:cannot_edit' => 'You are unauthorized to edit this content',
 	'scheduling:delete:success' => 'Scheduling poll deleted',
 	'scheduling:delete:error' => 'Deleting the scheduling poll failed',
 
+	// form
+	'scheduling:form:anwser:yes' => 'Yes',
+	'scheduling:form:anwser:maybe' => '(Yes)',
+	'scheduling:form:anwser:no' => 'No',
+	'scheduling:form:anwser:title:yes' => 'Yes',
+	'scheduling:form:anwser:title:maybe' => 'If necessary',
+	'scheduling:form:anwser:title:no' => 'No',
+	'scheduling:poll:type:label' => 'Advance Poll',
+	'scheduling:poll:type:title' => 'Get 3 choices, Yes, Maybe, No',
+	'scheduling:poll:picked:date:label' => 'Selected Dates:',
+	'scheduling:poll:pick:date' => 'Pick some dates',
+	'scheduling:poll:pick:date:instruction' => 'Just click on date in the calendar to add it. Just click on it in the list to delete this date.',
+	'scheduling:poll:copy:first:line' => 'Copy all the first line value to others',
+	'scheduling:poll:delete:title' => 'Delete this row',
+	'scheduling:poll:duplicate:title' => 'Duplicate this row',
+	'scheduling:form:answer:not:available' => 'Not available',
+        
 	// Notifications
 	'scheduling:notify:publish:subject' => 'New scheduling poll',
 	'scheduling:notify:publish:body' => '%s has created a new scheduling poll: "%s"
@@ -36,6 +54,8 @@ return array(
 You should check if your answer needs to be updated:
 %s',
 	'scheduling:notify:update:summary' => '%s has updated the scheduling poll: %s',
-
-	'river:create:object:scheduling_poll' => '%s created a new scheduling poll %s',
+	'river:create:object:scheduling_poll' => '%s created a new scheduling poll %s',	
+	// Breadcrumb
+	'scheduling:breadcrumb:add:days' => 'Add days',
+	'scheduling:breadcrumb:add:slots' => 'Add Slots',	
 );

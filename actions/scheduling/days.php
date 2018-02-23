@@ -10,27 +10,27 @@ if (!$entity instanceof ElggSchedulingPoll || !$entity->canEdit()) {
 	forward();
 }
 
-$slots = array();
-$input = (array) get_input('slots', array());
+$input = (array) get_input('poll-days', array());
+if ($input) {
+	foreach ($input as $index => $date_info) {
+		// add the current hour
+		// @FIXME
+		// work in addition but add a new slot in update
+		// $date_info .= date('G:i');
 
-foreach ($input as $index => $date_info) {
-
-	$date = $date_info['date'];
-	$date_slots = $date_info['slot'];
-	foreach ($date_slots as $slot) {
-		if (empty($slot)) {
-			continue;
-		}
-		$slots[] = strtotime("$date $slot");
+		$slots[] = strtotime("$date_info");
 	}
-}
 
-if ($entity->setSlots($slots)) {
-	system_message(elgg_echo('scheduling:save:success'));
+	if ($entity->setSlotsDays($slots)) {
+		system_message(elgg_echo('scheduling:save:success'));
+	} else {
+		register_error(elgg_echo('scheduling:save:error'));
+	}
+	elgg_clear_sticky_form('scheduling');
+
+	forward($entity->getAddSlotsUrl());
 } else {
-	register_error(elgg_echo('scheduling:save:error'));
+	register_error(elgg_echo('scheduling:save:error:no:days'));
+	forward(REFERRER);
 }
 
-elgg_clear_sticky_form('scheduling');
-
-forward($entity->getURL());
