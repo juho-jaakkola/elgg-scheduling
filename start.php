@@ -35,6 +35,9 @@ function scheduling_init() {
 		'text' => elgg_echo('scheduling'),
 		'href' => 'scheduling',
 	));
+        
+        // Register entity type for search
+	elgg_register_entity_type('object', 'scheduling_poll');
 }
 
 /**
