@@ -25,7 +25,7 @@ class ElggSchedulingPollSlot extends ElggObject {
 			return false;
 		}
 
-		return $this->annotate('scheduling_poll_answer', true, $this->access_id, $user->guid);
+		return $this->annotate('scheduling_poll_answer', true, ACCESS_PUBLIC, $user->guid);
 	}
 
 	/**
